@@ -2,6 +2,12 @@
 import React, { useState } from "react";
 import "./Chathistory.css";
 
+/**
+ * TODO: Logic for rendering the chat history still need to be done:
+ * It'll need to get all the chat history from the database and render it in the UI
+ * the chat history will be grouped by date, and each date will have a list of chat logs
+ */
+
 const ChatHistory = ({ userChatHistory }) => {
   const [toggle, setToggle] = useState(false);
   const [expandedDate, setExpandedDate] = useState(null);
@@ -43,14 +49,9 @@ const ChatHistory = ({ userChatHistory }) => {
               </div>
               {expandedDate === chat.date && (
                 <div className="chat_history_items">
-                  {chat.chatLog.map((item, itemIndex) => (
-                    <div
-                      key={itemIndex}
-                      className={`chat_item user ${item.type}`}>
-                      <span>{item.type === "user" ? "User:" : "AI:"}</span>
-                      <p>{item.content}</p>
-                    </div>
-                  ))}
+                  <div className="chathistory_log">
+                    <span>{""}</span>
+                  </div>
                 </div>
               )}
             </div>

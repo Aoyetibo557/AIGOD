@@ -1,6 +1,5 @@
 import React from "react";
 import "./Chatbox.css";
-import Avatar from "@mui/material/Avatar";
 import EyeImage from "../../assets/images/eye.png";
 
 const ChatboxItem = ({ type, content }) => {
@@ -8,11 +7,7 @@ const ChatboxItem = ({ type, content }) => {
     <div className={`chat_item ${type}`}>
       <div>
         {type === "user" ? (
-          <div>
-            <Avatar sx={{ width: 24, height: 24, bgcolor: "#eb00ff" }}>
-              A
-            </Avatar>
-          </div>
+          ""
         ) : (
           <div>
             <img src={EyeImage} alt="Ai eye" className="chatboxitem_img" />
