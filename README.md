@@ -22,8 +22,8 @@ TBD
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/react-chat-application.git`
-2. Navigate to the project directory: `cd react-chat-application`
+1. Clone the repository: `git clone https://github.com/your-username/aigod.git`
+2. Navigate to the project directory: `cd aigod`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 
