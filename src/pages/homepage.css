@@ -1,0 +1,5 @@
+.homepage_body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    margin: 50px 0px 50px 30px;
+}

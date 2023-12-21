@@ -1,0 +1,41 @@
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat_log {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.chat_item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 11px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+
+/* .user {} */
+
+.ai .chatboxitem_log {
+    border-radius: 0px 0px 10px 10px;
+    height: 80px;
+}
+
+.chatboxitem_log {
+    width: 549px;
+    padding: 15px;
+    color: #fff;
+    background: #161616;
+    border: none;
+    font-size: 16px;
+}
+
+.chatboxitem_img {
+    border-radius: 50%;
+}
