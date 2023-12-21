@@ -1,6 +1,6 @@
 # AIGOD
 
-A chat bot application based off chatgpt API with it's own personality and knwoledege base from major religions and philosophies.
+A chat bot application based off chatgpt API with its own personality and knowledge base from major religions and philosophies.
 
 ## Table of Contents
 
