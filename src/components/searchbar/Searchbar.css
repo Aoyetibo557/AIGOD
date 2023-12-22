@@ -1,0 +1,39 @@
+.searchbar {
+    display: inline-flex;
+    gap: 11px;
+    margin: 0px 0px 40px 30px;
+}
+
+.searchbar_input {
+    padding: 10px 30px;
+    background-color: #fff;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+}
+
+.searchbar_input:focus {
+    outline: none;
+    border: 0.5px solid #eb00ff;
+}
+
+.searchbar_btn {
+    padding: 9.745px 22.274px;
+    border-radius: 10px;
+    color: #fff;
+    background: #303030;
+    border: none;
+    cursor: pointer;
+}
+
+.searchbar_btn:hover {
+    background-color: #eb00ff;
+}
+
+.searchbar--lg {
+    width: 25vw;
+}
+
+.searchbar--sm {
+    width: 15vw;
+}

@@ -1,0 +1,58 @@
+/* ChatHistory.css */
+
+.chat_history {
+    padding: 5px;
+    border-right: 0.5px solid #eaeaea;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+}
+
+.view_history {
+    margin: 5px;
+    text-align: center;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.view_history:hover {
+    color: #eb00ff;
+}
+
+.chathistory_search_input {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 20px;
+    border: none;
+    font-size: 13px;
+}
+
+.chat_history_date {
+    margin: 5px;
+    width: 100%;
+    cursor: pointer;
+    color: #fff;
+    border-bottom: 1px solid #ffffff50;
+}
+
+.chat_history_date:hover {
+    color: #eb00ff;
+}
+
+.chathistory_log {
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+/* Remaining styles remain the same */
+
+@media only screen and (max-width: 768px) {
+    .chat_history {
+        display: none;
+    }
+}
