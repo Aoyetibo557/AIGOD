@@ -65,7 +65,7 @@ const Waitlistinput = () => {
           />
         </div>
         <button className="waitlist_btn" type="submit">
-          Notify Me!
+          Notify Me
         </button>
       </form>
     </div>

@@ -47,6 +47,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .waitlist_input {
@@ -77,10 +78,9 @@
 }
 
 .waitlist_btn:hover {
-  background-color: #e8e9eb;
-  color: #26292a;
-  transform: scale(0.9);
-  transition: ease-in-out 0.2s;
+  background-color: #eb00ff;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 .waitlist_success_msg {
