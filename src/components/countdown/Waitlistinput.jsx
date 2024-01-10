@@ -9,9 +9,17 @@ const Waitlistinput = () => {
   const [email, setEmail] = useState("");
   const [isAddedToWaitlist, setIsAddedToWaitlist] = useState(false);
 
+  const isEmailValid = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    addEmailToWaitlist();
+    if (!isEmailValid(email)) {
+      return alert("Please enter a valid email address");
+    } else {
+      addEmailToWaitlist();
+    }
     setEmail("");
   };
 
