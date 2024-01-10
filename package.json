@@ -1,7 +1,7 @@
 {
   "name": "ai_god",
   "version": "0.1.0",
-  "homepage": "http://localhost:3000",
+  "homepage": "https://aigod.ai",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.23.6",
