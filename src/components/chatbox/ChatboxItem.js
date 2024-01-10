@@ -1,6 +1,6 @@
 import React from "react";
 import "./Chatbox.css";
-import EyeImage from "../../assets/images/eye.png";
+import EyeImage from "../../images/eye.png";
 
 const ChatboxItem = ({ type, content }) => {
   return (

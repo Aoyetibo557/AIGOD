@@ -1,7 +1,7 @@
 import React from "react";
 import "./Header.css";
 import Navbar from "./navbar/Navbar";
-import AI_GOD_Logo from "../../assets/images/aigod_ftp.png";
+import AI_GOD_Logo from "../../images/aigod_ftp.png";
 
 const Header = () => {
   return (
