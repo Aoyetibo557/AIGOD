@@ -1,8 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
-body {
-  font-family: "Plus Jakarta Sans", sans-serif;
-}
-
 option {
   color: black;
 }
@@ -21,6 +17,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
   height: 100%;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .comingsoon_page_container {
