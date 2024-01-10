@@ -9,7 +9,7 @@ const Header = () => {
       <a href="/" rel="noreferrer">
         <img className="logo_img" src={AI_GOD_Logo} alt="AIGOD Logo" />
       </a>
-      <Navbar />
+      {/* <Navbar /> */}
     </div>
   );
 };
