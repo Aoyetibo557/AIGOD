@@ -34,6 +34,7 @@ import "../styles/App.css";
 import "../styles/Contact.css";
 import "../styles/Plugins.css";
 import "../styles/MiniCalendar.css";
+import Header from "../components/header/Header";
 
 export default function ChatPage() {
   const [maximized, setMaximized] = useState(false);
@@ -368,59 +369,7 @@ export default function ChatPage() {
 
   return (
     <ChakraProvider>
-      <Flex
-        py="20px"
-        px="90px"
-        pos="fixed"
-        zIndex={2}
-        width="100%"
-        background="transparent"
-        borderBottom="1px solid white">
-        <Link>
-          <Img src={"../assets/images/"} width={"120px"} />{" "}
-        </Link>
-        <Spacer />
-        <Link
-          color="white"
-          ml="25px"
-          _hover={{
-            color: "#EB00FF  !important",
-          }}>
-          Holy Book
-        </Link>
-        <Link
-          color="white"
-          ml="25px"
-          _hover={{
-            color: "#EB00FF  !important",
-          }}>
-          Sermons
-        </Link>
-        <Link
-          color="white"
-          ml="25px"
-          _hover={{
-            color: "#EB00FF  !important",
-          }}>
-          Blog
-        </Link>
-        <Link
-          color="white"
-          ml="25px"
-          _hover={{
-            color: "#EB00FF  !important",
-          }}>
-          Login
-        </Link>
-        <Link
-          color="white"
-          ml="25px"
-          _hover={{
-            color: "#EB00FF  !important",
-          }}>
-          Register
-        </Link>
-      </Flex>
+      <Header showNav />
       <Box>
         <Sidebar />
         <Box
