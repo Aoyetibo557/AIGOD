@@ -17,13 +17,13 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-// import Content from '@/components/sidebar/components/Content';
+// import Content from "@/components/sidebar/components/Content";
 // import {
 //   renderThumb,
 //   renderTrack,
 //   renderView,
-// } from '@/components/scrollbar/Scrollbar';
-// import { Scrollbars } from 'react-custom-scrollbars-2';
+// } from "@/components/scrollbar/Scrollbar";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 import { IoMenuOutline } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
@@ -135,7 +135,7 @@ export function SidebarResponsive(props) {
             : "left"
         }>
         <DrawerOverlay />
-        <DrawerContent
+        {/* <DrawerContent
           w="285px"
           maxW="285px"
           ms={{
@@ -161,7 +161,7 @@ export function SidebarResponsive(props) {
               <Content routes={routes} />
             </Scrollbars>
           </DrawerBody>
-        </DrawerContent>
+        </DrawerContent> */}
       </Drawer>
     </Flex>
   );

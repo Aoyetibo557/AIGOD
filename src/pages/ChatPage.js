@@ -27,9 +27,9 @@ import ReactMarkdown from "react-markdown";
 import { MdAutoAwesome, MdBolt, MdEdit, MdPerson } from "react-icons/md";
 
 // import theme from './theme';
-// import Sidebar from "../components/sidebar/Sidebar";
 // import Footer from './FooterAdmin';
 // import Navbar from './NavbarAdmin';
+import Sidebar from "../components/sidebar/Sidebar";
 import "../styles/App.css";
 import "../styles/Contact.css";
 import "../styles/Plugins.css";
@@ -71,9 +71,9 @@ export default function ChatPage() {
     y: 200,
   });
 
-  // useEffect(() => {
-  //   user ? getHistory() : register();
-  // }, []);
+  useEffect(() => {
+    user ? getHistory() : register();
+  }, []);
 
   const handleDrag = (e, ui) => {
     const { x, y } = deltaPosition;
@@ -422,7 +422,7 @@ export default function ChatPage() {
         </Link>
       </Flex>
       <Box>
-        {/* <Sidebar /> */}
+        <Sidebar />
         <Box
           pt={{ base: "60px", md: "30px" }}
           float="right"
