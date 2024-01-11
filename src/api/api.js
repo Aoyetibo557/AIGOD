@@ -4,7 +4,7 @@ import axios from "axios";
 
 // const [cookies, setCookie] = useCookies(['g-token','jwt']);
 
-const url = process.env.API_URL;
+const url = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("token");
 
 let headers = {

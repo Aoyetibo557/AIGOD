@@ -40,8 +40,8 @@ export default function ChatPage() {
   const [version, setVersion] = useState("hybrid");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-  const url = process.env.API_URL;
-  const public_path = process.env.PUBLIC_URL;
+  const url = process.env.REACT_APP_API_URL;
+  const public_path = process.env.REACT_APP_PUBLIC_URL;
 
   const [initMsg, setInitMsg] = useState("");
 
