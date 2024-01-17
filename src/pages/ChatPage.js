@@ -370,6 +370,7 @@ export default function ChatPage() {
   return (
     <ChakraProvider>
       <Header showNav />
+
       <Box>
         <Sidebar />
         <Box

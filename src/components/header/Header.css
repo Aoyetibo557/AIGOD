@@ -12,8 +12,9 @@
 
 .logo_img {
   width: 125px;
-  height: 35px;
-  flex-shrink: 0;
+  height: 45px;
+  object-fit: contain;
+  /* flex-shrink: 0; */
   padding: 10px;
 }
 
