@@ -386,127 +386,29 @@ export default function ChatPage() {
           transitionDuration=".2s, .2s, .35s"
           transitionProperty="top, bottom, width"
           transitionTimingFunction="linear, linear, ease">
-          <Portal>
-            <Box>
-              {/* <Navbar
-                setApiKey={setApiKey}
-                onOpen={onOpen}
-                logoText={'Horizon UI Dashboard PRO'}
-                brandText={getActiveRoute(routes, pathname)}
-                secondary={getActiveNavbar(routes, pathname)}
-              /> */}
-            </Box>
-          </Portal>
           <Box
             mx="auto"
             p={{ base: "20px", md: "30px" }}
             pe="20px"
             minH="100vh"
+            className="flex"
             pt={{ base: "0px", md: "0px" }}>
             <Flex
               w="100%"
               pt={{ base: "70px", md: "0px" }}
               direction="column"
               position="relative">
-              {/* <Img
-                src={"http://localhost:9000/bg-image.png"}
-                position={"absolute"}
-                w="350px"
-                left="50%"
-                top="50%"
-                transform={"translate(-50%, -50%)"}
-              /> */}
               <Flex
                 direction="column"
                 mx="auto"
                 w={{ base: "100%", md: "100%", xl: "100%" }}
                 minH={{ base: "75vh", "2xl": "85vh" }}
                 maxW="1000px">
-                {/* <Flex
-                  direction="column"
-                  w="100%"
-                  mx="auto"
-                  display={outputCode ? "flex" : "none"}
-                  mb={"20px"}
-                >
-                  <Flex w="100%" align={"center"} mb="10px">
-                    <Flex
-                      borderRadius="full"
-                      justify="center"
-                      align="center"
-                      bg={"transparent"}
-                      border="1px solid"
-                      borderColor={borderColor}
-                      me="20px"
-                      h="40px"
-                      minH="40px"
-                      minW="40px"
-                    >
-                      <Icon
-                        as={MdPerson}
-                        width="20px"
-                        height="20px"
-                        color={brandColor}
-                      />
-                    </Flex>
-                    <Flex
-                      p="22px"
-                      border="none"
-                      borderColor={borderColor}
-                      borderRadius="14px"
-                      background="#161616"
-                      w="100%"
-                      color="white"
-                      zIndex={"2"}
-                    >
-                      <Text
-                        color={textColor}
-                        fontWeight="600"
-                        fontSize={{ base: "sm", md: "md" }}
-                        lineHeight={{ base: "24px", md: "26px" }}
-                      >
-                        {inputOnSubmit}
-                      </Text>
-                      <Icon
-                        cursor="pointer"
-                        as={MdEdit}
-                        ms="auto"
-                        width="20px"
-                        height="20px"
-                        color={gray}
-                      />
-                    </Flex>
-                  </Flex>
-                  <Flex w="100%">
-                    <Flex
-                      borderRadius="full"
-                      justify="center"
-                      align="center"
-                      bg={
-                        "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)"
-                      }
-                      me="20px"
-                      h="40px"
-                      minH="40px"
-                      minW="40px"
-                    >
-                      <Icon
-                        as={MdAutoAwesome}
-                        width="20px"
-                        height="20px"
-                        color="white"
-                      />
-                    </Flex>
-                    <ReactMarkdown className="font-medium">
-                      {outputCode ? outputCode : ""}
-                    </ReactMarkdown>
-                    {/* <MessageBoxChat output={outputCode} /> */}
-                {/* </Flex>
-                </Flex> */}
                 {/* Chat Input */}
                 <Flex
                   ms={{ base: "0px", xl: "60px" }}
                   mt="20px"
+                  mb="20px"
                   position="sticky"
                   top="140px"
                   justifySelf={"flex-end"}>
@@ -516,7 +418,7 @@ export default function ChatPage() {
                     border="1px solid"
                     borderColor={borderColor}
                     borderRadius="45px"
-                    p="15px 20px"
+                    p="10px 20px"
                     me="10px"
                     fontSize="sm"
                     backgroundColor="white"
@@ -529,7 +431,7 @@ export default function ChatPage() {
                   />
                   <Button
                     variant="primary"
-                    py="20px"
+                    py="15px"
                     px="16px"
                     fontSize="sm"
                     backgroundColor="#303030"
@@ -556,6 +458,8 @@ export default function ChatPage() {
                   direction="column"
                   w="100%"
                   mx="auto"
+                  position="relative"
+                  top={outputCode ? "80px" : "0px"}
                   display={outputCode ? "flex" : "none"}
                   my={"auto"}>
                   <Flex w="100%" align={"center"} mb="10px">
@@ -640,7 +544,6 @@ export default function ChatPage() {
                         {outputCode ? outputCode : ""}
                       </ReactMarkdown>
                     </Flex>
-                    {/* <MessageBoxChat output={outputCode} /> */}
                   </Flex>
                 </Flex>
 
