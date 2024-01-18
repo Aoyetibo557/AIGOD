@@ -103,4 +103,7 @@
     align-items: center;
     justify-content: center;
   }
+  input::placeholder {
+    font-size: 13px;
+  }
 }
