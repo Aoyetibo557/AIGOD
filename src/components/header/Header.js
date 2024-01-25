@@ -7,7 +7,12 @@ const Header = ({ showNav }) => {
   return (
     <div className="header">
       <a href="/" rel="noreferrer">
-        <img className="logo_img" src={AI_GOD_Logo} alt="AIGOD Logo" />
+        <img
+          className="logo_img"
+          loading="lazy"
+          src={AI_GOD_Logo}
+          alt="AIGOD Logo"
+        />
       </a>
       {showNav && <Navbar />}
     </div>
