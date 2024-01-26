@@ -1,0 +1,68 @@
+.fallback_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.fallback_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.logo_img {
+    width: 30vw;
+    height: 15vh;
+    object-fit: contain;
+}
+
+.fallback_text {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 500;
+    width: 40vw;
+}
+
+.fallback_subtext {
+    color: #fff;
+    font-size: 20px;
+}
+
+.fallback_subtext a {
+    color: #fff;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.fallback_subtext a:hover {
+    color: #eb00ff;
+}
+
+.fallback_btns {
+    display: flex;
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 768px) {
+    .logo_img {
+        width: 200px;
+        height: 50px;
+    }
+    .fallback_text {
+        font-size: 23px;
+        width: 100%;
+    }
+    .fallback_subtext {
+        font-size: 16px;
+    }
+    .fallback_subtext a {
+        font-size: 17px;
+    }
+    .fallback_btns {
+        flex-direction: column;
+    }
+}

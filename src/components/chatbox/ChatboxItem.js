@@ -10,7 +10,12 @@ const ChatboxItem = ({ type, content }) => {
           ""
         ) : (
           <div>
-            <img src={EyeImage} alt="Ai eye" className="chatboxitem_img" />
+            <img
+              src={EyeImage}
+              alt="Ai eye"
+              loading="eager"
+              className="chatboxitem_img"
+            />
           </div>
         )}
       </div>
