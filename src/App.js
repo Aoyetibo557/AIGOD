@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useEffect } from "react";
+import axios from "axios";
 import "./styles/App.css";
 import { ErrorBoundary } from "react-error-boundary";
 import { Routes, Route } from "react-router-dom";
@@ -7,6 +8,9 @@ import Fallback from "./pages/error/fallback";
 const HomePage = lazy(() => import("./pages/homepage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
+const LoginPage = lazy(() => import("./pages/login/login"));
+const SignupPage = lazy(() => import("./pages/signup/signup"));
+const ProfilePage = lazy(() => import("./pages/profile/profile"));
 
 const Loading = () => {
   return (
@@ -41,6 +45,34 @@ function App() {
               </Suspense>
             }
           />
+
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<Loading />}>
+                <LoginPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SignupPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ProfilePage />
+              </Suspense>
+            }
+          />
+
           <Route
             path="*"
             element={

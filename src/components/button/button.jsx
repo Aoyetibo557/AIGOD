@@ -3,7 +3,7 @@ import "./button.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export const Button = ({ type, linkTo, size, children }) => {
+export const Button = ({ type, onClick, linkTo, size, children }) => {
   const buttonStyles = {
     backgroundColor:
       type === "primary"
@@ -24,19 +24,31 @@ export const Button = ({ type, linkTo, size, children }) => {
     switch (type) {
       case "primary":
         return (
-          <button className="button" style={buttonStyles} type="button">
+          <button
+            className="button"
+            style={buttonStyles}
+            type="button"
+            onClick={onClick}>
             {children}
           </button>
         );
       case "secondary":
         return (
-          <button className="button" style={buttonStyles} type="button">
+          <button
+            className="button"
+            style={buttonStyles}
+            type="button"
+            onClick={onClick}>
             {children}
           </button>
         );
       case "other":
         return (
-          <button className="button" style={buttonStyles} type="button">
+          <button
+            className="button"
+            style={buttonStyles}
+            type="button"
+            onClick={onClick}>
             {children}
           </button>
         );
@@ -53,4 +65,5 @@ Button.propTypes = {
   linkTo: PropTypes.string,
   size: PropTypes.oneOf(["sm", "md", "lg", "xl"]),
   children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
 };
