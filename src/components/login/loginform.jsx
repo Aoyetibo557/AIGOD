@@ -96,9 +96,9 @@ export const LoginForm = () => {
           Login
         </Button>
 
-        <Link className="form__link" to="/forgot-password">
+        {/* <Link className="form__link" to="/forgot-password">
           forgot password?
-        </Link>
+        </Link> */}
       </form>
 
       <div className="form__bottom">
