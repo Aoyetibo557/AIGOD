@@ -1,9 +1,9 @@
 .button {
-    opacity: 0.8;
+    opacity: 0.9;
+    font-family: "Inter", sans-serif;
 }
 
 .button:hover {
     transition: "transform 0.3s, opacity 0.3s";
-    transform: scale(1.09);
     opacity: 1;
 }
