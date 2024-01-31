@@ -4,8 +4,10 @@ import "./loginform.css";
 import { Button } from "../button/button";
 import { Link, useNavigate } from "react-router-dom";
 import { verifyToken } from "../../utils/auth";
+import { MdOutlineLockClock } from "react-icons/md";
+import { FaIdCard } from "react-icons/fa";
 
-const API_URL = process.env.REACT_APP_SERVER_URL || "http://localhost:8080";
+const API_URL = process.env.REACT_APP_PROD_SERVER_URL;
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -35,6 +37,9 @@ export const LoginForm = () => {
         setError("Fields can not be empty!");
       } else {
         const newToken = response.data.token;
+        const uid = response.data.user.id;
+
+        localStorage.setItem("aigod_userId", uid);
 
         // Check if there is an existing 'aigod_token' in local storage
         const existingToken = localStorage.getItem("aigod_token");
@@ -49,7 +54,7 @@ export const LoginForm = () => {
 
         // Set the new token to the Axios Authorization header for subsequent requests
         axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-        navigate("/chattest");
+        window.location.href = "/chattest";
       }
     } catch (error) {
       setError("An unexpected error occurred", error.status);
@@ -63,23 +68,29 @@ export const LoginForm = () => {
       {error.length > 0 && <div className="form__error">{error}</div>}
 
       <form className="form__container">
-        <input
-          type="text"
-          placeholder="username"
-          value={username}
-          required
-          onChange={(e) => setUsername(e.target.value)}
-          className="form__input"
-        />
+        <div className="form__input__container">
+          <FaIdCard className="form__icon" />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            required
+            onChange={(e) => setUsername(e.target.value)}
+            className="form__input"
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          required
-          onChange={(e) => setPassword(e.target.value)}
-          className="form__input"
-        />
+        <div className="form__input__container">
+          <MdOutlineLockClock className="form__icon" />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            className="form__input"
+          />
+        </div>
 
         <Button size="md" type="primary" onClick={handleLogin}>
           Login

@@ -14,17 +14,40 @@
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 10px;
+    font-family: "Inter", sans-serif;
+}
+
+.form__input__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    padding: 0px 10px;
+    margin: 10px;
+    border-radius: 5px;
 }
 
 .form__input {
+    background: transparent;
     width: 300px;
-    padding: 15px 20px;
-    margin: 10px;
     font-size: 14px;
+    margin: 10px;
     outline: none;
+    border: none;
+    color: #000;
+    font-family: "Inter", sans-serif;
 }
 
-.form__input:focus {
+.form__icon {
+    color: #272727;
+    opacity: 0.7;
+}
+
+.form__input::placeholder {
+    font-family: "Inter", sans-serif;
+}
+
+.form__input:focus .form__input__container {
     border: 1px solid #eb00ff;
 }
 
@@ -39,7 +62,12 @@
 
 .form__bottom {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
+    font-family: "Inter", sans-serif;
+}
+
+.form__bottom-link {
+    color: #eb00ff;
 }
 
 .form__bottom-link:hover {
@@ -52,9 +80,12 @@
     .form__container {
         border: none;
     }
+    .form__input__container {
+        padding: 0px 20px;
+    }
     .form__input {
         width: 100%;
-        padding: 10px;
+        padding: 5px;
         margin: 10px;
         font-size: 15px;
     }

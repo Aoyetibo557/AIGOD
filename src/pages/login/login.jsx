@@ -13,7 +13,6 @@ const Login = () => {
           loading="lazy"
           className="formpage_logo_img"
         />
-        <h2 className="formpage__subtext">Welcome back oh Mortal!</h2>
       </div>
 
       <div className="formpage__form__container">

@@ -5,16 +5,30 @@ import { verifyToken } from "../../../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Avatar } from "antd";
 import { FaUser } from "react-icons/fa";
+import { Button } from "../../button/button";
+import { logOut } from "../../../utils/auth";
 
 const items = [
   {
     key: "1",
-    label: <Link to="/profile">Profile</Link>,
+    label: (
+      <Link className="navbar_list_item" to="/profile">
+        Profile
+      </Link>
+    ),
   },
   {
     key: "2",
-    label: <Link to="/setting">Settings</Link>,
+    label: (
+      <button className="logout__btn" onClick={logOut}>
+        Log Out
+      </button>
+    ),
   },
+  // {
+  //   key: "3",
+  //   label: <Link to="/setting">Settings</Link>,
+  // },
 ];
 
 const Navbar = () => {
@@ -65,9 +79,9 @@ const Navbar = () => {
             <Dropdown menu={{ items }}>
               <div className="navbar_avatar">
                 <Avatar
-                  size="large"
+                  size={28}
                   style={{
-                    backgroundColor: "#fff",
+                    backgroundColor: "#eee",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -83,9 +97,13 @@ const Navbar = () => {
               <Link to="/login" className="navbar_list_item">
                 Login
               </Link>
-              <Link to="/signup" className="navbar_list_item">
+              <Button
+                size="sm"
+                type="primary"
+                linkTo="/signup"
+                className="navbar_list_item">
                 Register
-              </Link>
+              </Button>
             </>
           )}
         </ul>

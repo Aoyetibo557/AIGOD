@@ -13,7 +13,6 @@ const SignupPage = () => {
           loading="lazy"
           className="formpage_logo_img"
         />
-        <h2 className="formpage__subtext">Sign Up to recieve Enlightment!</h2>
       </div>
 
       <div className="formpage__form__container">
