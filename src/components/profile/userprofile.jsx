@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./userprofile.css";
 import { Avatar } from "antd";
-import { verifyToken, getUserProfile, updateUser } from "../../utils/auth";
+import { verifyToken } from "../../utils/auth";
+import { getUserProfile, updateUser } from "../../queries/user";
 import { Button } from "../button/button";
 import { formatDate } from "../../utils/commonfunctions";
 
-const API_URL = process.env.REACT_APP_SERVER_URL;
+const API_URL =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_DEV_SERVER_URL
+    : process.env.REACT_APP_PROD_SERVER_URL;
 
 const UserProfile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

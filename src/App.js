@@ -6,12 +6,17 @@ import { Routes, Route } from "react-router-dom";
 import Fallback from "./pages/error/fallback";
 import PrivateRoutes from "./components/privateRoutes/privateRoutes";
 import { verifyToken } from "./utils/auth";
+import ResetPasswordForm from "./components/signup/resetpassword";
+
 const HomePage = lazy(() => import("./pages/homepage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
 const LoginPage = lazy(() => import("./pages/login/login"));
 const SignupPage = lazy(() => import("./pages/signup/signup"));
 const ProfilePage = lazy(() => import("./pages/profile/profile"));
+const ForgotPasswordPage = lazy(() =>
+  import("./pages/forgot-password/forgotPassword")
+);
 
 const Loading = () => {
   return (
@@ -65,6 +70,7 @@ function App() {
             }
           />
 
+          {/* These are private routes only available to authenticated users */}
           <Route element={<PrivateRoutes />}>
             <Route
               path="/profile"
@@ -75,6 +81,24 @@ function App() {
               }
             />
           </Route>
+
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ForgotPasswordPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/reset-password/:token"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ResetPasswordForm />
+              </Suspense>
+            }
+          />
 
           <Route
             path="*"

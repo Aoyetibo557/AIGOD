@@ -4,10 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../button/button";
 import { MdOutlineEmail, MdOutlineLockClock } from "react-icons/md";
 import { FaUser, FaIdCard } from "react-icons/fa";
-
-import axios from "axios";
-
-const API_URL = process.env.REACT_APP_PROD_SERVER_URL;
+import { registerNewUser } from "../../queries/user";
 
 export const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -22,13 +19,14 @@ export const SignupForm = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError("");
+    const newUser = {
+      fullname,
+      email,
+      username,
+      password,
+    };
     try {
-      const response = await axios.post(`${API_URL}/user/signup`, {
-        fullname,
-        email,
-        username,
-        password,
-      });
+      const res = await registerNewUser(newUser);
       setLoading(true);
 
       if (
@@ -39,8 +37,8 @@ export const SignupForm = () => {
       ) {
         setError("Fields can not be empty!");
       } else {
-        const token = response.data.token;
-        const uid = response.data.user.id;
+        const token = res?.token;
+        const uid = res?.user.id;
         // store in localStorage
         localStorage.setItem("aigod_token", token);
         localStorage.setItem("aigod_userId", uid);

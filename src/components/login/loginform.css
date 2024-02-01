@@ -63,6 +63,7 @@
 .form__bottom {
     text-align: center;
     margin-top: 10px;
+    font-size: 15px;
     font-family: "Inter", sans-serif;
 }
 
@@ -74,6 +75,96 @@
     transform: scale(1.09);
     transition: ease-in 0.3ms all;
     color: #fff;
+}
+
+.resetform__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.resetform__topdiv h3 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.resetform__topdiv h4 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.resetform__topdiv p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
+.resetform__form {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 30px;
+    border: 1px solid #ffffff79;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.resetform__input {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+}
+
+.resetform__msg__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.resetform__logo__img {
+    width: 180px;
+}
+
+.resetform__msg {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    width: 50vw;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.resetform__div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.resetform__div label {
+    margin-bottom: 5px;
+    opacity: 0.6;
+    font-family: "Inter", sans-serif;
+}
+
+.error__msg {
+    color: red;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    font-family: "Inter", sans-serif;
 }
 
 @media only screen and (max-width: 768px) {
@@ -88,5 +179,12 @@
         padding: 5px;
         margin: 10px;
         font-size: 15px;
+    }
+    .resetform__form {
+        width: 80%;
+    }
+    .resetform__msg {
+        font-size: 16px;
+        width: 100%;
     }
 }
