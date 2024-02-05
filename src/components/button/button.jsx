@@ -3,7 +3,7 @@ import "./button.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export const Button = ({ type, onClick, linkTo, size, children }) => {
+export const Button = ({ type, onClick, linkTo, size, children, disabled }) => {
   const buttonStyles = {
     backgroundColor:
       type === "primary"
@@ -18,6 +18,7 @@ export const Button = ({ type, onClick, linkTo, size, children }) => {
     borderRadius: "5px",
     cursor: "pointer",
     fontSize: size === "sm" ? "12px" : size === "lg" ? "18px" : "14px",
+    pointerEvents: disabled ? "none" : "auto",
   };
 
   const renderButton = () => {
@@ -26,8 +27,10 @@ export const Button = ({ type, onClick, linkTo, size, children }) => {
         return (
           <button
             className="button"
+            title={disabled ? "Complete form" : children}
             style={buttonStyles}
             type="button"
+            disabled={disabled}
             onClick={onClick}>
             {children}
           </button>
@@ -38,6 +41,7 @@ export const Button = ({ type, onClick, linkTo, size, children }) => {
             className="button"
             style={buttonStyles}
             type="button"
+            disabled={disabled}
             onClick={onClick}>
             {children}
           </button>
@@ -48,6 +52,7 @@ export const Button = ({ type, onClick, linkTo, size, children }) => {
             className="button"
             style={buttonStyles}
             type="button"
+            disabled={disabled}
             onClick={onClick}>
             {children}
           </button>
@@ -66,4 +71,5 @@ Button.propTypes = {
   size: PropTypes.oneOf(["sm", "md", "lg", "xl"]),
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };

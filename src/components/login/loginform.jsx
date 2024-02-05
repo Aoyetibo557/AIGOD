@@ -6,8 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { verifyToken } from "../../utils/auth";
 import { MdOutlineLockClock } from "react-icons/md";
 import { FaIdCard } from "react-icons/fa";
-
-const API_URL = process.env.REACT_APP_PROD_SERVER_URL;
+import { checkUserCredentials } from "../../queries/user";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -22,22 +21,24 @@ export const LoginForm = () => {
     setError("");
     setLoading(true);
 
-    try {
-      const response = await axios.post(`${API_URL}/user/login`, {
-        username,
-        password,
-      });
+    const loginCred = {
+      username,
+      password,
+    };
 
-      if (response.data.status === "error") {
-        setError(response.data.message);
+    try {
+      const res = await checkUserCredentials(loginCred);
+
+      if (res.status === "error") {
+        setError(res.message);
         return;
       }
 
       if (username.length === 0 || password.length === 0) {
         setError("Fields can not be empty!");
       } else {
-        const newToken = response.data.token;
-        const uid = response.data.user.id;
+        const newToken = res?.token;
+        const uid = res?.user.id;
 
         localStorage.setItem("aigod_userId", uid);
 
@@ -52,12 +53,10 @@ export const LoginForm = () => {
           localStorage.setItem("aigod_token", newToken);
         }
 
-        // Set the new token to the Axios Authorization header for subsequent requests
-        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
         window.location.href = "/chattest";
       }
     } catch (error) {
-      setError("An unexpected error occurred", error.status);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -96,9 +95,9 @@ export const LoginForm = () => {
           Login
         </Button>
 
-        {/* <Link className="form__link" to="/forgot-password">
+        <Link className="form__link" to="/forgot-password">
           forgot password?
-        </Link> */}
+        </Link>
       </form>
 
       <div className="form__bottom">
