@@ -26,6 +26,7 @@ export const SendResetLink = () => {
         console.error(
           `Error handling send request for password reset: ${error.message}`
         );
+        setErrorMsg("An error occured, please try again");
       }
     } else {
       setErrorMsg("Please enter a valid email address");
