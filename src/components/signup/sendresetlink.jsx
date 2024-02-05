@@ -4,29 +4,35 @@ import "../login/loginform.css";
 import { sendPasswordResetLink } from "../../queries/user";
 import { Button } from "../button/button";
 import LogoImage from "../../images/aigod_ftp.png";
+import _ from "lodash";
 
 export const SendResetLink = () => {
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleReset = async (e) => {
     e.preventDefault();
-    try {
-      const response = await sendPasswordResetLink(email);
-      console.log(response);
-
-      if (response.data.status === "success") {
-        setEmail("");
-        setMsg(response?.data.message);
+    if (!_.isEmpty(email)) {
+      try {
+        const response = await sendPasswordResetLink(email);
+        if (response.status === "success") {
+          setEmail("");
+          setSuccessMsg(response?.message);
+        } else {
+          setErrorMsg(response?.message);
+        }
+      } catch (error) {
+        console.error(
+          `Error handling send request for password reset: ${error.message}`
+        );
       }
-    } catch (error) {
-      console.error(
-        `Error handling send request for password reset: ${error.message}`
-      );
+    } else {
+      setErrorMsg("Please enter a valid email address");
     }
   };
 
-  return msg ? (
+  return successMsg ? (
     <div className="resetform__msg__container">
       <img
         src={LogoImage}
@@ -34,7 +40,7 @@ export const SendResetLink = () => {
         loading="eager"
         className="resetform__logo__img"
       />
-      <div className="resetform__msg">{msg}</div>
+      <div className="resetform__msg">{successMsg}</div>
     </div>
   ) : (
     <div className="resetform__container">
@@ -42,12 +48,19 @@ export const SendResetLink = () => {
         <h3>Reset your password</h3>
         <p>Please enter your email</p>
       </div>
-      <form onSubmit="handleReset" className="resetform__form">
+      <form onSubmit={handleReset} className="resetform__form">
+        <div>
+          {errorMsg && (
+            <div className="error__msg">
+              <p>{errorMsg}</p>
+            </div>
+          )}
+        </div>
         <input
           type="email"
           name="email"
           required
-          aria-lable="email"
+          aria-label="email"
           placeholder="unique@mail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

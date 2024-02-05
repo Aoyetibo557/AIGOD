@@ -65,8 +65,10 @@ function ResetPasswordForm() {
             <div className="resetform__topdiv">
               <h4>{successMsg}</h4>
               <div>
-                Return to
-                <Link href="/login">Login</Link>
+                Return to{" "}
+                <Link className="form__link" to="/login">
+                  Login
+                </Link>
               </div>
             </div>
           ) : (

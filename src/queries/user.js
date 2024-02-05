@@ -94,18 +94,10 @@ const updateUser = async (uid, updatedData) => {
 // send reset link
 const sendPasswordResetLink = async (email) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/user/send-reset-link`,
-      {
-        email: email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
+    const response = await axios.post(`${API_URL}/user/send-reset-link`, {
+      email: email,
+    });
+    return response.data;
   } catch (error) {
     console.error(`Error Sending reset Link ${error.message}`);
     return error.message;
