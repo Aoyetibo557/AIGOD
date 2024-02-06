@@ -97,7 +97,7 @@ const validatePasswordResetToken = async (passwordToken) => {
   }
 };
 
-const updatePassword = async ({ email, token, password }) => {
+const updateUserPassword = async ({ email, token, password }) => {
   try {
     const response = await axios.put(`${API_URL}/user/updateuserpassword`, {
       email,
@@ -117,5 +117,5 @@ export {
   updateUser,
   sendPasswordResetLink,
   validatePasswordResetToken,
-  updatePassword,
+  updateUserPassword,
 };

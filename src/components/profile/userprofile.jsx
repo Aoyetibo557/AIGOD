@@ -3,7 +3,7 @@ import { Avatar, Input, Button, Text } from "@chakra-ui/react";
 import { formatDate } from "../../utils/commonfunctions";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { useUser } from "../../utils/hooks/useUser";
-import { updateUser } from "../../queries/user";
+import { updateUser, updateUserPassword } from "../../queries/user";
 import { updateToken } from "../../utils/auth";
 import {
   changeImageFileName,
@@ -17,9 +17,14 @@ const UserProfile = () => {
   const { username } = useAuth();
   const { profile } = useUser(username || "");
 
+  const token = localStorage.getItem("aigod_token");
+
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [msgType, setMsgType] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [updatePassword, setUpdatePassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasChanged, setHasChanged] = useState(false);
   const [orginalData, setOrginalData] = useState({});
@@ -57,6 +62,39 @@ const UserProfile = () => {
   const handleUploadOnClickEvent = () => {
     const imageInput = document.getElementById("imageInput");
     imageInput.click();
+  };
+
+  const handlePasswordReset = async () => {
+    setError("");
+    setMsgType("");
+    setIsLoading(true);
+    try {
+      if (newPassword !== confirmPassword) {
+        setError("Passwords do not match");
+        setMsgType("error");
+        return;
+      }
+      const response = await updateUserPassword({
+        email: profile?.email,
+        token: token,
+        password: newPassword,
+      });
+      if (response?.status === "success") {
+        setError(response?.message);
+        setMsgType("success");
+        setNewPassword("");
+        setConfirmPassword("");
+        setUpdatePassword(false);
+      } else {
+        setError("Error updating password");
+        setMsgType("error");
+      }
+    } catch (error) {
+      setError(error.message);
+      setMsgType("error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -198,16 +236,70 @@ const UserProfile = () => {
         </div>
 
         <div>
-          <label className="userprofile__label" htmlFor="password">
-            Password
-          </label>
-          <input
-            className="userprofile__input"
-            name="password"
-            placeholder="***************"
-            type="password"
-            readOnly
-          />
+          {updatePassword ? (
+            <div>
+              <div>
+                <label className="userprofile__label" htmlFor="password">
+                  New Password
+                </label>
+                <input
+                  className="userprofile__input"
+                  name="password"
+                  placeholder="***************"
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="userprofile__label" htmlFor="password">
+                  Confrim New Password
+                </label>
+                <input
+                  className="userprofile__input"
+                  name="password"
+                  placeholder="***************"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+
+              <Button
+                size="md"
+                colorScheme="blue"
+                variant="solid"
+                marginBottom="15px"
+                isLoading={isLoading}
+                loadingText="Resetting..."
+                onClick={handlePasswordReset}
+                className="userprofile__updatepassword">
+                Reset Password
+              </Button>
+
+              <Button
+                size="md"
+                colorScheme="blue"
+                variant="outline"
+                onClick={() => setUpdatePassword(false)}
+                disabled={isLoading}
+                className="userprofile__updatepassword">
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            !hasChanged && (
+              <Button
+                size="md"
+                colorScheme="blue"
+                variant="outline"
+                onClick={() => setUpdatePassword(true)}
+                className="userprofile__updatepassword">
+                Update Password
+              </Button>
+            )
+          )}
         </div>
 
         {hasChanged && (

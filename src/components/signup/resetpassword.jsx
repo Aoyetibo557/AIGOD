@@ -3,7 +3,10 @@ import Layout from "../Layout/layout";
 import { useParams, Link } from "react-router-dom";
 import "../login/loginform.css";
 import { Button } from "../button/button";
-import { validatePasswordResetToken, updatePassword } from "../../queries/user";
+import {
+  validatePasswordResetToken,
+  updateUserPassword,
+} from "../../queries/user";
 
 function ResetPasswordForm() {
   const [email, setEmail] = useState("");
@@ -28,7 +31,7 @@ function ResetPasswordForm() {
       password,
     };
 
-    const res = await updatePassword(queryData);
+    const res = await updateUserPassword(queryData);
     console.log(res);
     if (res.status === "success") {
       setEmail("");
