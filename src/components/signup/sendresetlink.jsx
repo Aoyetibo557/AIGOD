@@ -13,6 +13,7 @@ export const SendResetLink = () => {
 
   const handleReset = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
     if (!_.isEmpty(email)) {
       try {
         const response = await sendPasswordResetLink(email);

@@ -41,6 +41,13 @@
     margin-bottom: 20px;
 }
 
+.userprofile__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .userprofile__form div {
     display: flex;
     flex-direction: column;
@@ -72,12 +79,33 @@
     font-family: "Inter", sans-serif;
 }
 
+.btn__container {
+    width: 100%;
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
 @media only screen and (max-width: 768px) {
     .userprofile__container {
         height: 100%;
         margin-top: 50px;
     }
+    .userprofile__avater__container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .userprofile__avatar {
+        width: 90px;
+        height: 90px;
+    }
     .userprofile__input {
-        width: 80%;
+        width: 100%;
+    }
+    .btn__container {
+        flex-direction: column;
+        align-items: center;
     }
 }

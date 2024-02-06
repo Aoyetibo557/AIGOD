@@ -1,162 +1,178 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./userprofile.css";
-import { Avatar } from "antd";
-import { verifyToken } from "../../utils/auth";
-import { getUserProfile, updateUser } from "../../queries/user";
-import { Button } from "../button/button";
+import { Avatar, Input, Button, Text } from "@chakra-ui/react";
 import { formatDate } from "../../utils/commonfunctions";
-
-const API_URL =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_DEV_SERVER_URL
-    : process.env.REACT_APP_PROD_SERVER_URL;
+import { useAuth } from "../../utils/hooks/useAuth";
+import { useUser } from "../../utils/hooks/useUser";
+import { updateUser } from "../../queries/user";
+import { updateToken } from "../../utils/auth";
+import {
+  changeImageFileName,
+  uploadToS3,
+  fetchProfileImage,
+} from "../../utils/s3";
+import "./userprofile.css";
+import { NotificationAlert } from "../alert/notificationalert";
 
 const UserProfile = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [uid, setUid] = useState("");
-  const [username, setUsername] = useState("");
-  const [tokenUsername, setTokenUsername] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [createdDate, setCreatedDate] = useState("");
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
+
+  const [file, setFile] = useState(null);
   const [error, setError] = useState("");
-  const [originalData, setOriginalData] = useState({});
+  const [msgType, setMsgType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [hasChanged, setHasChanged] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [orginalData, setOrginalData] = useState({});
+  const [formValues, setFormValues] = useState({
+    fullname: profile?.fullname,
+    email: profile?.email,
+    username: profile?.username,
+    profileImage: profile?.profile_image,
+  });
 
   useEffect(() => {
-    const checkAuthentication = async () => {
-      const user = await verifyToken();
-      setIsLoggedIn(!!user);
-      setUsername(user);
-      setTokenUsername(user);
-    };
+    if (profile) {
+      setFormValues({
+        fullname: profile?.fullname,
+        email: profile?.email,
+        username: profile?.username,
+        profileImage: profile?.profile_image,
+      });
+      setOrginalData({
+        fullname: profile?.fullname,
+        email: profile?.email,
+        username: profile?.username,
+        profileImage: profile?.profile_image,
+      });
+    }
+  }, [profile]);
 
-    checkAuthentication();
-  }, []);
+  const handleImageChange = (event) => {
+    if (event.target.files[0]) {
+      setFile(event.target.files[0]);
+      setHasChanged(true);
+    }
+  };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      setLoading(true);
-      try {
-        if (username.length > 0) {
-          const userProfile = await getUserProfile(username);
-          setUid(userProfile?.id);
-          setOriginalData(userProfile); // Save the original data
-          setUsername(userProfile?.username);
-          setFullname(userProfile?.fullname);
-          setEmail(userProfile?.email);
-          setCreatedDate(userProfile?.created_date);
-        }
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleUploadOnClickEvent = () => {
+    const imageInput = document.getElementById("imageInput");
+    imageInput.click();
+  };
 
-    fetchUserData();
-  }, [tokenUsername]);
-
-  const handleInputChange = (field, value) => {
-    // Update the state and set hasChanged to true if the value has changed
-    if (originalData[field] !== value) {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    if (orginalData[name] !== value) {
       setHasChanged(true);
     } else {
       setHasChanged(false);
-    }
-
-    switch (field) {
-      case "username":
-        setUsername(value);
-        break;
-      case "fullname":
-        setFullname(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
-      default:
-        break;
     }
   };
 
   const handleUpdate = async () => {
     setError("");
+    setMsgType("");
+    setIsLoading(true);
     try {
-      if (hasChanged) {
-        const updatedData = {};
+      const updatedData = {};
 
-        if (originalData.fullname !== fullname) {
-          updatedData.fullname = fullname;
-        }
-        if (originalData.email !== email) {
-          updatedData.email = email;
-        }
-        if (originalData.username !== username) {
-          updatedData.username = username;
-        }
+      if (profile?.fullname !== formValues.fullname) {
+        updatedData.fullname = formValues.fullname;
+      }
+      if (profile.email !== formValues.email) {
+        updatedData.email = formValues.email;
+      }
+      if (profile?.username !== formValues.username) {
+        updatedData.username = formValues.username;
+      }
+      if (file) {
+        const imageUrl = changeImageFileName({
+          fileName: file?.name,
+          origin: "profile",
+          userId: profile?.id,
+        });
+        setFile(file);
+        // updatedData.profile_image = imageUrl;
 
-        const response = await updateUser(uid, updatedData);
-        if (response?.data.user) {
-          setHasChanged(false);
-          setError("Profile Updated Sucessfully!");
-        } else {
-          setError("Error Updating Profile");
-        }
+        const { fileName, url } = await uploadToS3({
+          file: file,
+          fileName: imageUrl,
+          userId: profile?.id,
+          location: "profile_pictures",
+        });
+        updatedData.profile_image = url;
+        setFormValues({ ...formValues, profileImage: url });
+      }
+
+      const response = await updateUser(profile.id, updatedData);
+      if (response?.data.user) {
+        setError("Profile updated successfully!");
+        setMsgType("success");
+        setHasChanged(false);
+        // Update profile state with the new data
+        setFormValues({
+          ...formValues,
+          fullname: response.data.user.fullname,
+          email: response.data.user.email,
+          username: response.data.user.username,
+          profileImage: response.data.user.profile_image,
+        });
+        // updateToken(response.data.token);
       } else {
-        setError("No chnages detected!");
+        setError("Error updating profile");
+        setMsgType("error");
       }
     } catch (error) {
       setError(error.message);
+      setMsgType("error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return loading ? (
-    <div>Loading pRofile...</div>
-  ) : (
+  return (
     <div className="userprofile__container">
-      {error.length > 0 && <p className="error_msg">{error}</p>}
+      {error && <NotificationAlert type={msgType} message={error} />}
       <div className="userprofile__avater__container">
         <Avatar
-          src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${username}`}
-          size={60}
+          key={profile?.profile_image}
+          src={`${formValues.profileImage}`}
+          size="2xl"
           className="userprofile__avatar"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#f56a00",
-          }}
         />
 
         <div className="userprofile__avater__container-info">
-          <div className="info-username">@{username}</div>
           <div>
-            <span className="info-sub-span">Joined</span>
-            <span className="info-sub-date">{formatDate(createdDate)}</span>
+            <Input
+              id="imageInput"
+              type="file"
+              hidden
+              onChange={handleImageChange}
+            />
+            <label htmlFor="imageInput">
+              <Button
+                colorScheme="blue"
+                variant="outline"
+                size="xs"
+                cursor="pointer"
+                onClick={handleUploadOnClickEvent}>
+                Upload
+              </Button>
+            </label>
+          </div>
+          <div className="info-username">@{profile?.username}</div>
+          <div>
+            <Text>
+              <span className="info-sub-span">Joined</span>
+              <span className="info-sub-date">
+                {formatDate(profile?.created_date)}
+              </span>
+            </Text>
           </div>
         </div>
       </div>
 
       <form className="userprofile__form">
-        {/* <div>
-          <label className="userprofile__label" htmlFor="username">
-            Username
-          </label>
-          <input
-            className="userprofile__input"
-            name="username"
-            value={username}
-            onChange={(e) => handleInputChange("username", e.target.value)}
-          />
-        </div> */}
-
         <div>
           <label className="userprofile__label" htmlFor="fullname">
             Full Name
@@ -164,8 +180,8 @@ const UserProfile = () => {
           <input
             className="userprofile__input"
             name="fullname"
-            value={fullname}
-            onChange={(e) => handleInputChange("fullname", e.target.value)}
+            value={formValues?.fullname}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -176,8 +192,8 @@ const UserProfile = () => {
           <input
             className="userprofile__input"
             name="email"
-            value={email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
+            value={formValues?.email}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -189,15 +205,43 @@ const UserProfile = () => {
             className="userprofile__input"
             name="password"
             placeholder="***************"
-            value={password}
-            onChange={(e) => handleInputChange("password", e.target.value)}
+            type="password"
+            readOnly
           />
         </div>
 
         {hasChanged && (
-          <Button size="md" type="primary" onClick={handleUpdate}>
-            save changes
-          </Button>
+          <div className="btn__container">
+            <Button
+              id="saveChanges"
+              colorScheme="blue"
+              md={4}
+              size="md"
+              isLoading={isLoading}
+              disabled={isLoading}
+              onClick={handleUpdate}>
+              {isLoading ? "Loading..." : "Save changes"}
+            </Button>
+
+            <Button
+              id="cancelChanges"
+              colorScheme="blue"
+              variant="outline"
+              md={4}
+              size="md"
+              disabled={isLoading}
+              onClick={() => {
+                setFormValues({
+                  fullname: profile?.fullname,
+                  email: profile?.email,
+                  username: profile?.username,
+                  profileImage: profile?.profile_image,
+                });
+                setHasChanged(false);
+              }}>
+              Cancel
+            </Button>
+          </div>
         )}
       </form>
     </div>

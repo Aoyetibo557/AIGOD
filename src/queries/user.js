@@ -1,106 +1,88 @@
 import axios from "axios";
 import { updateToken } from "../utils/auth";
 
-const token = localStorage.getItem("aigod_token");
 const API_URL =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_SERVER_URL
     : process.env.REACT_APP_PROD_SERVER_URL;
 
-const checkUserCredentials = async (cred) => {
+const token = localStorage.getItem("aigod_token");
+
+const handleError = (error) => {
+  console.error("Error:", error.message);
+  return error;
+};
+
+const checkUserCredentials = async ({ username, password }) => {
   try {
     const response = await axios.post(`${API_URL}/user/login`, {
-      username: cred.username,
-      password: cred.password,
+      username,
+      password,
     });
-
     return response?.data;
   } catch (error) {
-    return `Error authenticating user with ${cred.username}: ${error.message}`;
+    throw new Error(
+      `Error authenticating user with ${username}: ${error.message}`
+    );
   }
 };
 
-const registerNewUser = async (newUser) => {
+const registerNewUser = async ({ fullname, email, username, password }) => {
   try {
     const response = await axios.post(`${API_URL}/user/signup`, {
-      fullname: newUser.fullname,
-      email: newUser.email,
-      username: newUser.username,
-      password: newUser.password,
+      fullname,
+      email,
+      username,
+      password,
     });
-
     return response?.data;
   } catch (error) {
-    console.error(`Error Creating new user ${error.message}`);
-    return error.message;
+    throw new Error(`Error creating new user: ${error.message}`);
   }
 };
 
 const getUserProfile = async (username) => {
-  let user;
   try {
-    await axios
-      .get(`${API_URL}/user/getauthuser/${username}`, {
+    const response = await axios.get(
+      `${API_URL}/user/getauthuser/${username}`,
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        user = response.data.user;
-      })
-      .catch((error) => {
-        console.log("Error", error);
-      });
+      }
+    );
+    return response.data.user;
   } catch (error) {
-    console.error("Try Error", error.message);
-    return error.message;
+    return handleError(error);
   }
-
-  return user;
 };
 
 const updateUser = async (uid, updatedData) => {
-  let res;
   try {
-    await axios
-      .put(
-        `${API_URL}/user/updateuserprofile/${uid}`,
-        {
-          fullname: updatedData.fullname,
-          email: updatedData.email,
-          username: updatedData.username,
+    const response = await axios.put(
+      `${API_URL}/user/updateuserprofile/${uid}`,
+      updatedData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        updateToken(response.data.token);
-        res = response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    );
+    updateToken(response.data.token);
+    return response;
   } catch (error) {
-    console.error(error.message);
-    return error.message;
+    return handleError(error);
   }
-
-  return res;
 };
 
-// send reset link
 const sendPasswordResetLink = async (email) => {
   try {
     const response = await axios.post(`${API_URL}/user/send-reset-link`, {
-      email: email,
+      email,
     });
     return response.data;
   } catch (error) {
-    console.error(`Error Sending reset Link ${error.message}`);
-    return error.message;
+    throw new Error(`Error sending reset link: ${error.message}`);
   }
 };
 
@@ -111,23 +93,20 @@ const validatePasswordResetToken = async (passwordToken) => {
     );
     return response?.data;
   } catch (error) {
-    console.error(
-      `Error Occured in Password Reset Token Validation: ${error.message}`
-    );
-    return error.message;
+    throw new Error(`Error validating password reset token: ${error.message}`);
   }
 };
 
-const updatePassword = async (resetData) => {
+const updatePassword = async ({ email, token, password }) => {
   try {
     const response = await axios.put(`${API_URL}/user/updateuserpassword`, {
-      email: resetData.email,
-      token: resetData.token,
-      password: resetData.password,
+      email,
+      token,
+      password,
     });
     return response?.data;
   } catch (error) {
-    console.error(`Error updating password: ${error.message}`);
+    throw new Error(`Error updating password: ${error.message}`);
   }
 };
 

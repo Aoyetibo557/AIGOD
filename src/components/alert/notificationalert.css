@@ -1,0 +1,28 @@
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.alert__box-sucess {
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+    .alert__box {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin: 10px;
+    }
+    .alert {
+        display: flex;
+        flex-direction: row;
+    }
+}
