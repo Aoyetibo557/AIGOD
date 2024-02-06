@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./loginform.css";
-import { Button } from "../button/button";
+import { Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { verifyToken } from "../../utils/auth";
 import { MdOutlineLockClock } from "react-icons/md";
@@ -91,7 +91,13 @@ export const LoginForm = () => {
           />
         </div>
 
-        <Button size="md" type="primary" onClick={handleLogin}>
+        <Button
+          size="md"
+          isLoading={loading}
+          loadingText="Logging in..."
+          margin="10px"
+          colorScheme="blue"
+          onClick={handleLogin}>
           Login
         </Button>
 

@@ -7,7 +7,8 @@ import { Dropdown, Avatar } from "antd";
 import { FaUser } from "react-icons/fa";
 import { Button } from "../../button/button";
 import { logOut } from "../../../utils/auth";
-
+import { useAuth } from "../../../utils/hooks/useAuth";
+import { useUser } from "../../../utils/hooks/useUser";
 const items = [
   {
     key: "1",
@@ -32,9 +33,10 @@ const items = [
 ];
 
 const Navbar = () => {
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,16 +50,6 @@ const Navbar = () => {
 
     navigate("/login");
   };
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const user = await verifyToken();
-      setIsLoggedIn(!!user);
-      setUsername(user);
-    };
-
-    checkAuthentication();
-  }, []);
 
   return (
     <>
@@ -75,11 +67,11 @@ const Navbar = () => {
           <Link to="/" className="navbar_list_item">
             Blog
           </Link>
-          {isLoggedIn ? (
+          {username ? (
             <Dropdown menu={{ items }}>
               <div className="navbar_avatar">
                 <Avatar
-                  size={28}
+                  size={22}
                   style={{
                     backgroundColor: "#eee",
                     display: "flex",
@@ -88,6 +80,7 @@ const Navbar = () => {
                     color: "#f56a00",
                   }}
                   icon={<FaUser />}
+                  src={profile?.profile_image}
                 />
                 <span>{username}</span>
               </div>

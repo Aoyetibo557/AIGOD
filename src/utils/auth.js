@@ -1,46 +1,64 @@
 import axios from "axios";
 
-const token = localStorage.getItem("aigod_token");
 const API_URL =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_SERVER_URL
     : process.env.REACT_APP_PROD_SERVER_URL;
 
-// A function to update the 'aigod_token' in localStorage
-const updateToken = (newToken) => {
-  // Check if localStorage is supported in the browser
-  if (localStorage) {
-    // Get the existing token from localStorage
-    const existingToken = localStorage.getItem("aigod_token");
+const getToken = () => localStorage.getItem("aigod_token");
 
-    // Update the token in localStorage with the new token
+const handleError = (error) => {
+  console.error("Error:", error.message);
+  throw new Error(error.message);
+};
+
+const updateToken = (newToken) => {
+  if (localStorage) {
     localStorage.setItem("aigod_token", newToken);
   } else {
     console.error("localStorage is not supported in this browser");
   }
 };
 
+// const verifyToken = async () => {
+//   const token = getToken();
+//   if (!token) return null;
+
+//   try {
+//     const response = await axios.get(`${API_URL}/user/verifiedtoken`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response?.data.user.username;
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
+
 const verifyToken = async () => {
-  let authenticatedUser = null;
+  try {
+    const token = localStorage.getItem("aigod_token");
+    if (!token) return null; // Token not present
 
-  if (token) {
-    try {
-      const response = await axios.get(`${API_URL}/user/verifiedtoken`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const response = await axios.get(`${API_URL}/user/verifiedtoken`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { data } = await response;
 
-      authenticatedUser = response?.data.user.username;
-    } catch (error) {
-      console.log("Error in verifyToken:", error.message);
+    if (data.user) {
+      return data.user.username; // Return the username if token is valid
+    } else {
+      return null; // Return null if token is invalid
     }
+  } catch (error) {
+    console.error(`Error verifying token: ${error.message}`);
+    return null; // Return null if an error occurs during token verification
   }
-
-  return authenticatedUser;
 };
 
-// logout
 const logOut = () => {
   localStorage.removeItem("aigod_token");
   window.location.href = "/login";

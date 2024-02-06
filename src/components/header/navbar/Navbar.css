@@ -36,6 +36,9 @@
     align-items: center;
     color: #fff;
     cursor: pointer;
+    padding: 5px;
+    border-radius: 25px;
+    background-color: #ea00ff3b;
 }
 
 .navbar_avatar span {
@@ -45,7 +48,8 @@
 }
 
 .navbar_avatar:hover {
-    color: #eb00ff;
+    color: #fff;
+    font-weight: 500;
 }
 
 .logout__btn {
