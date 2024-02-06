@@ -74,6 +74,11 @@ const UserProfile = () => {
         setMsgType("error");
         return;
       }
+      if (newPassword.length === 0 || confirmPassword.length === 0) {
+        setError("Password cannot be empty");
+        setMsgType("error");
+        return;
+      }
       const response = await updateUserPassword({
         email: profile?.email,
         token: token,
