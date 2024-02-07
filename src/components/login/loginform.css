@@ -177,6 +177,27 @@
     text-align: center;
 }
 
+.form__password__criteria {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    backdrop-filter: blur(20px);
+}
+
+.form__password__criteria span {
+    /* color: #fff; */
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+    list-style: upper-alpha;
+}
+
+.met {
+    text-decoration: line-through;
+    color: blueviolet;
+}
+
 @media only screen and (max-width: 768px) {
     .form__container {
         border: none;

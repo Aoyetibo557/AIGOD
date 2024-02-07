@@ -226,10 +226,16 @@ const UserProfile = () => {
 
       <form className="userprofile__form">
         <div>
-          <label className="userprofile__label" htmlFor="fullname">
+          <label
+            aria-label="Fullname"
+            title="Fullname"
+            className="userprofile__label"
+            htmlFor="fullname">
             Full Name
           </label>
           <input
+            title="Fullname"
+            aria-label="Fullname"
             className="userprofile__input"
             name="fullname"
             value={formValues?.fullname}
@@ -238,11 +244,17 @@ const UserProfile = () => {
         </div>
 
         <div>
-          <label className="userprofile__label" htmlFor="email">
+          <label
+            aria-label="Username"
+            title="Username"
+            className="isDisabled userprofile__label"
+            htmlFor="email">
             Email
           </label>
           <input
-            className="userprofile__input"
+            title="Email cannot be changed"
+            aria-label="Email"
+            className="isDisabled userprofile__input"
             name="email"
             readonly
             disabled
@@ -250,9 +262,9 @@ const UserProfile = () => {
           />
         </div>
 
-        <div className="password__div">
+        <div>
           {updatePassword ? (
-            <div>
+            <div className="password__div">
               <div>
                 <label className="userprofile__label" htmlFor="password">
                   New Password
