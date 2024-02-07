@@ -45,7 +45,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
 }
 
 .userprofile__form div {
@@ -85,6 +84,10 @@
     flex-direction: row !important;
     justify-content: space-around;
     margin-top: 10px;
+}
+
+.password__div {
+    margin-top: 130px;
 }
 
 @media only screen and (max-width: 768px) {
