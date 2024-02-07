@@ -68,7 +68,9 @@ const updateUser = async (uid, updatedData) => {
         },
       }
     );
-    updateToken(response.data.token);
+    if (response.data.status === "success") {
+      updateToken(response.data.token);
+    }
     return response;
   } catch (error) {
     return handleError(error);

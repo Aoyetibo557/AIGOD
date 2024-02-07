@@ -14,6 +14,8 @@ const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
 const LoginPage = lazy(() => import("./pages/login/login"));
 const SignupPage = lazy(() => import("./pages/signup/signup"));
 const ProfilePage = lazy(() => import("./pages/profile/profile"));
+const BlogPage = lazy(() => import("./pages/blog/blog"));
+
 const ForgotPasswordPage = lazy(() =>
   import("./pages/forgot-password/forgotPassword")
 );
@@ -66,6 +68,15 @@ function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <SignupPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={<Loading />}>
+                <BlogPage />
               </Suspense>
             }
           />

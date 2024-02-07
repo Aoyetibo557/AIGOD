@@ -1,0 +1,44 @@
+.blogcard {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    padding: 16px;
+    width: 392px;
+    border-radius: 12px;
+    border: 1px solid #470d4c;
+}
+
+.blogcard__img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.blogcard__readtime {
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.blogcard__title {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+}
+
+.blogcard__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.blogcard__author__div {
+    display: flex;
+    align-items: center;
+}
+
+.blogcard__author {
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
