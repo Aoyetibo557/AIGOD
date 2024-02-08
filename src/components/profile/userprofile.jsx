@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Avatar, Input, Button, Text } from "@chakra-ui/react";
 import { formatDate } from "../../utils/commonfunctions";
 import { useAuth } from "../../utils/hooks/useAuth";
@@ -14,10 +14,10 @@ import "./userprofile.css";
 import { NotificationAlert } from "../alert/notificationalert";
 
 const UserProfile = () => {
-  const { username } = useAuth();
-  const { profile } = useUser(username || "");
+  const { username: memoizedUsername } = useAuth();
+  const { profile } = useUser(memoizedUsername || "");
 
-  const token = localStorage.getItem("aigod_token");
+  const token = useMemo(() => localStorage.getItem("token"), []);
 
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
@@ -50,7 +50,15 @@ const UserProfile = () => {
         profileImage: profile?.profile_image,
       });
     }
+
+    console.log(
+      "formValues",
+      formValues.profileImage,
+      orginalData.profileImage
+    );
   }, [profile]);
+
+  const memoizedProfile = useMemo(() => profile, [profile]);
 
   const handleImageChange = (event) => {
     if (event.target.files[0]) {
@@ -90,6 +98,7 @@ const UserProfile = () => {
         setNewPassword("");
         setConfirmPassword("");
         setUpdatePassword(false);
+        window.locaion.reload();
       } else {
         setError("Error updating password");
         setMsgType("error");
@@ -178,8 +187,8 @@ const UserProfile = () => {
       {error && <NotificationAlert type={msgType} message={error} />}
       <div className="userprofile__avater__container">
         <Avatar
-          key={profile?.profile_image}
-          src={`${formValues.profileImage}`}
+          key={memoizedProfile?.profile_image}
+          src={`${memoizedProfile?.profile_image}`}
           size="2xl"
           className="userprofile__avatar"
         />
@@ -203,12 +212,12 @@ const UserProfile = () => {
               </Button>
             </label>
           </div>
-          <div className="info-username">@{profile?.username}</div>
+          <div className="info-username">@{memoizedProfile?.username}</div>
           <div>
             <Text>
               <span className="info-sub-span">Joined</span>
               <span className="info-sub-date">
-                {formatDate(profile?.created_date)}
+                {formatDate(memoizedProfile?.created_date)}
               </span>
             </Text>
           </div>
@@ -217,10 +226,16 @@ const UserProfile = () => {
 
       <form className="userprofile__form">
         <div>
-          <label className="userprofile__label" htmlFor="fullname">
+          <label
+            aria-label="Fullname"
+            title="Fullname"
+            className="userprofile__label"
+            htmlFor="fullname">
             Full Name
           </label>
           <input
+            title="Fullname"
+            aria-label="Fullname"
             className="userprofile__input"
             name="fullname"
             value={formValues?.fullname}
@@ -229,20 +244,27 @@ const UserProfile = () => {
         </div>
 
         <div>
-          <label className="userprofile__label" htmlFor="email">
+          <label
+            aria-label="Username"
+            title="Username"
+            className="isDisabled userprofile__label"
+            htmlFor="email">
             Email
           </label>
           <input
-            className="userprofile__input"
+            title="Email cannot be changed"
+            aria-label="Email"
+            className="isDisabled userprofile__input"
             name="email"
+            readonly
+            disabled
             value={formValues?.email}
-            onChange={handleInputChange}
           />
         </div>
 
         <div>
           {updatePassword ? (
-            <div>
+            <div className="password__div">
               <div>
                 <label className="userprofile__label" htmlFor="password">
                   New Password

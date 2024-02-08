@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../login/loginform.css";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../button/button";
 import { MdOutlineEmail, MdOutlineLockClock } from "react-icons/md";
 import { FaUser, FaIdCard } from "react-icons/fa";
 import { registerNewUser } from "../../queries/user";
+import {
+  isValidUsername,
+  isValidEmail,
+  isValidPassword,
+} from "../../utils/commonfunctions";
+import { Tooltip, Button } from "@chakra-ui/react";
 
 export const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -13,8 +18,53 @@ export const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [usernameValid, setUsernameValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+  const [passwordCriteriaMet, setPasswordCriteriaMet] = useState({
+    length: false,
+    specialChar: false,
+    uppercase: false,
+    lowercase: false,
+    digit: false,
+  });
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const navigate = useNavigate();
+
+  const handleUsernameChange = (e) => {
+    const { value } = e.target;
+    setUsername(value);
+    setUsernameValid(isValidUsername(value));
+  };
+
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    setPassword(value);
+    setPasswordValid(isValidPassword(value));
+
+    // Update password criteria met
+    setPasswordCriteriaMet({
+      length: value.length >= 8,
+      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+      uppercase: /[A-Z]/.test(value),
+      lowercase: /[a-z]/.test(value),
+      digit: /[0-9]/.test(value),
+    });
+  };
+
+  const handlePasswordFocus = () => {
+    setIsPasswordFocused(true);
+  };
+
+  const isCriteriaMet = () => {
+    return (
+      passwordCriteriaMet.length &&
+      passwordCriteriaMet.specialChar &&
+      passwordCriteriaMet.uppercase &&
+      passwordCriteriaMet.lowercase &&
+      passwordCriteriaMet.digit
+    );
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -36,6 +86,12 @@ export const SignupForm = () => {
         password.length === 0
       ) {
         setError("Fields can not be empty!");
+      } else if (!usernameValid) {
+        setError("Username can only contain alphabet, number, and underscore.");
+      } else if (!passwordValid) {
+        setError("Password criteria not met.");
+      } else if (!isValidEmail(email)) {
+        setError("Invalid mail format");
       } else {
         const token = res?.token;
         const uid = res?.user.id;
@@ -66,6 +122,7 @@ export const SignupForm = () => {
             value={fullname}
             required
             onChange={(e) => setFullname(e.target.value)}
+            onFocus={() => setIsPasswordFocused(false)}
             className="form__input"
           />
         </div>
@@ -78,6 +135,7 @@ export const SignupForm = () => {
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
+            onFocus={() => setIsPasswordFocused(false)}
             className="form__input"
           />
         </div>
@@ -89,24 +147,57 @@ export const SignupForm = () => {
             placeholder="Username"
             value={username}
             required
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
+            onFocus={() => setIsPasswordFocused(false)}
             className="form__input"
           />
         </div>
 
-        <div className="form__input__container">
-          <MdOutlineLockClock className="form__icon" />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            className="form__input"
-          />
+        <div className="">
+          <div className="form__input__container">
+            <MdOutlineLockClock className="form__icon" />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              required
+              onChange={handlePasswordChange}
+              onFocus={handlePasswordFocus}
+              className="form__input"
+            />
+          </div>
+          {isPasswordFocused && (
+            <div>
+              {isCriteriaMet() === false && (
+                <div className="form__password__criteria">
+                  <span className={passwordCriteriaMet.length ? "met" : ""}>
+                    At least 8 characters
+                  </span>
+                  <span
+                    className={passwordCriteriaMet.specialChar ? "met" : ""}>
+                    At least 1 special character
+                  </span>
+                  <span className={passwordCriteriaMet.uppercase ? "met" : ""}>
+                    At least 1 uppercase letter
+                  </span>
+                  <span className={passwordCriteriaMet.lowercase ? "met" : ""}>
+                    At least 1 lowercase letter
+                  </span>
+                  <span className={passwordCriteriaMet.digit ? "met" : ""}>
+                    At least 1 digit
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        <Button size="md" type="primary" onClick={handleSignUp}>
+        <Button
+          isLoading={loading}
+          loadingText="Signing Up"
+          size="md"
+          colorScheme="blue"
+          onClick={handleSignUp}>
           {loading ? "Loading..." : "Sign Up"}
         </Button>
 

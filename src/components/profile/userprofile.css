@@ -24,15 +24,15 @@
 }
 
 .info-sub-span {
-    font-size: 12px;
+    font-size: 11px;
     font-style: italic;
     font-family: "Inter", sans-serif;
     opacity: 0.7;
 }
 
 .info-sub-date {
-    margin-left: 10px;
-    font-size: 15px;
+    margin-left: 5px;
+    font-size: 13px;
     font-family: "Inter", sans-serif;
 }
 
@@ -45,7 +45,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
 }
 
 .userprofile__form div {
@@ -64,9 +63,9 @@
 
 .userprofile__input {
     font-size: 15px;
-    width: 300px;
+    width: 350px;
     border: 1px solid #eee;
-    border-radius: 15px;
+    border-radius: 8px;
     outline: none;
     padding: 10px 20px;
     font-family: "Inter", sans-serif;
@@ -85,6 +84,15 @@
     flex-direction: row !important;
     justify-content: space-around;
     margin-top: 10px;
+}
+
+.isDisabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.password__div {
+    margin-top: 30px;
 }
 
 @media only screen and (max-width: 768px) {
