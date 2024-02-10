@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { verifyToken } from "../auth";
 
 const useAuth = () => {
@@ -22,7 +22,10 @@ const useAuth = () => {
     checkAuthentication();
   }, []);
 
-  return { username, error };
+  const memoizedUsername = useMemo(() => username, [username]);
+  const memoizedError = useMemo(() => error, [error]);
+
+  return { username: memoizedUsername, error: memoizedError };
 };
 
 export { useAuth };
