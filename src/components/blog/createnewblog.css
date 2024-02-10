@@ -1,0 +1,75 @@
+.blog__container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    color: #fff;
+    backdrop-filter: blur(20px);
+}
+
+.newblog__container {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.newblog__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.newblog__form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.newblog__label {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.newblog__input {
+    padding: 4px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+.newblog__textarea {
+    padding: 4px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    resize: none;
+    background: transparent;
+}
+
+.quill__editor {
+    margin-top: 1rem;
+    height: 500px;
+    font-size: 20px;
+}
+
+.ql-toolbar {
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    color: #fff !important;
+    background-color: #ccc;
+}
+
+.ql-editor {
+    font-size: 16px !important;
+    color: #fff !important;
+}
+
+.newblog__submit {
+    margin-top: 12px;
+}

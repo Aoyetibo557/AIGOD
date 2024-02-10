@@ -21,6 +21,14 @@ const items = [
   {
     key: "2",
     label: (
+      <Link className="navbar_list_item" to="/create-new-blog">
+        Create New Blog
+      </Link>
+    ),
+  },
+  {
+    key: "3",
+    label: (
       <button className="logout__btn" onClick={logOut}>
         Log Out
       </button>
@@ -64,7 +72,7 @@ const Navbar = () => {
           <Link to="/" className="navbar_list_item">
             Sermons
           </Link>
-          <Link to="/" className="navbar_list_item">
+          <Link to="/blog" className="navbar_list_item">
             Blog
           </Link>
           {username ? (
