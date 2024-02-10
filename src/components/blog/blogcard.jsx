@@ -3,30 +3,31 @@ import { Link } from "react-router-dom";
 import "./blogcard.css";
 import { Avatar } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import { formatDate } from "../../utils/commonfunctions";
 
 export const BlogCard = ({
-  title,
-  date,
-  author,
-  author_image,
-  image,
-  description,
-  read_time,
-  blogId,
+  blog_title,
+  created_date,
+  author_name,
+  author_image_url,
+  blog_image_url,
+  blog_description,
+  blog_read_time,
+  blog_id,
 }) => {
   return (
-    <Link to={`/blog/${blogId}`} className="blogcard">
+    <Link to={`/blog/${blog_id}`} className="blogcard">
       <div className="blogcard__top">
-        <img src={image} alt={title} className="blogcard__img" />
-        <span className="blogcard__readtime">{read_time}</span>
+        <img src={blog_image_url} alt={blog_title} className="blogcard__img" />
+        <span className="blogcard__readtime">{blog_read_time} min read </span>
       </div>
-      <h3 className="blogcard__title">{title}</h3>
+      <h3 className="blogcard__title">{blog_title}</h3>
       <div className="blogcard__bottom">
         <div className="blogcard__author__div">
-          <Avatar src={author_image} size="sm" />
-          <div className="blogcard__author">{author}</div>
+          <Avatar src={author_image_url} size="sm" />
+          <div className="blogcard__author">{author_name}</div>
         </div>
-        <p className="blogcard__ate">{date}</p>
+        <p className="blogcard__date">{formatDate(created_date)}</p>
       </div>
     </Link>
   );

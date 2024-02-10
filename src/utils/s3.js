@@ -82,4 +82,15 @@ const fetchProfileImage = async (imageUrl) => {
   }
 };
 
-export { changeImageFileName, uploadToS3, deleteFromS3, fetchProfileImage };
+const constructImageUrl = (filename, subfolder) => {
+  const urlPrefix = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${subfolder}/`;
+  return `${urlPrefix}${filename}`;
+};
+
+export {
+  changeImageFileName,
+  uploadToS3,
+  deleteFromS3,
+  fetchProfileImage,
+  constructImageUrl,
+};

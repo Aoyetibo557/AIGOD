@@ -1,3 +1,13 @@
+.alert__box {
+    width: 400px;
+}
+
+.alert {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+}
+
 @media screen and (max-width: 768px) {
     .alert__box {
         position: relative;
@@ -7,6 +17,6 @@
     }
     .alert {
         display: flex;
-        flex-direction: row;
+        flex-direction: row !important;
     }
 }

@@ -72,7 +72,7 @@ const Navbar = () => {
           <Link to="/" className="navbar_list_item">
             Sermons
           </Link>
-          <Link to="/blog" className="navbar_list_item">
+          <Link to="/blogs" className="navbar_list_item">
             Blog
           </Link>
           {username ? (

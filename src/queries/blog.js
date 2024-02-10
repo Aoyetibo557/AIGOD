@@ -17,7 +17,14 @@ const createNewBlogPost = async (blogData) => {
   try {
     const response = await axios.post(
       `${API_URL}/blog/createnewblog`,
-      blogData,
+      {
+        blog_title: blogData.title,
+        blog_description: blogData.description,
+        blog_read_time: blogData.readTime,
+        blog_content: blogData.content,
+        blog_author: blogData.userId,
+        blog_image_url: blogData.imageUrl,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -30,7 +37,7 @@ const createNewBlogPost = async (blogData) => {
   }
 };
 
-const getBlogPosts = async () => {
+const getBlogs = async () => {
   try {
     const response = await axios.get(`${API_URL}/blog/getallblogs`);
     return response.data;
@@ -49,4 +56,4 @@ const getBlogById = async (id) => {
   }
 };
 
-export { createNewBlogPost, getBlogPosts, getBlogById };
+export { createNewBlogPost, getBlogs, getBlogById };

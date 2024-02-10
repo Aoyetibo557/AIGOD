@@ -50,7 +50,8 @@ export const NotificationAlert = ({ type, message }) => {
           className="alert"
           status={type}
           variant="solid"
-          borderRadius="lg">
+          borderRadius="lg"
+          onClick={() => setShowAlert(false)}>
           <AlertIcon />
           <AlertDescription>{message}</AlertDescription>
         </Alert>

@@ -1,46 +1,74 @@
-import React, { useState, useMemo, useRef, useCallback } from "react";
-import { Button } from "@chakra-ui/react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
+import { useNavigate } from "react-router-dom";
+import { Input, Button } from "@chakra-ui/react";
 import QuillEditor from "react-quill";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { ViewNewBlog } from "./viewnewblog";
 import "./createnewblog.css";
 import "react-quill/dist/quill.snow.css";
+import { NotificationAlert } from "../alert/notificationalert";
+import { createNewBlogPost } from "../../queries/blog";
+import {
+  changeImageFileName,
+  uploadToS3,
+  fetchProfileImage,
+  constructImageUrl,
+} from "../../utils/s3";
 
 const CreateNewBlog = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
+  const [file, setFile] = useState(null);
+  const [readTime, setReadTime] = useState(0);
+  const [imageName, setImageName] = useState("");
+  const [msgType, setMsgType] = useState("error");
+  const [error, setError] = useState(null);
+
+  const { username: memoizedUsername } = useAuth();
+  const userId = localStorage.getItem("aigod_userId");
+  const navigate = useNavigate();
 
   // editorRef is used to get the value of the editor
   const quill = useRef();
 
-  // check if the user is authenticated, if not redirect to login
+  const imageHandler = () => {};
 
-  const imageHandler = useCallback(() => {
-    // Create an input element of type 'file'
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
+  const handleImageChange = (event) => {
+    setImageName("");
+    if (event.target.files[0]) {
+      setFile(event.target.files[0]);
+      if (event.target.files[0].size > 1000000) {
+        setError("Image size too large, please upload an image less than 1MB");
+        setMsgType("error");
+      } else if (
+        event.target.files[0].type !== "image/png" &&
+        event.target.files[0].type !== "image/jpeg"
+      ) {
+        setError(
+          "Image format not supported, please upload an image in jpeg or png format"
+        );
+        setMsgType("error");
+      } else if (
+        event.target.files[0].type === "image/png" ||
+        event.target.files[0].type === "image/jpeg"
+      ) {
+        const newFileName = changeImageFileName({
+          fileName: file?.name,
+          origin: "blog",
+          userId: userId,
+        });
 
-    // When a file is selected
-    input.onchange = () => {
-      const file = input.files[0];
-      const reader = new FileReader();
-
-      // Read the selected file as a data URL
-      reader.onload = () => {
-        const imageUrl = reader.result;
-        const quillEditor = quill.current.getEditor();
-
-        // Get the current selection range and insert the image at that index
-        const range = quillEditor.getSelection(true);
-        quillEditor.insertEmbed(range.index, "image", imageUrl, "user");
-      };
-
-      reader.readAsDataURL(file);
-    };
-  }, []);
+        setImageName(newFileName);
+      }
+    }
+  };
 
   const modules = useMemo(
     () => ({
@@ -55,18 +83,15 @@ const CreateNewBlog = () => {
             { indent: "-1" },
             { indent: "+1" },
           ],
-          ["link", "image"],
+          ["link"],
           ["clean"],
         ],
-        handlers: {
-          image: imageHandler,
-        },
       },
       clipboard: {
         matchVisual: true,
       },
     }),
-    [imageHandler]
+    []
   );
 
   const formats = [
@@ -80,30 +105,108 @@ const CreateNewBlog = () => {
     "bullet",
     "indent",
     "link",
-    "image",
     "color",
     "clean",
   ];
 
-  //
+  const validateInput = () => {
+    setError("");
+    if (title === "" || readTime == 0 || description === "" || value === "") {
+      setError("Please fill in all fields");
+      setMsgType("error");
+      return false;
+    }
+    if (readTime < 0 || readTime > 1000) {
+      setError("Please enter a valid read time");
+      setMsgType("error");
+      return false;
+    } else if (file === null) {
+      setError("Please upload an image");
+      setMsgType("error");
+    } else if (imageName === "") {
+      setError("Please upload an image");
+      setMsgType("error");
+      return false;
+    }
 
-  const handleNewBlogSubmit = (e) => {
-    e.preventDefault();
-    const newBlog = {
-      title,
-      description,
-      content: value,
-    };
-    console.log(newBlog);
+    return true;
+  };
+
+  const clearForm = () => {
     setTitle("");
     setDescription("");
     setValue("");
+    setReadTime(0);
+    setImageName("");
+  };
+
+  const handleNewBlogSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateInput()) {
+      return;
+    } else {
+      try {
+        const imageUrl = constructImageUrl(imageName, "blogs");
+        const newBlog = {
+          title,
+          readTime,
+          userId,
+          description,
+          content: value,
+          imageUrl,
+        };
+        const res = await createNewBlogPost(newBlog);
+        if (res.status === "success") {
+          const { fileName, url } = await uploadToS3({
+            file,
+            fileName: imageName,
+            userId,
+            location: "blogs",
+          });
+
+          setError("Blog created successfully");
+          setMsgType("success");
+          clearForm();
+
+          navigate(`/blog/${res?.blog.blog_id}`);
+        } else {
+          setError("Error creating blog");
+          setMsgType("error");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
     <div className="blog__container ">
       <div className="newblog__container">
         <form className="newblog__form">
+          {error && <NotificationAlert type={msgType} message={error} />}
+          <div>
+            <label htmlFor="imageInput" className="newblog__label">
+              <span>Blog Image</span>
+
+              <Input id="imageInput" type="file" onChange={handleImageChange} />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="readtime" className="newblog__label">
+              Read Time
+            </label>
+            <input
+              id="readtime"
+              name="readtime"
+              type="number"
+              className="newblog__input"
+              placeholder="Read Time (in minutes)"
+              value={readTime}
+              onChange={(e) => setReadTime(e.target.value)}
+            />
+          </div>
           <div>
             <label htmlFor="title" className="newblog__label">
               Blog Title
@@ -130,7 +233,7 @@ const CreateNewBlog = () => {
               className="newblog__textarea"
               placeholder="Enter Description"
               value={description}
-              rows="5"
+              rows="3"
               onChange={(e) => setDescription(e.target.value)}></textarea>
           </div>
           <div>
@@ -150,19 +253,28 @@ const CreateNewBlog = () => {
             />
           </div>
 
-          <Button
-            colorScheme="teal"
-            variant="solid"
-            type="submit"
-            className="newblog__submit"
-            onClick={handleNewBlogSubmit}>
-            Submit Blog
-          </Button>
+          <div className="newblog__submit">
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              type="submit"
+              onClick={handleNewBlogSubmit}>
+              Submit Blog
+            </Button>
+          </div>
         </form>
       </div>
 
       <div>
-        <ViewNewBlog blog={{ title, description, content: value }} />
+        <ViewNewBlog
+          blog={{
+            image: imageName,
+            title,
+            readTime,
+            description,
+            content: value,
+          }}
+        />
       </div>
     </div>
   );

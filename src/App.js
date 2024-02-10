@@ -74,7 +74,7 @@ function App() {
           />
 
           <Route
-            path="/blog"
+            path="/blogs"
             element={
               <Suspense fallback={<Loading />}>
                 <BlogPage />

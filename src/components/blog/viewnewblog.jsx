@@ -8,9 +8,14 @@ export const ViewNewBlog = ({ blog }) => {
     <div className="viewblog__container">
       <div>
         <div className="view__div">
-          <h3 className="view__title">Blog Image</h3>
-          <img src={blog.image} alt={blog.title} className="viewblog__img" />
+          <h3 className="view__title">Blog Image Name</h3>
+          {blog.image}
         </div>
+        <div className="view__div">
+          <h3 className="view__title">Blog Read Time</h3>
+          <div className="view__div-item">{blog.readTime}</div>
+        </div>
+
         <div className="view__div">
           <h3 className="view__title">Blog Title</h3>
           <div className="view__div-item-title">{blog.title}</div>
