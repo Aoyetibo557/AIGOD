@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Input, Button } from "@chakra-ui/react";
 import QuillEditor from "react-quill";
 import { useAuth } from "../../utils/hooks/useAuth";
+import { Select } from "antd";
 import { ViewNewBlog } from "./viewnewblog";
 import "./createnewblog.css";
 import "react-quill/dist/quill.snow.css";
@@ -27,6 +28,7 @@ const CreateNewBlog = () => {
   const [value, setValue] = useState("");
   const [file, setFile] = useState(null);
   const [readTime, setReadTime] = useState(0);
+  const [tags, setTags] = useState([]);
   const [imageName, setImageName] = useState("");
   const [msgType, setMsgType] = useState("error");
   const [error, setError] = useState(null);
@@ -55,17 +57,6 @@ const CreateNewBlog = () => {
           "Image format not supported, please upload an image in jpeg or png format"
         );
         setMsgType("error");
-      } else if (
-        event.target.files[0].type === "image/png" ||
-        event.target.files[0].type === "image/jpeg"
-      ) {
-        const newFileName = changeImageFileName({
-          fileName: file?.name,
-          origin: "blog",
-          userId: userId,
-        });
-
-        setImageName(newFileName);
       }
     }
   };
@@ -109,6 +100,18 @@ const CreateNewBlog = () => {
     "clean",
   ];
 
+  const tagOptions = [
+    { value: "technology", label: "Technology" },
+    { value: "news", label: "News" },
+    { value: "health", label: "Health" },
+    { value: "sports", label: "Sports" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "lifestyle", label: "Lifestyle" },
+    { value: "religion", label: "Religion" },
+    { value: "politics", label: "Politics" },
+    { value: "education", label: "Education" },
+  ];
+
   const validateInput = () => {
     setError("");
     if (title === "" || readTime == 0 || description === "" || value === "") {
@@ -140,9 +143,20 @@ const CreateNewBlog = () => {
     setImageName("");
   };
 
+  const handleChangeName = () => {
+    const newFileName = changeImageFileName({
+      fileName: file?.name,
+      origin: "blog",
+      userId: userId,
+    });
+
+    setImageName(newFileName);
+  };
+
   const handleNewBlogSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    handleChangeName();
 
     if (!validateInput()) {
       return;
@@ -152,6 +166,7 @@ const CreateNewBlog = () => {
         const newBlog = {
           title,
           readTime,
+          tags,
           userId,
           description,
           content: value,
@@ -205,6 +220,21 @@ const CreateNewBlog = () => {
               placeholder="Read Time (in minutes)"
               value={readTime}
               onChange={(e) => setReadTime(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="tags" className="newblog__label">
+              Tags
+            </label>
+            <Select
+              size="middle"
+              mode="tags"
+              className="newblog__select"
+              placeholder="Select Tags"
+              onChange={(value) => setTags(value)}
+              tokenSeparators={[","]}
+              options={tagOptions}
+              maxCount={2}
             />
           </div>
           <div>
@@ -271,6 +301,7 @@ const CreateNewBlog = () => {
             image: imageName,
             title,
             readTime,
+            tags,
             description,
             content: value,
           }}

@@ -13,12 +13,25 @@ export const ViewNewBlog = ({ blog }) => {
         </div>
         <div className="view__div">
           <h3 className="view__title">Blog Read Time</h3>
-          <div className="view__div-item">{blog.readTime}</div>
+          <div className="view__div-item">{blog.readTime} min read</div>
+        </div>
+
+        <div className="view__div">
+          <h3 className="view__title">Blog Tags</h3>
+          <div className="view__div-item">
+            {blog?.tags?.map((tag, index) => (
+              <span className="view__tag" key={index}>
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="view__div">
           <h3 className="view__title">Blog Title</h3>
-          <div className="view__div-item-title">{blog.title}</div>
+          <div className="view__div-item view__div-item-title">
+            {blog.title}
+          </div>
         </div>
 
         <div className="view__div">

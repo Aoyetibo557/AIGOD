@@ -17,10 +17,10 @@ const BlogList = () => {
     return fetchBlogs();
   }, []);
 
-  return (
+  return blogs?.length > 0 ? (
     <div className="bloglist">
       <div className="bloglist__cards">
-        {blogs.map((blog) => (
+        {blogs?.map((blog) => (
           <BlogCard key={blog.blog_id} {...blog} />
         ))}
       </div>
@@ -32,6 +32,10 @@ const BlogList = () => {
         className="bloglist__button">
         View All Posts
       </Button>
+    </div>
+  ) : (
+    <div>
+      <p>No blogs found</p>
     </div>
   );
 };

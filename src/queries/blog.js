@@ -21,6 +21,7 @@ const createNewBlogPost = async (blogData) => {
         blog_title: blogData.title,
         blog_description: blogData.description,
         blog_read_time: blogData.readTime,
+        blog_tags: blogData.tags,
         blog_content: blogData.content,
         blog_author: blogData.userId,
         blog_image_url: blogData.imageUrl,
@@ -56,4 +57,18 @@ const getBlogById = async (id) => {
   }
 };
 
-export { createNewBlogPost, getBlogs, getBlogById };
+// deleteblog
+const deleteBlog = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/blog/deleteblog/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export { createNewBlogPost, getBlogs, getBlogById, deleteBlog };

@@ -13,13 +13,25 @@ export const BlogCard = ({
   blog_image_url,
   blog_description,
   blog_read_time,
+  blog_tags,
   blog_id,
 }) => {
   return (
     <Link to={`/blog/${blog_id}`} className="blogcard">
       <div className="blogcard__top">
         <img src={blog_image_url} alt={blog_title} className="blogcard__img" />
-        <span className="blogcard__readtime">{blog_read_time} min read </span>
+        <div className="blogcard__top-div">
+          <span className="blogcard__readtime">{blog_read_time} min read </span>
+          {blog_tags && (
+            <div>
+              {blog_tags.map((tag) => (
+                <span key={tag} className="blogcard__tags">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
       <h3 className="blogcard__title">{blog_title}</h3>
       <div className="blogcard__bottom">

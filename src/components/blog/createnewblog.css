@@ -57,6 +57,22 @@
     background: transparent;
 }
 
+.newblog__select {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.ant-select-selector {
+    padding: 10px !important;
+    display: flex;
+    flex-direction: row !important;
+}
+
+.ant-select-selection-overflow {
+    display: flex;
+    flex-direction: row !important;
+}
+
 .quill__editor {
     margin-top: 1rem;
     height: 300px;
@@ -78,4 +94,14 @@
 
 .newblog__submit {
     margin-top: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .blog__container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .newblog__container {
+        width: 100%;
+    }
 }
