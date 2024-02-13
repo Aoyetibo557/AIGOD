@@ -4,10 +4,13 @@ import "./styles/App.css";
 import { ErrorBoundary } from "react-error-boundary";
 import { Routes, Route } from "react-router-dom";
 import Fallback from "./pages/error/fallback";
-import PrivateRoutes from "./components/privateRoutes/privateRoutes";
+import PrivateRoutes from "./pages/customRoutes/privateRoutes";
+import AdminRoutes from "./pages/customRoutes/adminRoutes";
 import { verifyToken } from "./utils/auth";
 import ResetPasswordForm from "./components/signup/resetpassword";
 import NewBlogPost from "./pages/blog/newblog";
+import AdminPage from "./pages/admin/admin";
+import { generateRandomString } from "./utils/commonfunctions";
 
 const HomePage = lazy(() => import("./pages/homepage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
@@ -30,6 +33,7 @@ const Loading = () => {
 };
 
 function App() {
+  const randomRoute = generateRandomString(10);
   return (
     <ErrorBoundary
       FallbackComponent={<Fallback />}
@@ -102,14 +106,25 @@ function App() {
               }
             />
 
-            <Route
-              path="/create-new-blog"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <NewBlogPost />
-                </Suspense>
-              }
-            />
+            <Route element={<AdminRoutes />}>
+              <Route
+                path={`/epikavios/internal-e3gHt7Jp5q/admin`}
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <AdminPage />
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path="/create-new-blog"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <NewBlogPost />
+                  </Suspense>
+                }
+              />
+            </Route>
           </Route>
 
           <Route

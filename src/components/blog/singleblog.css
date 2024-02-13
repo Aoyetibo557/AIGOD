@@ -100,7 +100,16 @@
     .blogdetails {
         width: 90vw;
     }
-    .blogdetails__back__button {
+    .blogdetails__btn {
         display: none !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .blogdetails__back__btn {
+        display: none !important;
+    }
+    .blogdetails {
+        width: 90vw;
     }
 }

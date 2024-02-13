@@ -6,6 +6,7 @@ import { getBlogs } from "../../queries/blog";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchBlogs = async () => {
     const blogData = await getBlogs();
@@ -14,7 +15,14 @@ const BlogList = () => {
 
   //useMemo to store the value of the blogs so that it doesn't get recalculated on every render
   const blogList = useMemo(() => {
-    return fetchBlogs();
+    try {
+      setIsLoading(true);
+      return fetchBlogs();
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   return blogs?.length > 0 ? (
@@ -25,13 +33,14 @@ const BlogList = () => {
         ))}
       </div>
 
-      <Button
+      {/* Switch this to pagination! */}
+      {/* <Button
         colorScheme="teal"
         variant="outline"
         size="md"
         className="bloglist__button">
         View All Posts
-      </Button>
+      </Button> */}
     </div>
   ) : (
     <div>

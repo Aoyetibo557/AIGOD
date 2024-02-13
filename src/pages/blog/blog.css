@@ -8,6 +8,7 @@
 
 .blog__body {
     width: 70%;
+    margin-top: 30px;
 }
 
 .blog__h3 {
@@ -44,4 +45,15 @@
     flex-direction: column;
     align-items: center;
     margin-top: 30px;
+}
+
+.blog__btn {
+    display: flex;
+    justify-content: end;
+}
+
+@media screen and (max-width: 768px) {
+    .blog__body {
+        width: 90%;
+    }
 }

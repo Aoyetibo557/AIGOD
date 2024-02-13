@@ -49,7 +49,8 @@ const CreateNewBlog = () => {
       if (event.target.files[0].size > 1000000) {
         setError("Image size too large, please upload an image less than 1MB");
         setMsgType("error");
-      } else if (
+      }
+      if (
         event.target.files[0].type !== "image/png" &&
         event.target.files[0].type !== "image/jpeg"
       ) {
@@ -58,6 +59,13 @@ const CreateNewBlog = () => {
         );
         setMsgType("error");
       }
+      const newFileName = changeImageFileName({
+        fileName: file?.name,
+        origin: "blog",
+        userId: userId,
+      });
+
+      setImageName(newFileName);
     }
   };
 
@@ -143,20 +151,20 @@ const CreateNewBlog = () => {
     setImageName("");
   };
 
-  const handleChangeName = () => {
-    const newFileName = changeImageFileName({
-      fileName: file?.name,
-      origin: "blog",
-      userId: userId,
-    });
+  // const handleChangeName = () => {
+  //   const newFileName = changeImageFileName({
+  //     fileName: file?.name,
+  //     origin: "blog",
+  //     userId: userId,
+  //   });
 
-    setImageName(newFileName);
-  };
+  //   setImageName(newFileName);
+  // };
 
   const handleNewBlogSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    handleChangeName();
+    // handleChangeName();
 
     if (!validateInput()) {
       return;
@@ -256,15 +264,15 @@ const CreateNewBlog = () => {
             <label htmlFor="description" className="newblog__label">
               Blog Description
             </label>
-            <textarea
+            <input
               id="description"
               name="description"
               type="text"
-              className="newblog__textarea"
+              className="newblog__input"
               placeholder="Enter Description"
               value={description}
-              rows="3"
-              onChange={(e) => setDescription(e.target.value)}></textarea>
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
           <div>
             <label htmlFor="content" className="newblog__label">

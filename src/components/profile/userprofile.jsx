@@ -12,6 +12,7 @@ import {
 } from "../../utils/s3";
 import "./userprofile.css";
 import { NotificationAlert } from "../alert/notificationalert";
+import { UserProfileSkeleton } from "../skeleton/userprofileskeleton";
 
 const UserProfile = () => {
   const { username: memoizedUsername } = useAuth();
@@ -182,7 +183,7 @@ const UserProfile = () => {
     }
   };
 
-  return (
+  return !isLoading && profile ? (
     <div className="userprofile__container">
       {error && <NotificationAlert type={msgType} message={error} />}
       <div className="userprofile__avater__container">
@@ -363,6 +364,10 @@ const UserProfile = () => {
           </div>
         )}
       </form>
+    </div>
+  ) : (
+    <div className="userprofile__container">
+      <UserProfileSkeleton />
     </div>
   );
 };

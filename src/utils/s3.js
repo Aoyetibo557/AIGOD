@@ -16,8 +16,8 @@ const myBucket = new AWS.S3({
 });
 
 const changeImageFileName = ({ fileName, origin, userId }) => {
-  const splitName = fileName.split(".");
-  const extension = splitName.at(-1);
+  const splitName = fileName?.split(".");
+  const extension = splitName?.at(-1);
 
   userId = !_.isEmpty(userId) ? userId : "UNKNOWN";
 

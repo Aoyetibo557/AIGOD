@@ -3,46 +3,18 @@ import "./Navbar.css";
 import { MdMenu, MdOutlineClose } from "react-icons/md";
 import { verifyToken } from "../../../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Avatar } from "antd";
-import { FaUser } from "react-icons/fa";
 import { Button } from "../../button/button";
-import { logOut } from "../../../utils/auth";
 import { useAuth } from "../../../utils/hooks/useAuth";
 import { useUser } from "../../../utils/hooks/useUser";
-const items = [
-  {
-    key: "1",
-    label: (
-      <Link className="navbar_list_item" to="/profile">
-        Profile
-      </Link>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <Link className="navbar_list_item" to="/create-new-blog">
-        Create New Blog
-      </Link>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <button className="logout__btn" onClick={logOut}>
-        Log Out
-      </button>
-    ),
-  },
-  // {
-  //   key: "3",
-  //   label: <Link to="/setting">Settings</Link>,
-  // },
-];
+import { logOut } from "../../../utils/auth";
+import { useUserRoles } from "../../../utils/hooks/useUserRoles";
+import { MenuDropdown } from "../menudropdown";
+import { NavbarSkeleton } from "../../skeleton/navbarskeleton";
 
 const Navbar = () => {
   const { username } = useAuth();
   const { profile } = useUser(username || "");
+  const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -58,6 +30,27 @@ const Navbar = () => {
 
     navigate("/login");
   };
+
+  const items = [
+    {
+      key: "1",
+      label: (
+        <Link className="navbar_list_item" to="/profile">
+          Profile
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <button className="logout__btn" onClick={logOut}>
+          Log Out
+        </button>
+      ),
+    },
+  ];
+
+  const isAdminUser = userRoles?.includes("admin");
 
   return (
     <>
@@ -75,24 +68,18 @@ const Navbar = () => {
           <Link to="/blogs" className="navbar_list_item">
             Blog
           </Link>
+
+          {isAdminUser && (
+            <Link
+              to={`/epikavios/internal-e3gHt7Jp5q/admin`}
+              className="navbar_list_item">
+              Admin Dashboard
+            </Link>
+          )}
           {username ? (
-            <Dropdown menu={{ items }}>
-              <div className="navbar_avatar">
-                <Avatar
-                  size={22}
-                  style={{
-                    backgroundColor: "#eee",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#f56a00",
-                  }}
-                  icon={<FaUser />}
-                  src={profile?.profile_image}
-                />
-                <span>{username}</span>
-              </div>
-            </Dropdown>
+            <MenuDropdown menuItems={items} profile={profile}>
+              {username}
+            </MenuDropdown>
           ) : (
             <>
               <Link to="/login" className="navbar_list_item">
@@ -114,3 +101,23 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+/**
+ *  <Dropdown menu={{ items }}>
+              <div className="navbar_avatar">
+                <Avatar
+                  size={22}
+                  style={{
+                    backgroundColor: "#eee",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#f56a00",
+                  }}
+                  icon={<FaUser />}
+                  src={profile?.profile_image}
+                />
+                <span>{username}</span>
+              </div>
+            </Dropdown>
+ */

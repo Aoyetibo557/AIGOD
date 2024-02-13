@@ -17,10 +17,17 @@ import PropTypes from "prop-types";
 import { getBlogById, deleteBlog } from "../../queries/blog";
 import { formatDate } from "../../utils/commonfunctions";
 import parse from "html-react-parser";
+import { useAuth } from "../../utils/hooks/useAuth";
+import { useUser } from "../../utils/hooks/useUser";
+import { useUserRoles } from "../../utils/hooks/useUserRoles";
+import { ImageLoader } from "../imageloader/imageloader";
 
 export const SingleBlog = ({ blogId }) => {
   const [blog, setBlog] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
+  const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
   const navigate = useNavigate();
 
   const fetchBlog = async () => {
@@ -40,6 +47,8 @@ export const SingleBlog = ({ blogId }) => {
     return fetchBlog();
   }, [blogId]);
 
+  const isAdmin = userRoles?.includes("admin");
+
   return blog ? (
     <div className="blogdetails__container">
       <div className="blogdetails__btns">
@@ -47,7 +56,7 @@ export const SingleBlog = ({ blogId }) => {
           colorScheme="blue"
           variant="outline"
           size="sm"
-          className="blogdetails__button"
+          className="blogdetails__btn blogdetails__back__btn"
           onClick={() => navigate(-1)}>
           Go Back
         </Button>
@@ -83,20 +92,24 @@ export const SingleBlog = ({ blogId }) => {
             </div>
           </div>
 
-          <Button
-            colorScheme="red"
-            variant="outline"
-            size="sm"
-            className="blogdetails__button"
-            onClick={onOpen}>
-            Delete Blog
-          </Button>
+          {!isLoading && isAdmin && (
+            <Button
+              colorScheme="red"
+              variant="outline"
+              size="sm"
+              className="blogdetails__btn"
+              onClick={onOpen}>
+              Delete Blog
+            </Button>
+          )}
         </div>
         <div>
-          <img
+          <ImageLoader
             src={blog.blog_image_url}
             alt={blog.blog_title}
             loading="eager"
+            width="100%"
+            height="400px"
             className="blogdetails__image"
           />
         </div>

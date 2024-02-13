@@ -112,6 +112,20 @@ const updateUserPassword = async ({ email, token, password }) => {
   }
 };
 
+// find all users with similar username
+const findUsersByUserName = async (username) => {
+  try {
+    const response = await axios.get(`${API_URL}/user/findusers/${username}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
 export {
   checkUserCredentials,
   registerNewUser,
@@ -120,4 +134,5 @@ export {
   sendPasswordResetLink,
   validatePasswordResetToken,
   updateUserPassword,
+  findUsersByUserName,
 };
