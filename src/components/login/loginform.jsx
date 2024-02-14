@@ -22,7 +22,7 @@ export const LoginForm = () => {
     setLoading(true);
 
     const loginCred = {
-      username,
+      username: username.toLowerCase(),
       password,
     };
 

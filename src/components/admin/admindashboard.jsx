@@ -7,6 +7,9 @@ import { ProfileCard } from "../profilecard/profilecard";
 import { findUsersByUserName } from "../../queries/user";
 import { CreateNewRoleModal } from "../modals/createnewrolemodal";
 import { debounce } from "lodash";
+import { useAuth } from "../../utils/hooks/useAuth";
+import { useUser } from "../../utils/hooks/useUser";
+import { useUserRoles } from "../../utils/hooks/useUserRoles";
 
 const AdminDashboard = () => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -16,8 +19,15 @@ const AdminDashboard = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
+  const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
+
+  // const isAdmin = userRoles.includes("super admin");
+
+  const isAdmin = userRoles?.includes("super admin");
   const handleInput = debounce(async (searchText) => {
-    setInput(searchText);
+    setInput(searchText.toLowerCase());
     try {
       if (searchText.length <= 1) {
         setFoundUsers([]); // Clear the found users list if the input is too short
@@ -42,9 +52,16 @@ const AdminDashboard = () => {
         <SearchBar size="lg" onSearch={handleInput} />
 
         <div>
-          <Button colorScheme="blue" variant="solid" onClick={onOpen}>
-            + Create New Role
-          </Button>
+          {isAdmin && (
+            <Button
+              colorScheme="blue"
+              variant="solid"
+              onClick={onOpen}
+              className="create__btn"
+              disabled={!isAdmin}>
+              + Create New Role
+            </Button>
+          )}
         </div>
       </div>
       <div className="admin__userslist">

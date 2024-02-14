@@ -28,9 +28,9 @@ const BlogList = () => {
   return blogs?.length > 0 ? (
     <div className="bloglist">
       <div className="bloglist__cards">
-        {blogs?.map((blog) => (
-          <BlogCard key={blog.blog_id} {...blog} />
-        ))}
+        {blogs
+          ?.map((blog) => <BlogCard key={blog.blog_id} {...blog} />)
+          .reverse()}
       </div>
 
       {/* Switch this to pagination! */}

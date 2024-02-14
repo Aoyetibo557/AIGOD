@@ -13,7 +13,8 @@ const BlogPage = () => {
   const { username } = useAuth();
   const { profile } = useUser(username || "");
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
-  const canCreateBlog = userRoles.includes("admin");
+  const canCreateBlog =
+    userRoles.includes("super admin") || userRoles.includes("moderator");
 
   return (
     <Layout>

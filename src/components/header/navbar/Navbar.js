@@ -3,7 +3,8 @@ import "./Navbar.css";
 import { MdMenu, MdOutlineClose } from "react-icons/md";
 import { verifyToken } from "../../../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../../button/button";
+// import { Button } from "../../button/button";
+import { Button } from "@chakra-ui/react";
 import { useAuth } from "../../../utils/hooks/useAuth";
 import { useUser } from "../../../utils/hooks/useUser";
 import { logOut } from "../../../utils/auth";
@@ -50,7 +51,8 @@ const Navbar = () => {
     },
   ];
 
-  const isAdminUser = userRoles?.includes("admin");
+  const isAdminUser =
+    userRoles?.includes("super admin") || userRoles?.includes("moderator");
 
   return (
     <>
@@ -70,11 +72,18 @@ const Navbar = () => {
           </Link>
 
           {isAdminUser && (
-            <Link
-              to={`/epikavios/internal-e3gHt7Jp5q/admin`}
-              className="navbar_list_item">
-              Admin Dashboard
-            </Link>
+            <Button
+              size="sm"
+              colorScheme="blue"
+              variant="solid"
+              style={{
+                borderRadius: "50px",
+                color: "#fff",
+                fontWeight: "400",
+              }}
+              className="">
+              <Link to={`/epikavios/internal-e3gHt7Jp5q/admin`}>Dashboard</Link>
+            </Button>
           )}
           {username ? (
             <MenuDropdown menuItems={items} profile={profile}>

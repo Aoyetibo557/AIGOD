@@ -8,7 +8,7 @@ const Searchbar = ({ onSearch, size }) => {
     const inputValue = e.target.value;
     setUserInput(inputValue);
 
-    onSearch(inputValue);
+    onSearch(inputValue.toLowerCase());
   };
 
   return (

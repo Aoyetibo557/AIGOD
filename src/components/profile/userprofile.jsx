@@ -282,7 +282,7 @@ const UserProfile = () => {
 
               <div>
                 <label className="userprofile__label" htmlFor="password">
-                  Confrim New Password
+                  Confirm New Password
                 </label>
                 <input
                   className="userprofile__input"

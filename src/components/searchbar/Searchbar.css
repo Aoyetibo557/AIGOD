@@ -41,3 +41,15 @@
 .searchbar--sm {
     width: 15vw;
 }
+
+@media (max-width: 768px) {
+    .searchbar--lg {
+        width: 70vw;
+    }
+    .searchbar--md {
+        width: 50vw;
+    }
+    .searchbar--sm {
+        width: 100%;
+    }
+}

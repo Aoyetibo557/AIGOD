@@ -70,7 +70,7 @@ export const CreateNewRoleModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleOnClose} isCentered size="md">
+    <Modal isOpen={isOpen} onClose={handleOnClose} isCentered size="sm">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Create New Role</ModalHeader>

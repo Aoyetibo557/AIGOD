@@ -21,6 +21,9 @@ import {
   unassignRole,
 } from "../../queries/role";
 import { BsInfoCircle } from "react-icons/bs";
+import { useAuth } from "../../utils/hooks/useAuth";
+import { useUser } from "../../utils/hooks/useUser";
+import { useUserRoles } from "../../utils/hooks/useUserRoles";
 
 export const ProfileCard = ({ user, onSelect, isSelected }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,6 +36,14 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUnassignLoading, setIsUnassignLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
+  const {
+    userRoles: currentUserRoles,
+    isLoading: isCurrentUserRolesLoading,
+    isError,
+  } = useUserRoles(profile?.id);
 
   const handleSelectUser = () => {
     onSelect(user);
@@ -145,6 +156,8 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
     }
   };
 
+  const isAdmin = currentUserRoles.includes("super admin");
+
   return (
     <div
       className={`profilecard__container ${
@@ -162,7 +175,7 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
         <Button size="sm" colorScheme="blue" variant="solid" onClick={onOpen}>
           View Assigned Roles
         </Button>
-        <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+        <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader className="profilecard__roles-title">
@@ -194,7 +207,7 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
                           />
                         </Tooltip>
                       </div>
-                      {userRoles.includes(role.role_name) && (
+                      {userRoles.includes(role.role_name) && isAdmin && (
                         <Button
                           size="xs"
                           colorScheme="blue"
@@ -213,7 +226,7 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
               </div>
             </ModalBody>
             <ModalFooter className="profilecard__modal__footer">
-              {newUserRoles.length > 0 && (
+              {newUserRoles.length > 0 && isAdmin && (
                 <Button
                   size="sm"
                   LoadingText="Assigning..."

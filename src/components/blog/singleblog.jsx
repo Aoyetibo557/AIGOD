@@ -47,7 +47,8 @@ export const SingleBlog = ({ blogId }) => {
     return fetchBlog();
   }, [blogId]);
 
-  const isAdmin = userRoles?.includes("admin");
+  const isAdmin =
+    userRoles?.includes("super admin") || userRoles?.includes("moderator");
 
   return blog ? (
     <div className="blogdetails__container">

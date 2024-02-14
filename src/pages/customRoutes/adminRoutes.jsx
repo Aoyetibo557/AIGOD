@@ -9,7 +9,7 @@ const AdminRoutes = ({ element: Element, ...rest }) => {
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
   console.log("User Roles:", userRoles, isLoading);
 
-  const isAdmin = userRoles.includes("admin");
+  const isAdmin = userRoles.includes("super admin");
   const isModerator = userRoles.includes("moderator");
 
   if (isLoading) {
