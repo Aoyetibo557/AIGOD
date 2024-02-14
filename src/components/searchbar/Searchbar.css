@@ -1,13 +1,13 @@
 .searchbar {
     display: inline-flex;
     gap: 11px;
-    margin: 0px 0px 40px 30px;
 }
 
 .searchbar_input {
     padding: 10px 30px;
     background-color: #fff;
-    border-radius: 20px;
+    color: #000;
+    border-radius: 8px;
     border: none;
     font-size: 14px;
 }
@@ -31,9 +31,25 @@
 }
 
 .searchbar--lg {
+    width: 35vw;
+}
+
+.searchbar--md {
     width: 25vw;
 }
 
 .searchbar--sm {
     width: 15vw;
+}
+
+@media (max-width: 768px) {
+    .searchbar--lg {
+        width: 70vw;
+    }
+    .searchbar--md {
+        width: 50vw;
+    }
+    .searchbar--sm {
+        width: 100%;
+    }
 }

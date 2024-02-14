@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./Searchbar.css";
 
-const Searchbar = ({ onAsk, size }) => {
+const Searchbar = ({ onSearch, size }) => {
   const [userInput, setUserInput] = useState("");
+
   const handleUserInput = (e) => {
-    setUserInput(e.target.value);
+    const inputValue = e.target.value;
+    setUserInput(inputValue);
+
+    onSearch(inputValue.toLowerCase());
   };
 
-  const handleAsk = () => {
-    onAsk(userInput);
-    setUserInput("");
-  };
   return (
     <div className="searchbar">
       <input
@@ -22,9 +22,9 @@ const Searchbar = ({ onAsk, size }) => {
           size === "lg" ? "searchbar--lg" : "searchbar--sm"
         } `}
       />
-      <button onClick={handleAsk} type="submit" className="searchbar_btn">
-        Ask god
-      </button>
+      {/* <button type="submit" className="searchbar_btn">
+        Search
+      </button> */}
     </div>
   );
 };

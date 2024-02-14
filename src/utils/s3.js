@@ -16,8 +16,8 @@ const myBucket = new AWS.S3({
 });
 
 const changeImageFileName = ({ fileName, origin, userId }) => {
-  const splitName = fileName.split(".");
-  const extension = splitName.at(-1);
+  const splitName = fileName?.split(".");
+  const extension = splitName?.at(-1);
 
   userId = !_.isEmpty(userId) ? userId : "UNKNOWN";
 
@@ -82,4 +82,15 @@ const fetchProfileImage = async (imageUrl) => {
   }
 };
 
-export { changeImageFileName, uploadToS3, deleteFromS3, fetchProfileImage };
+const constructImageUrl = (filename, subfolder) => {
+  const urlPrefix = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${subfolder}/`;
+  return `${urlPrefix}${filename}`;
+};
+
+export {
+  changeImageFileName,
+  uploadToS3,
+  deleteFromS3,
+  fetchProfileImage,
+  constructImageUrl,
+};
