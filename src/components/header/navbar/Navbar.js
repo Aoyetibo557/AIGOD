@@ -94,12 +94,8 @@ const Navbar = () => {
               <Link to="/login" className="navbar_list_item">
                 Login
               </Link>
-              <Button
-                size="sm"
-                type="primary"
-                linkTo="/signup"
-                className="navbar_list_item">
-                Register
+              <Button size="sm" type="primary" colorScheme="blue">
+                <Link to="/signup">Register</Link>
               </Button>
             </>
           )}
