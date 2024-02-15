@@ -26,7 +26,7 @@ export const ImageLoader = ({ src, alt, width, height, className }) => {
         startColor="gray.100"
         endColor="gray.300">
         <Image
-          src={src}
+          src={src || "https://via.placeholder.com/300x150"}
           alt={alt}
           onLoad={handleLoad}
           onError={handleError}

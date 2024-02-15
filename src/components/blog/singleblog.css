@@ -88,6 +88,26 @@
     margin-top: 30px;
 }
 
+.blog__content h2 {
+    font-size: 30px !important;
+}
+
+.blog__content h3 {
+    font-size: 25px !important;
+}
+
+.blog__content h4 {
+    font-size: 20px !important;
+}
+
+.blog__content blockquote {
+    font-size: 19px;
+    background-color: #161616;
+    border-left: 4px solid #bd00ff;
+    border-radius: 12px;
+    padding: 25px;
+}
+
 .blogdetails__btns {
     display: flex;
     flex-direction: row;

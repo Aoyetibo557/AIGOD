@@ -6,7 +6,15 @@ import React, {
   useCallback,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input, Button } from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from "@chakra-ui/react";
 import QuillEditor from "react-quill";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { Select } from "antd";
@@ -75,6 +83,7 @@ const CreateNewBlog = () => {
         container: [
           [{ header: [2, 3, 4, false] }],
           ["bold", "italic", "underline", "blockquote"],
+          [{ script: "sub" }, { script: "super" }],
           [{ color: [] }],
           [
             { list: "ordered" },
@@ -83,6 +92,7 @@ const CreateNewBlog = () => {
             { indent: "+1" },
           ],
           ["link"],
+
           ["clean"],
         ],
       },
@@ -95,11 +105,13 @@ const CreateNewBlog = () => {
 
   const formats = [
     "header",
+    "font",
     "bold",
     "italic",
     "underline",
     "strike",
     "blockquote",
+    "script",
     "list",
     "bullet",
     "indent",
@@ -205,117 +217,137 @@ const CreateNewBlog = () => {
   };
 
   return (
-    <div className="blog__container ">
-      <div className="newblog__container">
-        <form className="newblog__form">
-          {error && <NotificationAlert type={msgType} message={error} />}
-          <div>
-            <label htmlFor="imageInput" className="newblog__label">
-              <span>Blog Image</span>
+    <Tabs size="md" variant="enclosed">
+      <div className="blog__container ">
+        <TabList>
+          <Tab>
+            <h2>Create New Blog</h2>
+          </Tab>
+          <Tab>
+            <h2>Preview</h2>
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <div className="newblog__container">
+              <form className="newblog__form">
+                {error && <NotificationAlert type={msgType} message={error} />}
+                <div>
+                  <label htmlFor="imageInput" className="newblog__label">
+                    <span>Blog Image</span>
 
-              <Input id="imageInput" type="file" onChange={handleImageChange} />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="readtime" className="newblog__label">
-              Read Time
-            </label>
-            <input
-              id="readtime"
-              name="readtime"
-              type="number"
-              className="newblog__input"
-              placeholder="Read Time (in minutes)"
-              value={readTime}
-              onChange={(e) => setReadTime(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="tags" className="newblog__label">
-              Tags
-            </label>
-            <Select
-              size="middle"
-              mode="tags"
-              className="newblog__select"
-              placeholder="Select Tags"
-              onChange={(value) => setTags(value)}
-              tokenSeparators={[","]}
-              options={tagOptions}
-              maxCount={2}
-            />
-          </div>
-          <div>
-            <label htmlFor="title" className="newblog__label">
-              Blog Title
-            </label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              className="newblog__input"
-              placeholder="Enter Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
+                    <Input
+                      id="imageInput"
+                      type="file"
+                      onChange={handleImageChange}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label htmlFor="readtime" className="newblog__label">
+                    Read Time
+                  </label>
+                  <input
+                    id="readtime"
+                    name="readtime"
+                    type="number"
+                    className="newblog__input"
+                    placeholder="Read Time (in minutes)"
+                    value={readTime}
+                    onChange={(e) => setReadTime(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="tags" className="newblog__label">
+                    Tags
+                  </label>
+                  <Select
+                    size="middle"
+                    mode="tags"
+                    className="newblog__select"
+                    placeholder="Select Tags"
+                    onChange={(value) => setTags(value)}
+                    tokenSeparators={[","]}
+                    options={tagOptions}
+                    maxCount={2}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="title" className="newblog__label">
+                    Blog Title
+                  </label>
+                  <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    className="newblog__input"
+                    placeholder="Enter Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
 
-          <div>
-            <label htmlFor="description" className="newblog__label">
-              Blog Description
-            </label>
-            <input
-              id="description"
-              name="description"
-              type="text"
-              className="newblog__input"
-              placeholder="Enter Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="content" className="newblog__label">
-              Blog Content
-            </label>
-            <QuillEditor
-              ref={(el) => (quill.current = el)}
-              theme="snow"
-              value={value}
-              formats={formats}
-              modules={modules}
-              onChange={setValue}
-              styles={{ width: "300px" }}
-              className="quill__editor"
-              placeholder={"Write something awesome..."}
-            />
-          </div>
+                <div>
+                  <label htmlFor="description" className="newblog__label">
+                    Blog Description
+                  </label>
+                  <input
+                    id="description"
+                    name="description"
+                    type="text"
+                    className="newblog__input"
+                    placeholder="Enter Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="content" className="newblog__label">
+                    Blog Content
+                  </label>
+                  <QuillEditor
+                    ref={(el) => (quill.current = el)}
+                    theme="snow"
+                    value={value}
+                    formats={formats}
+                    modules={modules}
+                    onChange={setValue}
+                    styles={{ width: "300px" }}
+                    className="quill__editor"
+                    placeholder={"Write something awesome..."}
+                  />
+                </div>
 
-          <div className="newblog__submit">
-            <Button
-              colorScheme="teal"
-              variant="solid"
-              type="submit"
-              onClick={handleNewBlogSubmit}>
-              Submit Blog
-            </Button>
-          </div>
-        </form>
+                <div className="newblog__submit">
+                  <Button
+                    colorScheme="teal"
+                    variant="solid"
+                    type="submit"
+                    onClick={handleNewBlogSubmit}>
+                    Submit Blog
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </TabPanel>
+
+          <TabPanel>
+            <div className="newblog__container">
+              <ViewNewBlog
+                blog={{
+                  image: imageName,
+                  title,
+                  readTime,
+                  tags,
+                  description,
+                  content: value,
+                }}
+              />
+            </div>
+          </TabPanel>
+        </TabPanels>
       </div>
-
-      <div>
-        <ViewNewBlog
-          blog={{
-            image: imageName,
-            title,
-            readTime,
-            tags,
-            description,
-            content: value,
-          }}
-        />
-      </div>
-    </div>
+    </Tabs>
   );
 };
 
