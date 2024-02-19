@@ -85,7 +85,6 @@ const getRoles = async () => {
 
 // unassign role from user
 const unassignRole = async (userData) => {
-  console.log("userData", userData);
   try {
     const response = await axios.post(
       `${API_URL}/role/unassignrole`,
@@ -99,7 +98,6 @@ const unassignRole = async (userData) => {
         },
       }
     );
-    console.log("response", response);
     return response.data;
   } catch (error) {
     return handleError(error);

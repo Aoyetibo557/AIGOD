@@ -1,0 +1,118 @@
+.notification__icon {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* Notification Card Styles */
+
+.notificationcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid #c7c1c185;
+    border-radius: 10px;
+}
+
+.notificationcard__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notificationcard__type {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-family: "Manrope", sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+    width: 90px;
+}
+
+.notificationcard__new_user {
+    background-color: lightblue;
+}
+
+.notificationcard__new_blog {
+    background-color: lightgreen;
+}
+
+.isNotRead {
+    border-left: 6px solid #bd00ff;
+}
+
+.isRead {
+    border-left: 6px solid #c7c1c1;
+    opacity: 0.9;
+}
+
+.notificationcard__msg {
+    font-size: 14px;
+    font-family: "Manrope", sans-serif;
+    font-weight: 500;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.notificationcard__btn {
+    width: 100px;
+    display: flex;
+    text-align: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.notificationcard__none {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
+}
+
+
+/* drawer styles */
+
+.chakra-slide {
+    background: #18151a !important;
+}
+
+.drawer__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: #fff;
+    border-bottom: 1px solid #c7c1c1;
+}
+
+.drawer__header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Manrope", sans-serif;
+}
+
+.drawer__header .close__icon {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.drawer__togglecontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.drawer__toggletext {
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
+    color: #fff;
+}

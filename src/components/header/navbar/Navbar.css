@@ -25,12 +25,12 @@
     padding: 0 10px;
     color: #fff;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-    font-family: "Inter", sans-serif;
+    font-family: "Manrope", sans-serif;
 }
 
 .navbar_list_item:hover {
@@ -56,7 +56,8 @@
 .navbar_avatar span {
     margin-right: 10px;
     font-size: 14px;
-    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
 }
 
 .navbar_avatar:hover {
@@ -66,10 +67,11 @@
 
 .logout__btn {
     background: transparent;
-    margin-left: 5px;
+    margin-left: 9px;
     border: none;
     cursor: pointer;
-    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
 }
 
 @media (max-width: 768px) {

@@ -9,7 +9,7 @@
 
 .blogdetails {
     color: #fff;
-    font-family: "Inter", sans-serif;
+    font-family: "Manrope", sans-serif;
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -101,9 +101,9 @@
 }
 
 .blog__content blockquote {
-    font-size: 19px;
+    font-size: 17px;
     background-color: #161616;
-    border-left: 4px solid #bd00ff;
+    border-left: 4px solid #bb00ffbf;
     border-radius: 12px;
     padding: 25px;
 }
