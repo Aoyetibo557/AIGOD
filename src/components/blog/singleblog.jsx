@@ -37,7 +37,6 @@ export const SingleBlog = ({ blogId }) => {
 
   const handleDelete = async () => {
     const response = await deleteBlog(blogId);
-    console.log(response);
     if (response) {
       navigate(-1);
     }

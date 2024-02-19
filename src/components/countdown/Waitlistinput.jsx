@@ -7,6 +7,7 @@ const API_URL = "https://sheetdb.io/api/v1/tql3hfy5t6ama";
 
 const Waitlistinput = () => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [isAddedToWaitlist, setIsAddedToWaitlist] = useState(false);
 
   const isEmailValid = (email) => {
@@ -39,7 +40,8 @@ const Waitlistinput = () => {
 
       if (response.status === 201) setIsAddedToWaitlist(true);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setError("Something went wrong. Please try again later.");
     }
   };
 
@@ -51,6 +53,7 @@ const Waitlistinput = () => {
           Sign up to be shown the path to enlightenment.
         </p>
       </div>
+      {error && <p className="waitlist_error_msg">{error}</p>}
       <form className="waitlist_form" onSubmit={handleSubmit}>
         <div className="waitlist_input_container">
           <MdOutlineMail className="waitlist_icon" />

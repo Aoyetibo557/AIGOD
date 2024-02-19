@@ -79,15 +79,6 @@ const AdminDashboard = () => {
           <p>No users found with username: {input}</p>
         )}
       </div>
-      {/* <div>
-        {selectedUser && (
-          <RolesSection
-            selectedUser={selectedUser}
-            onRoleSelect={handleRoleSelect}
-          />
-        )}
-      </div> */}
-
       <CreateNewRoleModal isOpen={isOpen} onClose={onClose} />
     </div>
   );

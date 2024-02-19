@@ -3,7 +3,6 @@ import "./Navbar.css";
 import { MdMenu, MdOutlineClose } from "react-icons/md";
 import { verifyToken } from "../../../utils/auth";
 import { Link, useNavigate } from "react-router-dom";
-// import { Button } from "../../button/button";
 import { Button } from "@chakra-ui/react";
 import { useAuth } from "../../../utils/hooks/useAuth";
 import { useUser } from "../../../utils/hooks/useUser";
@@ -11,6 +10,7 @@ import { logOut } from "../../../utils/auth";
 import { useUserRoles } from "../../../utils/hooks/useUserRoles";
 import { MenuDropdown } from "../menudropdown";
 import { NavbarSkeleton } from "../../skeleton/navbarskeleton";
+import { UserNotifications } from "../../notification/notifications";
 
 const Navbar = () => {
   const { username } = useAuth();
@@ -18,7 +18,7 @@ const Navbar = () => {
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -86,9 +86,12 @@ const Navbar = () => {
             </Button>
           )}
           {username ? (
-            <MenuDropdown menuItems={items} profile={profile}>
-              {username}
-            </MenuDropdown>
+            <>
+              <UserNotifications />
+              <MenuDropdown menuItems={items} profile={profile}>
+                {username}
+              </MenuDropdown>
+            </>
           ) : (
             <>
               <Link to="/login" className="navbar_list_item">

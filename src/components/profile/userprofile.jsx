@@ -51,12 +51,6 @@ const UserProfile = () => {
         profileImage: profile?.profile_image,
       });
     }
-
-    console.log(
-      "formValues",
-      formValues.profileImage,
-      orginalData.profileImage
-    );
   }, [profile]);
 
   const memoizedProfile = useMemo(() => profile, [profile]);
@@ -319,7 +313,7 @@ const UserProfile = () => {
           ) : (
             !hasChanged && (
               <Button
-                size="md"
+                size="sm"
                 colorScheme="blue"
                 variant="outline"
                 onClick={() => setUpdatePassword(true)}
