@@ -1,3 +1,74 @@
+.adminheader {
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.adminheader h3 {
+    font-size: clamp(1.8rem, 2vw, 2.5rem);
+    font-weight: 600;
+    font-family: "Manrope", sans-serif;
+    color: #ffffffd2;
+}
+
+.adminheader p {
+    font-size: clamp(16px, 1.5vw, 1.1rem);
+    font-weight: 400;
+    font-family: "Manrope", sans-serif;
+    color: #ffffffd2;
+}
+
+.adminheader__right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.adminheader__search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Manrope", sans-serif;
+    font-size: 15px;
+    color: #ffffffd2;
+    background-color: #ffffff1a;
+}
+
+.adminheader__links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.adminheader__link {
+    font-size: clamp(16px, 1.5vw, 1rem);
+    font-weight: 400;
+    font-family: "Manrope", sans-serif;
+    color: #ffffffd2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.adminheader__icon {
+    font-size: 20px;
+    color: #ffffffd2;
+    cursor: pointer;
+}
+
+.adminheader__link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 .admin__dashboard {
     display: flex;
     flex-direction: column;
@@ -77,6 +148,23 @@
 }
 
 @media (max-width: 768px) {
+    .adminheader {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .adminheader__links {
+        margin-top: 20px;
+    }
+    .adminheader__right {
+        flex-direction: column;
+        gap: 0px;
+    }
+    .adminheader__search {
+        width: 100%;
+        margin-top: 20px;
+    }
     .admin__dashboard {
         margin: 0;
     }

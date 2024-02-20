@@ -157,6 +157,7 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
   };
 
   const isAdmin = currentUserRoles.includes("super admin");
+  const isModerator = currentUserRoles.includes("moderator");
 
   return (
     <div
@@ -193,7 +194,9 @@ export const ProfileCard = ({ user, onSelect, isSelected }) => {
                       <Checkbox
                         key={index}
                         isChecked={checkedRoles.includes(role.role_id)}
-                        isDisabled={userRoles.includes(role.role_name)}
+                        isDisabled={
+                          userRoles.includes(role.role_name) || !isAdmin
+                        }
                         onChange={() => handleRoleSelect(role)}>
                         <span className="profilecard__roles__name">
                           {role.role_name}

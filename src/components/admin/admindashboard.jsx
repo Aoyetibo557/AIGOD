@@ -2,10 +2,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./adminstyles.css";
 import SearchBar from "../searchbar/Searchbar";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { AdminHeader } from "./adminheader";
 import { ProfileCard } from "../profilecard/profilecard";
 import { findUsersByUserName } from "../../queries/user";
-import { CreateNewRoleModal } from "../modals/createnewrolemodal";
 import { debounce } from "lodash";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { useUser } from "../../utils/hooks/useUser";
@@ -17,13 +16,9 @@ const AdminDashboard = () => {
   const [foundUsers, setFoundUsers] = useState([]);
   const [input, setInput] = useState("");
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { username } = useAuth();
   const { profile } = useUser(username || "");
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
-
-  // const isAdmin = userRoles.includes("super admin");
 
   const isAdmin = userRoles?.includes("super admin");
   const handleInput = debounce(async (searchText) => {
@@ -48,22 +43,8 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin__dashboard">
-      <div className="admin__top">
-        <SearchBar size="lg" onSearch={handleInput} />
+      <AdminHeader onSearch={handleInput} isAdmin={isAdmin} />
 
-        <div>
-          {isAdmin && (
-            <Button
-              colorScheme="blue"
-              variant="solid"
-              onClick={onOpen}
-              className="create__btn"
-              disabled={!isAdmin}>
-              + Create New Role
-            </Button>
-          )}
-        </div>
-      </div>
       <div className="admin__userslist">
         {foundUsers?.map((user) => (
           <ProfileCard
@@ -79,7 +60,6 @@ const AdminDashboard = () => {
           <p>No users found with username: {input}</p>
         )}
       </div>
-      <CreateNewRoleModal isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };
