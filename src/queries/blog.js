@@ -71,4 +71,32 @@ const deleteBlog = async (id) => {
   }
 };
 
-export { createNewBlogPost, getBlogs, getBlogById, deleteBlog };
+//updateblog/editblog
+
+const updateBlog = async (blogData) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/blog/updateblog/${blogData.blog_id}`,
+      {
+        blog_id: blogData.blog_id,
+        blog_title: blogData.blog_title,
+        // blog_description: blogData.description,
+        // blog_read_time: blogData.readTime,
+        blog_tags: blogData.blog_tags,
+        blog_content: blogData.blog_content,
+        // blog_author: blogData.userId,
+        // blog_image_url: blogData.imageUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export { createNewBlogPost, getBlogs, getBlogById, deleteBlog, updateBlog };

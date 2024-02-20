@@ -12,18 +12,24 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
+import QuillEditor from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getBlogById, deleteBlog } from "../../queries/blog";
+import { getBlogById, deleteBlog, updateBlog } from "../../queries/blog";
 import { formatDate } from "../../utils/commonfunctions";
+import { Select } from "antd";
 import parse from "html-react-parser";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { useUser } from "../../utils/hooks/useUser";
 import { useUserRoles } from "../../utils/hooks/useUserRoles";
 import { ImageLoader } from "../imageloader/imageloader";
+import { modules, formats, tagOptions } from "../../utils/const/quillconfig";
 
 export const SingleBlog = ({ blogId }) => {
   const [blog, setBlog] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedBlog, setEditedBlog] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { username } = useAuth();
   const { profile } = useUser(username || "");
@@ -33,6 +39,7 @@ export const SingleBlog = ({ blogId }) => {
   const fetchBlog = async () => {
     const blogData = await getBlogById(blogId);
     setBlog(blogData?.blog);
+    setEditedBlog(blogData?.blog);
   };
 
   const handleDelete = async () => {
@@ -45,6 +52,33 @@ export const SingleBlog = ({ blogId }) => {
   const blogDetails = useMemo(() => {
     return fetchBlog();
   }, [blogId]);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedBlog(blog); // Reset editedBlog state to current blog data
+  };
+
+  const handleSubmitEdit = async () => {
+    const blogData = {
+      blog_id: blog.blog_id,
+      blog_title: editedBlog.blog_title,
+      blog_content: editedBlog.blog_content,
+      blog_tags: editedBlog.blog_tags,
+      // blog_image_url: editedBlog.blog_image_url,
+      // author_name: editedBlog.author_name,
+      // author_image_url: editedBlog.author_image_url,
+      // created_date: editedBlog.created_date,
+    };
+    const response = await updateBlog(blogData);
+    if (response) {
+      setIsEditing(false);
+      setBlog(editedBlog); // Update current blog state with edited data
+    }
+  };
 
   const isAdmin =
     userRoles?.includes("super admin") || userRoles?.includes("moderator");
@@ -64,17 +98,47 @@ export const SingleBlog = ({ blogId }) => {
 
       <div className="blogdetails">
         <div>
-          <div className="blogdetails_tags">
-            {blog.blog_tags?.map((tag, index) => {
-              return (
-                <span key={index} className="blog_tag">
-                  {tag}
-                </span>
-              );
-            })}
-          </div>
+          {isEditing ? (
+            <Select
+              size="middle"
+              mode="tags"
+              className=""
+              style={{ width: "45%", marginBottom: "20px" }}
+              placeholder="Select Tags"
+              onChange={(value) =>
+                setEditedBlog({ ...editedBlog, blog_tags: value })
+              }
+              tokenSeparators={[","]}
+              options={tagOptions}
+              maxCount={2}
+            />
+          ) : (
+            <div className="blogdetails_tags">
+              {blog.blog_tags?.map((tag, index) => {
+                return (
+                  <span key={index} className="blog_tag">
+                    {tag}
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </div>
-        <div className="blogdetails__title">{blog.blog_title}</div>
+        <div>
+          {isEditing ? (
+            <input
+              type="text"
+              className="blogdetails__title"
+              value={editedBlog.blog_title}
+              className="blogdetails__title__edit__input"
+              onChange={(e) =>
+                setEditedBlog({ ...editedBlog, blog_title: e.target.value })
+              }
+            />
+          ) : (
+            <div className="blogdetails__title">{blog.blog_title}</div>
+          )}
+        </div>
         <div className="blogdetails__topbar">
           <div className="blogdetails__div">
             <div className="blogdetails__author">
@@ -92,16 +156,51 @@ export const SingleBlog = ({ blogId }) => {
             </div>
           </div>
 
-          {!isLoading && isAdmin && (
-            <Button
-              colorScheme="red"
-              variant="outline"
-              size="sm"
-              className="blogdetails__btn"
-              onClick={onOpen}>
-              Delete Blog
-            </Button>
-          )}
+          <div>
+            {!isLoading && isAdmin && (
+              <>
+                {!isEditing ? (
+                  <>
+                    <Button
+                      colorScheme="green"
+                      variant="outline"
+                      size="sm"
+                      className="blogdetails__btn"
+                      onClick={handleEdit}>
+                      Edit
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      variant="outline"
+                      size="sm"
+                      className="blogdetails__btn"
+                      onClick={onOpen}>
+                      Delete Blog
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      colorScheme="blue"
+                      variant="outline"
+                      size="sm"
+                      className="blogdetails__btn"
+                      onClick={handleSubmitEdit}>
+                      Save
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      variant="outline"
+                      size="sm"
+                      className="blogdetails__btn"
+                      onClick={handleCancelEdit}>
+                      Cancel
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </div>
         <div>
           <ImageLoader
@@ -115,10 +214,24 @@ export const SingleBlog = ({ blogId }) => {
         </div>
 
         <div>
-          <div
-            className="blog__content"
-            dangerouslySetInnerHTML={{ __html: blog.blog_content }}
-          />
+          {!isEditing ? (
+            <div
+              className="blog__content"
+              dangerouslySetInnerHTML={{ __html: blog.blog_content }}
+            />
+          ) : (
+            <QuillEditor
+              theme="snow"
+              value={editedBlog.blog_content}
+              formats={formats}
+              modules={modules}
+              onChange={(e) =>
+                setEditedBlog({ ...editedBlog, blog_content: e })
+              }
+              styles={{ width: "300px", marginBottom: "50px" }}
+              className=""
+            />
+          )}
         </div>
       </div>
 

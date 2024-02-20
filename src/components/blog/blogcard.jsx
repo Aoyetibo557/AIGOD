@@ -18,14 +18,14 @@ export const BlogCard = ({
   blog_id,
 }) => {
   const hasAllDetails =
-    blog_title &&
-    created_date &&
-    author_name &&
-    author_image_url &&
-    blog_image_url &&
-    blog_description &&
-    blog_read_time &&
-    blog_tags &&
+    blog_title ||
+    created_date ||
+    author_name ||
+    author_image_url ||
+    blog_image_url ||
+    blog_description ||
+    blog_read_time ||
+    blog_tags ||
     blog_id;
   return hasAllDetails ? (
     <Link to={`/blog/${blog_id}`} className="blogcard">
