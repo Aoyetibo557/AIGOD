@@ -5,3 +5,4 @@ export const notificationTypes = {
   subscription: "SUBSCRIPTION",
   system_notification: "SYSTEM NOTIFICATION",
 };
+
