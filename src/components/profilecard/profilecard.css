@@ -1,91 +1,91 @@
 .profilecard__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 10px;
-    margin: 5px 0;
-    width: 200px;
-    color: #fff;
-    background-color: #18151a;
-    opacity: 0.8;
-    border-radius: 9px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  margin: 5px 0;
+  width: 200px;
+  color: #fff;
+  background-color: #ea00ff23;
+  opacity: 0.8;
+  border-radius: 9px;
+  cursor: pointer;
 }
 
 .profilecard__info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .profilecard__info-name {
-    font-size: 17px;
-    font-weight: 600;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 .profilecard__info-email {
-    font-size: 14px;
-    font-weight: 400;
-    color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
 }
 
 .profilecard__info-username {
-    font-size: 14px;
-    font-weight: 400;
-    font-style: italic;
-    color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  color: #fff;
 }
 
 .profilecard__container-selected {
-    border: 1px solid #eb00ff;
-    opacity: 1;
+  border: 1px solid #eb00ff;
+  opacity: 1;
 }
 
 .profilecard__roles-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #303030;
+  font-size: 12px;
+  font-weight: 600;
+  color: #303030;
 }
 
 .profilecard__roles {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .profilecard__modal__footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .profilecard__msg__container {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .profilecard__msg {
-    font-size: 14px;
-    opacity: 0.7;
-    font-weight: 500;
-    color: #303030;
+  font-size: 14px;
+  opacity: 0.7;
+  font-weight: 500;
+  color: #303030;
 }
 
 .profilecard__roles__name {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    font-weight: 400;
-    color: #303030;
-    text-transform: capitalize;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #303030;
+  text-transform: capitalize;
 }
 
 .profilecard__roles__info {
-    cursor: pointer;
+  cursor: pointer;
 }

@@ -14,6 +14,20 @@ const handleError = (error) => {
   return error;
 };
 
+// get users count
+const getUsersCount = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/stats/getuserscount`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
 //get all the users with roles in the user_roles table
 const getAllUsersWithRoles = async () => {
   try {
@@ -56,4 +70,4 @@ const getAllLogs = async () => {
   }
 };
 
-export { getAllUsersWithRoles, createLog, getAllLogs };
+export { getAllUsersWithRoles, createLog, getAllLogs, getUsersCount };

@@ -29,17 +29,6 @@ export const AdminHeader = ({ onSearch }) => {
     if (isAdmin) {
       return (
         <div className="adminheader__links">
-          {/* {!showSearch ? (
-            <RiSearch2Line
-              onClick={() => setShowSearch(!showSearch)}
-              className="adminheader__link adminheader__icon"
-            />
-          ) : (
-            <RiCloseLine
-              onClick={() => setShowSearch(!showSearch)}
-              className="adminheader__link adminheader__icon"
-            />
-          )} */}
           <Link className="adminheader__link" to="/admin">
             Overview
           </Link>
@@ -69,7 +58,7 @@ export const AdminHeader = ({ onSearch }) => {
           clsx="adminheader__search"
         />
 
-        {renderAdminLinks()}
+        {/* {renderAdminLinks()} */}
 
         <div>
           {isAdmin && (
