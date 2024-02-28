@@ -103,7 +103,7 @@ export const SignupForm = () => {
         navigate("/chattest");
       }
     } catch (error) {
-      setError(`Error Message: ${error.message}`);
+      setError(`${error.message}`);
     } finally {
       setLoading(false);
     }

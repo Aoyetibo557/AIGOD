@@ -1,0 +1,47 @@
+.log__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 0.4rem 0;
+    border-bottom: 1px solid #242027;
+    color: #e0e0e0;
+    background-color: #242027;
+}
+
+.log__card__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log__card__date {
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Manrope", sans-serif;
+    color: #fff;
+    opacity: 0.6;
+}
+
+.log__card__icon {
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.log__card__type {
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+    font-family: "Manrope", sans-serif;
+    padding: 3px;
+    margin-right: 10px;
+    background-color: #1c1b1e;
+    font-size: clamp(13px, 2vw, 13px);
+}
+
+.log__card__body {
+    margin-top: 0.8rem;
+    font-size: 14px;
+}

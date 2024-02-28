@@ -68,6 +68,7 @@ export const SingleBlog = ({ blogId }) => {
       blog_title: editedBlog.blog_title,
       blog_content: editedBlog.blog_content,
       blog_tags: editedBlog.blog_tags,
+      blog_author: profile?.id || editedBlog.blog_author,
       // blog_image_url: editedBlog.blog_image_url,
       // author_name: editedBlog.author_name,
       // author_image_url: editedBlog.author_image_url,

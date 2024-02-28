@@ -1,0 +1,33 @@
+.setting__layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting__container {
+  width: 70vw;
+  margin-top: 50px;
+}
+
+.setting__container h3 {
+  color: white;
+  font-weight: 700;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2.5rem, 2.3vw, 1.5rem);
+}
+
+.setting__body {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .setting__container {
+    width: 80vw;
+  }
+  .setting__body {
+    flex-direction: column;
+    gap: 0px;
+  }
+}

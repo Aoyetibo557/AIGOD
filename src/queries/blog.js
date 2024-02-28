@@ -84,7 +84,7 @@ const updateBlog = async (blogData) => {
         // blog_read_time: blogData.readTime,
         blog_tags: blogData.blog_tags,
         blog_content: blogData.blog_content,
-        // blog_author: blogData.userId,
+        blog_author: blogData.blog_author,
         // blog_image_url: blogData.imageUrl,
       },
       {

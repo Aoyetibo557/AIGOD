@@ -11,6 +11,7 @@ import ResetPasswordForm from "./components/signup/resetpassword";
 import NewBlogPost from "./pages/blog/newblog";
 import AdminPage from "./pages/admin/admin";
 import { generateRandomString } from "./utils/commonfunctions";
+import Subscription from "./components/settings/settingssubscription";
 
 const HomePage = lazy(() => import("./pages/homepage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
@@ -18,6 +19,9 @@ const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
 const LoginPage = lazy(() => import("./pages/login/login"));
 const SignupPage = lazy(() => import("./pages/signup/signup"));
 const ProfilePage = lazy(() => import("./pages/profile/profile"));
+const SettingsAccount = lazy(() =>
+  import("./components/settings/settingsaccount")
+);
 const BlogPage = lazy(() => import("./pages/blog/blog"));
 const BlogDetail = lazy(() => import("./pages/blog/blogdetail"));
 const ForgotPasswordPage = lazy(() =>
@@ -98,10 +102,28 @@ function App() {
           {/* These are private routes only available to authenticated users */}
           <Route element={<PrivateRoutes />}>
             <Route
-              path="/profile"
+              path="/settings/profile"
               element={
                 <Suspense fallback={<Loading />}>
                   <ProfilePage />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/settings/account"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SettingsAccount />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path="/settings/subscription"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Subscription />
                 </Suspense>
               }
             />

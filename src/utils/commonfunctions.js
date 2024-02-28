@@ -48,3 +48,33 @@ export const generateRandomString = (length) => {
   }
   return randomString;
 };
+
+//detect if the user is using a mobile device
+export const isMobile = () => {
+  return window.innerWidth < 768;
+};
+
+// Function to get the current user's location
+export const getUserLocation = async () => {
+  const response = await fetch("https://ipapi.co/json/");
+  const data = await response.json();
+  return data;
+};
+
+export const truncate = (text, length = 30) => {
+  if (text.length > length) {
+    return text.substring(0, length) + "...";
+  } else {
+    return text;
+  }
+};
+
+// detect and convert links withing a string to anchor tags
+export const linkify = (text) => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, (url) => {
+    return `<a href="${url}" aria-label=${url} title=${url} target="_blank">${truncate(
+      url
+    )}</a>`;
+  });
+};
