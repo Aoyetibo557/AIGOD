@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./adminstyles.css";
 import SearchBar from "../searchbar/Searchbar";
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ export const AdminHeader = ({ onSearch }) => {
     if (isAdmin) {
       return (
         <div className="adminheader__links">
-          {!showSearch ? (
+          {/* {!showSearch ? (
             <RiSearch2Line
               onClick={() => setShowSearch(!showSearch)}
               className="adminheader__link adminheader__icon"
@@ -39,39 +39,10 @@ export const AdminHeader = ({ onSearch }) => {
               onClick={() => setShowSearch(!showSearch)}
               className="adminheader__link adminheader__icon"
             />
-          )}
+          )} */}
           <Link className="adminheader__link" to="/admin">
             Overview
           </Link>
-          <Link className="adminheader__link" to="/admin/users">
-            Analytics
-          </Link>
-          <Link className="adminheader__link" to="/admin/cms">
-            CMS
-          </Link>
-          <Link className="adminheader__link" to="/admin/settings">
-            Settings
-          </Link>
-        </div>
-      );
-    } else if (!isAdmin && isModerator) {
-      return (
-        <div className="adminheader__links">
-          {!showSearch ? (
-            <RiSearch2Line
-              onClick={() => setShowSearch(!showSearch)}
-              className="adminheader__link adminheader__icon"
-            />
-          ) : (
-            <RiCloseLine
-              onClick={() => setShowSearch(!showSearch)}
-              className="adminheader__link adminheader__icon"
-            />
-          )}
-          <Link className="adminheader__link" to="/admin">
-            Overview
-          </Link>
-
           <Link className="adminheader__link" to="/admin/settings">
             Settings
           </Link>
@@ -91,14 +62,12 @@ export const AdminHeader = ({ onSearch }) => {
       </div>
 
       <div className="adminheader__right">
-        {showSearch && (
-          <SearchBar
-            size="md"
-            onSearch={handleInput}
-            placeholder="Search data..."
-            clsx="adminheader__search"
-          />
-        )}
+        <SearchBar
+          size="md"
+          onSearch={handleInput}
+          placeholder="Search data..."
+          clsx="adminheader__search"
+        />
 
         {renderAdminLinks()}
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { updateToken } from "../utils/auth";
+import { createLog } from "./admin";
 
 const API_URL =
   process.env.NODE_ENV === "development"
@@ -63,6 +64,7 @@ const assignRoles = async (userData) => {
         },
       }
     );
+
     return response.data;
   } catch (error) {
     return handleError(error);
@@ -98,6 +100,7 @@ const unassignRole = async (userData) => {
         },
       }
     );
+
     return response.data;
   } catch (error) {
     return handleError(error);

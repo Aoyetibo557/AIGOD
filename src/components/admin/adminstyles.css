@@ -8,6 +8,21 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.admindashboard__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 100px;
+    border-radius: 10px;
+}
+
+.admin__h3 {
+    font-size: clamp(1rem, 2vw, 19px);
+    font-weight: 600;
+    font-family: "Manrope", sans-serif;
+    color: #ffffffd2;
+}
+
 .adminheader h3 {
     font-size: clamp(1.8rem, 2vw, 2.5rem);
     font-weight: 600;
@@ -88,8 +103,8 @@
 
 .admin__userslist {
     display: flex;
-    flex-direction: column;
-    /* align-items: center; */
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     border-radius: 10px;
@@ -143,6 +158,14 @@
     text-transform: capitalize;
 }
 
+.no__result {
+    font-size: 19px;
+    font-family: "Manrope", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+}
+
 .create__btn {
     margin-left: 20px;
 }
@@ -153,6 +176,9 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+    .admin__userslist {
+        justify-content: center;
     }
     .adminheader__links {
         margin-top: 20px;

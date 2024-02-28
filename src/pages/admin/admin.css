@@ -8,3 +8,10 @@
     padding: 20px 0;
     backdrop-filter: blur(20px);
 }
+
+@media screen and (max-width: 768px) {
+    .admin__container {
+        height: 100%;
+        margin: 0;
+    }
+}
