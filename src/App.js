@@ -14,7 +14,7 @@ import { generateRandomString } from "./utils/commonfunctions";
 import Subscription from "./components/settings/settingssubscription";
 
 const HomePage = lazy(() => import("./pages/homepage"));
-const ChatPage = lazy(() => import("./pages/ChatPage"));
+const ChatPage = lazy(() => import("./pages/chatpage/ChatPage"));
 const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
 const LoginPage = lazy(() => import("./pages/login/login"));
 const SignupPage = lazy(() => import("./pages/signup/signup"));

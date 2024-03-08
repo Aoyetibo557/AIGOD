@@ -46,7 +46,8 @@ function Sidebar(props) {
       display={{ base: "none", xl: "block" }}
       position="fixed"
       minH="100%"
-      pt="calc(215px - 74.8px)">
+      // pt="calc(215px - 74.8px)"
+    >
       <Box
         bg={sidebarBg}
         backgroundColor="transparent"
@@ -65,14 +66,6 @@ function Sidebar(props) {
         minH="100%"
         overflowX="hidden"
         boxShadow={shadow}>
-        {/* <Scrollbars
-          autoHide
-          renderTrackVertical={renderTrack}
-          renderThumbVertical={renderThumb}
-          renderView={renderView}
-        >
-          <Content routes={routes} />
-        </Scrollbars> */}
         <Flex background="transparent" display={"block"} pl="50px">
           <Center justifyContent={"left"} mb="10px">
             <Text

@@ -18,6 +18,15 @@ option {
     height: 80vh;
 }
 
+.chat__content__container {
+    backdrop-filter: blur(40px);
+    border: 0.8px solid #838383;
+}
+
+.chat__content {
+    font-size: 14px;
+}
+
 @media only screen and (max-width: 768px) {
     .comingsoon_div {
         width: 330px;
