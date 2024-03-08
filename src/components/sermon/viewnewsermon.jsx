@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { Avatar } from "@chakra-ui/react";
 import { ImageLoader } from "../imageloader/imageloader";
-import "./viewnewblog.css";
+import "./viewnewsermon.css";
 
-export const ViewNewBlog = ({ blog }) => {
+export const ViewNewSermon = ({ blog }) => {
   return (
     <div className="viewblog__container">
       <div>
@@ -67,6 +67,6 @@ export const ViewNewBlog = ({ blog }) => {
   );
 };
 
-ViewNewBlog.propTypes = {
+ViewNewSermon.propTypes = {
   blog: PropTypes.object,
 };

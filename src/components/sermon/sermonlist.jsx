@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@chakra-ui/react";
-import "./bloglist.css";
-import { BlogCard } from "./blogcard";
+import "./sermonlist.css";
+import { SermonCard } from "./sermoncard";
 import { getBlogs } from "../../queries/blog";
 
-const BlogList = () => {
+const SermonList = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ const BlogList = () => {
     <div className="bloglist">
       <div className="bloglist__cards">
         {blogs
-          ?.map((blog) => <BlogCard key={blog.blog_id} {...blog} />)
+          ?.map((blog) => <SermonCard key={blog.blog_id} {...blog} />)
           .reverse()}
       </div>
 
@@ -49,4 +49,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default SermonList;
