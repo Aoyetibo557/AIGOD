@@ -18,8 +18,8 @@ import {
 import QuillEditor from "react-quill";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { Select } from "antd";
-import { ViewNewBlog } from "./viewnewblog";
-import "./createnewblog.css";
+import { ViewNewSermon } from "./viewnewsermon";
+import "./createnewsermon.css";
 import "react-quill/dist/quill.snow.css";
 import { NotificationAlert } from "../alert/notificationalert";
 import { createNewBlogPost } from "../../queries/blog";
@@ -30,7 +30,7 @@ import {
   constructImageUrl,
 } from "../../utils/s3";
 
-const CreateNewBlog = () => {
+const CreateNewSermon = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
@@ -221,7 +221,7 @@ const CreateNewBlog = () => {
       <div className="blog__container ">
         <TabList>
           <Tab>
-            <h2>Create New Blog</h2>
+            <h2>Create New Sermon</h2>
           </Tab>
           <Tab>
             <h2>Preview</h2>
@@ -234,7 +234,7 @@ const CreateNewBlog = () => {
                 {error && <NotificationAlert type={msgType} message={error} />}
                 <div>
                   <label htmlFor="imageInput" className="newblog__label">
-                    <span>Blog Image</span>
+                    <span>Sermon Image</span>
 
                     <Input
                       id="imageInput"
@@ -257,7 +257,7 @@ const CreateNewBlog = () => {
                     onChange={(e) => setReadTime(e.target.value)}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label htmlFor="tags" className="newblog__label">
                     Tags
                   </label>
@@ -271,10 +271,10 @@ const CreateNewBlog = () => {
                     options={tagOptions}
                     maxCount={2}
                   />
-                </div>
+                </div> */}
                 <div>
                   <label htmlFor="title" className="newblog__label">
-                    Blog Title
+                    Sermon Title
                   </label>
                   <input
                     id="title"
@@ -289,7 +289,7 @@ const CreateNewBlog = () => {
 
                 <div>
                   <label htmlFor="description" className="newblog__label">
-                    Blog Description
+                    Sermon Description
                   </label>
                   <input
                     id="description"
@@ -303,7 +303,7 @@ const CreateNewBlog = () => {
                 </div>
                 <div>
                   <label htmlFor="content" className="newblog__label">
-                    Blog Content
+                    Sermon Content
                   </label>
                   <QuillEditor
                     ref={(el) => (quill.current = el)}
@@ -324,7 +324,7 @@ const CreateNewBlog = () => {
                     variant="solid"
                     type="submit"
                     onClick={handleNewBlogSubmit}>
-                    Submit Blog
+                    Submit Sermon
                   </Button>
                 </div>
               </form>
@@ -333,7 +333,7 @@ const CreateNewBlog = () => {
 
           <TabPanel>
             <div className="newblog__container">
-              <ViewNewBlog
+              <ViewNewSermon
                 blog={{
                   image: imageName,
                   title,
@@ -351,4 +351,4 @@ const CreateNewBlog = () => {
   );
 };
 
-export default CreateNewBlog;
+export default CreateNewSermon;

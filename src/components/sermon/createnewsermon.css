@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     color: #fff;
-    backdrop-filter: blur(20px);
 }
 
 .newblog__container {
@@ -13,6 +12,7 @@
     justify-content: center;
     margin: 0px;
     padding: 50px;
+    backdrop-filter: blur(30px);
 }
 
 .newblog__form {

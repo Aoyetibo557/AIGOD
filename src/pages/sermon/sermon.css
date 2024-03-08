@@ -1,9 +1,9 @@
 .blog__container {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-color: black; */
 }
 
 .blog__body {
@@ -35,9 +35,10 @@
     border-radius: 12px;
 }
 
-.blog__bloglist {
-    margin-top: 100px;
-}
+
+/* .blog__bloglist {
+    margin-top: 0px;
+} */
 
 .newblog__post {
     color: #fff;

@@ -8,7 +8,7 @@ import PrivateRoutes from "./pages/customRoutes/privateRoutes";
 import AdminRoutes from "./pages/customRoutes/adminRoutes";
 import { verifyToken } from "./utils/auth";
 import ResetPasswordForm from "./components/signup/resetpassword";
-import NewBlogPost from "./pages/blog/newblog";
+import NewSermonPost from "./pages/sermon/newsermon";
 import AdminPage from "./pages/admin/admin";
 import { generateRandomString } from "./utils/commonfunctions";
 import Subscription from "./components/settings/settingssubscription";
@@ -22,8 +22,8 @@ const ProfilePage = lazy(() => import("./pages/profile/profile"));
 const SettingsAccount = lazy(() =>
   import("./components/settings/settingsaccount")
 );
-const BlogPage = lazy(() => import("./pages/blog/blog"));
-const BlogDetail = lazy(() => import("./pages/blog/blogdetail"));
+const SermonPage = lazy(() => import("./pages/sermon/sermon"));
+const SermonDetailPage = lazy(() => import("./pages/sermon/sermondetail"));
 const ForgotPasswordPage = lazy(() =>
   import("./pages/forgot-password/forgotPassword")
 );
@@ -82,19 +82,19 @@ function App() {
           />
 
           <Route
-            path="/blogs"
+            path="/sermons"
             element={
               <Suspense fallback={<Loading />}>
-                <BlogPage />
+                <SermonPage />
               </Suspense>
             }
           />
 
           <Route
-            path="/blog/:blogId"
+            path="/sermon/:blogId"
             element={
               <Suspense fallback={<Loading />}>
-                <BlogDetail />
+                <SermonDetailPage />
               </Suspense>
             }
           />
@@ -139,10 +139,10 @@ function App() {
               />
 
               <Route
-                path="/create-new-blog"
+                path="/create-new-sermon"
                 element={
                   <Suspense fallback={<Loading />}>
-                    <NewBlogPost />
+                    <NewSermonPost />
                   </Suspense>
                 }
               />

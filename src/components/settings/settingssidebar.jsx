@@ -23,13 +23,13 @@ export const SettingSidebar = () => {
       `}>
         Account
       </Link>
-      <Link
+      {/* <Link
         to="/settings/subscription"
         className={`settings__link
       ${isActive("/settings/subscription") ? "settings__link--active" : ""}
       `}>
         Subscription
-      </Link>
+      </Link> */}
     </div>
   );
 };

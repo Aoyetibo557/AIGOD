@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import "./singleblog.css";
+import "./sermondetail.css";
 import {
   Button,
   Avatar,
@@ -26,7 +26,7 @@ import { useUserRoles } from "../../utils/hooks/useUserRoles";
 import { ImageLoader } from "../imageloader/imageloader";
 import { modules, formats, tagOptions } from "../../utils/const/quillconfig";
 
-export const SingleBlog = ({ blogId }) => {
+export const SermonDetail = ({ blogId }) => {
   const [blog, setBlog] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedBlog, setEditedBlog] = useState({});
@@ -98,7 +98,7 @@ export const SingleBlog = ({ blogId }) => {
       </div>
 
       <div className="blogdetails">
-        <div>
+        {/* <div>
           {isEditing ? (
             <Select
               size="middle"
@@ -124,7 +124,7 @@ export const SingleBlog = ({ blogId }) => {
               })}
             </div>
           )}
-        </div>
+        </div> */}
         <div>
           {isEditing ? (
             <input
@@ -176,7 +176,7 @@ export const SingleBlog = ({ blogId }) => {
                       size="sm"
                       className="blogdetails__btn"
                       onClick={onOpen}>
-                      Delete Blog
+                      Delete Sermon
                     </Button>
                   </>
                 ) : (
@@ -243,10 +243,10 @@ export const SingleBlog = ({ blogId }) => {
         motionPreset="slideInBottom">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete Blog</ModalHeader>
+          <ModalHeader>Delete Sermon</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>Are you sure you want to delete this blog?</p>
+            <p>Are you sure you want to delete this sermon?</p>
           </ModalBody>
 
           <ModalFooter>
@@ -267,6 +267,6 @@ export const SingleBlog = ({ blogId }) => {
   );
 };
 
-SingleBlog.propTypes = {
+SermonDetail.propTypes = {
   blogId: PropTypes.string,
 };
