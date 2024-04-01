@@ -8,13 +8,18 @@ export const useChatbot = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Check if token is expired
+  const isTokenExpired = (expiresAt) => {
+    return new Date(expiresAt) < new Date();
+  };
+
   // register guest user
   const registerGuestUser = async () => {
     setLoading(true);
     try {
       const response = await axios.get(url + "/api/guest_register/");
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("token", JSON.stringify(response.data.token));
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
+      sessionStorage.setItem("token", JSON.stringify(response.data.token));
     } catch (error) {
       setError("Something went wrong while registering as a guest user.");
     } finally {
@@ -27,6 +32,11 @@ export const useChatbot = () => {
     if (!userInput.trim()) return;
     setLoading(true);
     try {
+      const token = JSON.parse(sessionStorage.getItem("token"));
+      if (!token || isTokenExpired(token.expires_at)) {
+        await registerGuestUser();
+      }
+
       const response = await axios.post(
         `${url}/api/chat/`,
         {
@@ -36,7 +46,9 @@ export const useChatbot = () => {
         },
         {
           headers: {
-            Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
+            Authorization: `Token ${JSON.parse(
+              sessionStorage.getItem("token")
+            )}`,
           },
         }
       );
@@ -52,7 +64,6 @@ export const useChatbot = () => {
       ]);
     } catch (error) {
       if (error.response?.status === 401) {
-        console.log("123");
         await registerGuestUser();
       }
     } finally {
@@ -64,6 +75,11 @@ export const useChatbot = () => {
   const handleResponse = async (inputCode, version) => {
     try {
       setLoading(true);
+      const token = JSON.parse(sessionStorage.getItem("token"));
+      if (!token || isTokenExpired(token.expires_at)) {
+        await registerGuestUser();
+      }
+
       const response = await axios.post(
         `${url}/api/chat/`,
         {
@@ -73,7 +89,9 @@ export const useChatbot = () => {
         },
         {
           headers: {
-            Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
+            Authorization: `Token ${JSON.parse(
+              sessionStorage.getItem("token")
+            )}`,
           },
         }
       );
@@ -94,9 +112,14 @@ export const useChatbot = () => {
   const getChatHistory = async () => {
     try {
       setLoading(true);
+      const token = JSON.parse(sessionStorage.getItem("token"));
+      if (!token || isTokenExpired(token.expires_at)) {
+        await registerGuestUser();
+      }
+
       const response = await axios.get(`${url}/api/chat/`, {
         headers: {
-          Authorization: `Token ${JSON.parse(localStorage.getItem("token"))}`,
+          Authorization: `Token ${JSON.parse(sessionStorage.getItem("token"))}`,
         },
       });
 
@@ -105,10 +128,11 @@ export const useChatbot = () => {
           "Something went wrong when fetching from the UserChat History."
         );
       }
+      console.log("History", response.data);
 
       return response.data;
     } catch (error) {
-      setError("Error occured getting user history!");
+      setError("Error occurred getting user history!");
     } finally {
       setLoading(false);
     }

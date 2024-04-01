@@ -7,6 +7,7 @@ import {
   Flex,
   Icon,
   Input,
+  Avatar,
   Text,
   useColorModeValue,
   ChakraProvider,
@@ -21,6 +22,8 @@ import "../../styles/Plugins.css";
 import "../../styles/MiniCalendar.css";
 import Header from "../../components/header/Header";
 import { useChatbot } from "../../utils/hooks/useChatbot";
+import { useUser } from "../../utils/hooks/useUser";
+import { useAuth } from "../../utils/hooks/useAuth";
 
 export default function ChatPage() {
   const {
@@ -32,11 +35,13 @@ export default function ChatPage() {
     error,
   } = useChatbot();
 
+  const { username } = useAuth();
+  const { profile } = useUser(username || "");
   const url = process.env.REACT_APP_API_URL;
 
   const [inputOnSubmit, setInputOnSubmit] = useState("");
   const [version, setVersion] = useState("hybrid");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
   const [messages, setMessages] = useState([
     {
       role: "system",
@@ -121,6 +126,7 @@ export default function ChatPage() {
     } catch (error) {
       setChatError("Something went wrong. Please try again.");
     } finally {
+      setUserInput("");
       setLoading(false);
     }
   };
@@ -133,12 +139,20 @@ export default function ChatPage() {
     user ? handleGetHistory() : registerGuestUser();
   }, []);
 
+  const renderAvatar = () => {
+    return username && profile ? (
+      <Avatar name={profile?.fullname} src={profile?.profile_image} />
+    ) : (
+      MdPerson
+    );
+  };
+
   return (
     <ChakraProvider>
       <Header showNav />
 
       <Box>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Box
           // pt={{ base: "60px", md: "30px" }}
           float="right"
@@ -198,6 +212,7 @@ export default function ChatPage() {
                     color={inputColor}
                     _placeholder={placeholderColor}
                     placeholder="Type your message here..."
+                    value={userInput}
                     onChange={handleChange}
                   />
                   <Button
@@ -222,53 +237,70 @@ export default function ChatPage() {
                     }}
                     onClick={handleTranslate}
                     isLoading={loading ? true : false}>
-                    Submit
+                    Ask God
                   </Button>
                 </Flex>
 
                 {/* response here */}
-                {messages.map((message, index) => (
-                  <Flex
-                    key={index}
-                    my={"10px"}
-                    position="relative"
-                    direction={message.role === "user" ? "col" : "row"}>
-                    <Box
-                      borderRadius="full"
-                      border="1px solid"
-                      borderColor={borderColor}
-                      alignItems="center"
-                      justify="center"
-                      bg={
-                        message.role === "user"
-                          ? "transparent"
-                          : "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)"
-                      }
-                      me="20px"
-                      h="40px"
-                      minH="40px"
-                      minW="40px">
-                      <Icon
-                        as={message.role === "user" ? MdPerson : MdAutoAwesome}
-                        width="20px"
-                        height="20px"
-                        color={message.role === "user" ? "brandColor" : "white"}
-                        cursor="pointer"
-                      />
-                    </Box>
-                    <Flex
-                      p="14px"
-                      // borderColor={borderColor}
-                      borderRadius="8px"
-                      className={"chat__content__container"}
-                      w="100%"
-                      color={message.role === "user" ? "white" : "white"}>
-                      <ReactMarkdown className="font-medium chat__content">
-                        {message.content}
-                      </ReactMarkdown>
-                    </Flex>
-                  </Flex>
-                ))}
+                {messages.map(
+                  (message, index) =>
+                    message.content !== "" && (
+                      <Flex
+                        key={index}
+                        my={"10px"}
+                        position="relative"
+                        direction={message.role === "user" ? "col" : "row"}>
+                        <Box
+                          borderRadius="full"
+                          border={username && profile ? " " : "1px solid"}
+                          borderColor={borderColor}
+                          alignItems="center"
+                          justify="center"
+                          bg={
+                            message.role === "user"
+                              ? "transparent"
+                              : "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)"
+                          }
+                          me="20px"
+                          h="40px"
+                          minH="40px"
+                          minW="40px">
+                          {username && profile && message.role === "user" ? (
+                            <Avatar
+                              name={profile?.fullname}
+                              src={profile?.profile_image}
+                            />
+                          ) : (
+                            <Icon
+                              as={
+                                message.role === "user"
+                                  ? MdPerson
+                                  : MdAutoAwesome
+                              }
+                              width="20px"
+                              height="20px"
+                              color={
+                                message.role === "user" ? "brandColor" : "white"
+                              }
+                              cursor="pointer"
+                            />
+                          )}
+                        </Box>
+
+                        <Flex
+                          p="14px"
+                          // borderColor={borderColor}
+                          borderRadius="8px"
+                          className={"chat__content__container"}
+                          w="100%"
+                          color={message.role === "user" ? "white" : "white"}>
+                          <ReactMarkdown className="font-medium chat__content">
+                            {message.content}
+                          </ReactMarkdown>
+                        </Flex>
+                      </Flex>
+                    )
+                )}
                 <Flex
                   justify="center"
                   mt="20px"

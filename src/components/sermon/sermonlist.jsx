@@ -44,7 +44,7 @@ const SermonList = () => {
     </div>
   ) : (
     <div>
-      <p>No blogs found</p>
+      <p>No sermon found</p>
     </div>
   );
 };
