@@ -76,7 +76,9 @@ export const useChatbot = () => {
     try {
       setLoading(true);
       const token = JSON.parse(sessionStorage.getItem("token"));
-      if (!token || isTokenExpired(token.expires_at)) {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+
+      if (token && isTokenExpired(user.expires_at)) {
         await registerGuestUser();
       }
 
@@ -113,7 +115,8 @@ export const useChatbot = () => {
     try {
       setLoading(true);
       const token = JSON.parse(sessionStorage.getItem("token"));
-      if (!token || isTokenExpired(token.expires_at)) {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (isTokenExpired(user.expires_at)) {
         await registerGuestUser();
       }
 
