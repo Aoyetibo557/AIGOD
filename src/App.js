@@ -12,6 +12,7 @@ import NewSermonPost from "./pages/sermon/newsermon";
 import AdminPage from "./pages/admin/admin";
 import { generateRandomString } from "./utils/commonfunctions";
 import Subscription from "./components/settings/settingssubscription";
+import AboutPage from "./pages/about/about";
 
 const HomePage = lazy(() => import("./pages/homepage"));
 const ChatPage = lazy(() => import("./pages/chatpage/ChatPage"));
@@ -51,6 +52,14 @@ function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <ComingSoonPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <Suspense fallback={<Loading />}>
+                <AboutPage />
               </Suspense>
             }
           />

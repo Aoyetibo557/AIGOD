@@ -219,7 +219,7 @@ export default function ChatPage() {
                     // py="15px"
                     // px="11px"
                     fontSize="sm"
-                    colorScheme="blue"
+                    colorScheme="purple"
                     size="md"
                     // backgroundColor="#303030"
                     borderRadius="8px"

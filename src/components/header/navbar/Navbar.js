@@ -81,6 +81,10 @@ const Navbar = () => {
           {isMenuOpen ? <MdOutlineClose /> : <MdMenu />}
         </div>
         <ul className="navbar_list">
+          <Link to="/about" className="navbar_list_item">
+            About
+          </Link>
+
           <Link to="/sermons" className="navbar_list_item">
             Sermons
           </Link>
