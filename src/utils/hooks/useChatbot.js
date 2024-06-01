@@ -8,11 +8,19 @@ export const useChatbot = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Check if token is expired
+  /**
+   * Date.parse(expiresAt): Converts the expiresAt string into the number of milliseconds since January 1, 1970, 00:00:00 UTC.
+    tokenLifetime: Represents 24 hours in milliseconds.
+    expiryTimestamp + tokenLifetime: Calculates the adjusted expiration timestamp by adding 24 hours to the original expiration time.
+    currentTimestamp >= adjustedExpiryTimestamp: Checks if the current time is greater than or equal to the adjusted expiration timestamp.
+   */
   const isTokenExpired = (expiresAt) => {
-    return new Date(expiresAt) < new Date();
+    const expiryTimestamp = Date.parse(expiresAt);
+    const currentTimestamp = Date.now();
+    const tokenLifetime = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    const adjustedExpiryTimestamp = expiryTimestamp + tokenLifetime;
+    return currentTimestamp >= adjustedExpiryTimestamp;
   };
-
   // register guest user
   const registerGuestUser = async () => {
     setLoading(true);
@@ -116,6 +124,7 @@ export const useChatbot = () => {
       setLoading(true);
       const token = JSON.parse(sessionStorage.getItem("token"));
       const user = JSON.parse(sessionStorage.getItem("user"));
+
       if (isTokenExpired(user.expires_at)) {
         await registerGuestUser();
       }
@@ -131,7 +140,6 @@ export const useChatbot = () => {
           "Something went wrong when fetching from the UserChat History."
         );
       }
-      console.log("History", response.data);
 
       return response.data;
     } catch (error) {
