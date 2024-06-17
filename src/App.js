@@ -47,14 +47,14 @@ function App() {
       }}>
       <div className="App">
         <Routes>
-          <Route
+          {/* <Route
             path="/"
             element={
               <Suspense fallback={<Loading />}>
                 <ComingSoonPage />
               </Suspense>
             }
-          />
+          /> */}
           <Route
             path="/about"
             element={
@@ -63,11 +63,12 @@ function App() {
               </Suspense>
             }
           />
+
           <Route
-            path="/chattest"
+            path="/"
             element={
               <Suspense fallback={<Loading />}>
-                <ChatPage />
+                <LoginPage />
               </Suspense>
             }
           />
@@ -110,6 +111,15 @@ function App() {
 
           {/* These are private routes only available to authenticated users */}
           <Route element={<PrivateRoutes />}>
+            <Route
+              path="/chat"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChatPage />
+                </Suspense>
+              }
+            />
+
             <Route
               path="/settings/profile"
               element={

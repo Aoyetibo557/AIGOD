@@ -21,9 +21,12 @@ import "../../styles/Contact.css";
 import "../../styles/Plugins.css";
 import "../../styles/MiniCalendar.css";
 import Header from "../../components/header/Header";
+import { SearchBar } from "../../components/chat/searchbar";
+import { MessageList } from "../../components/chat/messagelist";
 import { useChatbot } from "../../utils/hooks/useChatbot";
 import { useUser } from "../../utils/hooks/useUser";
 import { useAuth } from "../../utils/hooks/useAuth";
+import { useToast } from "@chakra-ui/react";
 
 export default function ChatPage() {
   const {
@@ -48,6 +51,8 @@ export default function ChatPage() {
       content: "",
     },
   ]);
+
+  const toast = useToast();
 
   // ChatGPT model
   const [model, setModel] = useState("gpt-3.5-turbo");
@@ -101,12 +106,26 @@ export default function ChatPage() {
 
     if (!userInput) {
       setChatError("You must ask a question mortal to receive an answer!");
-      return;
+      return toast({
+        title: "Error Occurred",
+        description: "You must ask a question mortal to receive an answer!",
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+        status: "error",
+      });
     }
 
     if (userInput.length > maxCodeLength) {
       setChatError(`Enter less than ${maxCodeLength} characters Mortal!.`);
-      return;
+      return toast({
+        title: "Error Occurred",
+        description: `Enter less than ${maxCodeLength} characters Mortal!.`,
+        duration: 6000,
+        isClosable: true,
+        position: "top-right",
+        status: "error",
+      });
     }
 
     setLoading(true);
@@ -175,137 +194,23 @@ export default function ChatPage() {
             <Flex w="100%" direction="column" position="relative">
               <Flex
                 direction="column"
-                mx="auto"
-                className={`searchbar__container`}
+                className="searchbar__container"
                 w={{ base: "100%", md: "100%", xl: "100%" }}
                 minH={{ base: "75vh", "2xl": "85vh" }}
                 maxW="1000px">
-                {/* Chat Input */}
-                {/* Chat Error */}
-                <Text
-                  align="center"
-                  fontSize="15px"
-                  color="tomato"
-                  marginTop="90px">
-                  {chatError}
-                </Text>
-                <Flex
-                  ms={{ base: "0px", xl: "60px" }}
-                  mb="50px"
-                  position="sticky"
-                  // zIndex={"1000"}
-                  top="110px"
-                  alignItems={"center"}
-                  justifySelf={"flex-end"}>
-                  <Input
-                    minH="54px"
-                    h="100%"
-                    border="1px solid"
-                    borderColor={borderColor}
-                    borderRadius="16px"
-                    p="0px 20px"
-                    me="10px"
-                    fontSize="sm"
-                    backgroundColor="white"
-                    fontWeight="500"
-                    _focus={{ borderColor: "none" }}
-                    color={inputColor}
-                    _placeholder={placeholderColor}
-                    placeholder="Type your message here..."
-                    value={userInput}
-                    onChange={handleChange}
-                  />
-                  <Button
-                    // py="15px"
-                    // px="11px"
-                    fontSize="sm"
-                    colorScheme="purple"
-                    size="md"
-                    // backgroundColor="#303030"
-                    borderRadius="8px"
-                    // ms="auto"
-                    color="white"
-                    // w={{ base: "160px", md: "110px" }}
-                    // h="50px"
-                    _hover={{
-                      boxShadow:
-                        "0px 21px 27px -10px rgba(96, 60, 255, 0.48) !important",
-                      bg: "#EB00FF  !important",
-                      // _disabled: {
-                      //   bg: "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
-                      // },
-                    }}
-                    onClick={handleTranslate}
-                    isLoading={loading ? true : false}>
-                    Ask God
-                  </Button>
-                </Flex>
+                <SearchBar
+                  userInput={userInput}
+                  handleChange={handleChange}
+                  handleTranslate={handleTranslate}
+                  loading={loading}
+                  chatError={chatError}
+                />
 
-                {/* response here */}
-                {messages.map(
-                  (message, index) =>
-                    message.content !== "" && (
-                      <Flex
-                        key={index}
-                        my={"10px"}
-                        position="relative"
-                        direction={message.role === "user" ? "col" : "row"}>
-                        <Box
-                          borderRadius="full"
-                          border={username && profile ? " " : "1px solid"}
-                          borderColor={borderColor}
-                          alignItems="center"
-                          justify="center"
-                          bg={
-                            message.role === "user"
-                              ? "transparent"
-                              : "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)"
-                          }
-                          me="20px"
-                          h="40px"
-                          minH="40px"
-                          minW="40px">
-                          {username && profile && message.role === "user" ? (
-                            <Avatar
-                              name={profile?.fullname}
-                              src={profile?.profile_image}
-                            />
-                          ) : (
-                            <Icon
-                              as={
-                                message.role === "user"
-                                  ? MdPerson
-                                  : MdAutoAwesome
-                              }
-                              width="20px"
-                              height="20px"
-                              color={
-                                message.role === "user" ? "brandColor" : "white"
-                              }
-                              cursor="pointer"
-                            />
-                          )}
-                        </Box>
-
-                        <Flex
-                          p="14px"
-                          // borderColor={borderColor}
-                          borderRadius="8px"
-                          className={"chat__content__container"}
-                          w="100%"
-                          color={message.role === "user" ? "white" : "white"}>
-                          <ReactMarkdown className="font-medium chat__content">
-                            {message.content}
-                          </ReactMarkdown>
-                        </Flex>
-                      </Flex>
-                    )
-                )}
-                <Flex
-                  justify="center"
-                  mt="20px"
-                  direction={{ base: "column", md: "row" }}
-                  alignItems="center"></Flex>
+                <MessageList
+                  messages={messages}
+                  username={username}
+                  profile={profile}
+                />
               </Flex>
             </Flex>
           </Box>
