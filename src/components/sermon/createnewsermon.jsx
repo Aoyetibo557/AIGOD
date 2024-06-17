@@ -22,7 +22,7 @@ import { ViewNewSermon } from "./viewnewsermon";
 import "./createnewsermon.css";
 import "react-quill/dist/quill.snow.css";
 import { NotificationAlert } from "../alert/notificationalert";
-import { createNewBlogPost } from "../../queries/blog";
+import { createNewSermonPost } from "../../queries/sermon";
 import {
   changeImageFileName,
   uploadToS3,
@@ -173,7 +173,7 @@ const CreateNewSermon = () => {
   //   setImageName(newFileName);
   // };
 
-  const handleNewBlogSubmit = async (e) => {
+  const handleNewSermonSubmit = async (e) => {
     e.preventDefault();
     setError("");
     // handleChangeName();
@@ -182,8 +182,8 @@ const CreateNewSermon = () => {
       return;
     } else {
       try {
-        const imageUrl = constructImageUrl(imageName, "blogs");
-        const newBlog = {
+        const imageUrl = constructImageUrl(imageName, "sermons");
+        const newSermon = {
           title,
           readTime,
           tags,
@@ -192,22 +192,23 @@ const CreateNewSermon = () => {
           content: value,
           imageUrl,
         };
-        const res = await createNewBlogPost(newBlog);
+        //need to go update the blog to sermon logic(just update naming conventions)
+        const res = await createNewSermonPost(newSermon);
         if (res.status === "success") {
           const { fileName, url } = await uploadToS3({
             file,
             fileName: imageName,
             userId,
-            location: "blogs",
+            location: "sermons",
           });
 
-          setError("Blog created successfully");
+          setError("Sermon created successfully");
           setMsgType("success");
           clearForm();
 
-          navigate(`/blog/${res?.blog.blog_id}`);
+          navigate(`/sermon/${res?.blog.blog_id}`);
         } else {
-          setError("Error creating blog");
+          setError("Error creating sermon");
           setMsgType("error");
         }
       } catch (error) {
@@ -323,7 +324,7 @@ const CreateNewSermon = () => {
                     colorScheme="teal"
                     variant="solid"
                     type="submit"
-                    onClick={handleNewBlogSubmit}>
+                    onClick={handleNewSermonSubmit}>
                     Submit Sermon
                   </Button>
                 </div>

@@ -24,6 +24,7 @@ export const useChatbot = () => {
   // register guest user
   const registerGuestUser = async () => {
     setLoading(true);
+    sessionStorage.clear();
     try {
       const response = await axios.get(url + "/api/guest_register/");
       sessionStorage.setItem("user", JSON.stringify(response.data.user));
@@ -122,7 +123,6 @@ export const useChatbot = () => {
   const getChatHistory = async () => {
     try {
       setLoading(true);
-      const token = JSON.parse(sessionStorage.getItem("token"));
       const user = JSON.parse(sessionStorage.getItem("user"));
 
       if (isTokenExpired(user.expires_at)) {

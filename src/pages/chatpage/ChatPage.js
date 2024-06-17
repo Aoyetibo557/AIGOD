@@ -27,6 +27,7 @@ import { useChatbot } from "../../utils/hooks/useChatbot";
 import { useUser } from "../../utils/hooks/useUser";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { useToast } from "@chakra-ui/react";
+import { useUserRoles } from "../../utils/hooks/useUserRoles";
 
 export default function ChatPage() {
   const {
@@ -40,6 +41,10 @@ export default function ChatPage() {
 
   const { username } = useAuth();
   const { profile } = useUser(username || "");
+  const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
+
+  const isAdmin = userRoles?.includes("super admin");
+
   const url = process.env.REACT_APP_API_URL;
 
   const [inputOnSubmit, setInputOnSubmit] = useState("");
@@ -102,7 +107,8 @@ export default function ChatPage() {
   const handleTranslate = async () => {
     setInputOnSubmit(userInput);
     setChatError("");
-    const maxCodeLength = model === "gpt-3.5-turbo" ? 700 : 700;
+    const maxCodeLength =
+      model === "gpt-3.5-turbo" ? (isAdmin ? 18000 : 800) : 800;
 
     if (!userInput) {
       setChatError("You must ask a question mortal to receive an answer!");
@@ -120,7 +126,9 @@ export default function ChatPage() {
       setChatError(`Enter less than ${maxCodeLength} characters Mortal!.`);
       return toast({
         title: "Error Occurred",
-        description: `Enter less than ${maxCodeLength} characters Mortal!.`,
+        description: isAdmin
+          ? `You can only enter 18000 characters as an admin`
+          : `Enter less than ${maxCodeLength} characters Mortal!.`,
         duration: 6000,
         isClosable: true,
         position: "top-right",

@@ -14,8 +14,6 @@ const handleError = (error) => {
 };
 
 const checkUserCredentials = async ({ username, password }) => {
-  console.log("API_URL", API_URL);
-  console.log("PRocess", process.env.REACT_APP_NODE_ENV);
   try {
     const response = await axios.post(`${API_URL}/user/login`, {
       username,

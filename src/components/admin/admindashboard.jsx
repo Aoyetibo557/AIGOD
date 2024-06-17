@@ -27,60 +27,70 @@ const AdminDashboard = () => {
 
   const isAdmin = userRoles?.includes("super admin");
 
-  const handleInput = debounce(async (searchText) => {
+  const handleInput = debounce((searchText) => {
     setInput(searchText.toLowerCase());
-  }, 300);
+  }, 500);
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
   };
 
-  const getRoleUsers = useMemo(() => {
+  useEffect(() => {
     const fetchUsers = async () => {
       const res = await getAllUsersWithRoles();
       if (res.status === "success") {
         setUsers(res.users);
+        setFoundUsers(res.users);
       }
     };
     fetchUsers();
   }, []);
 
-  const getAllUsers = useMemo(() => {
-    const fetchUsers = async () => {
+  useEffect(() => {
+    const fetchUserCount = async () => {
       const res = await getUsersCount();
       if (res.status === "success") {
-        setUserCount(res?.data);
+        setUserCount(res.data);
       }
     };
-    fetchUsers();
+    fetchUserCount();
   }, []);
 
   const searchdbForUsers = async () => {
     const res = await findUsersByUserName(input);
-    if (res.status === "success") {
+    if (res.status === "success" && res?.users.length > 0) {
       setFoundUsers(res.users);
+    } else {
+      setFoundUsers([]);
     }
   };
 
-  const filteredUsers = useMemo(() => {
+  const filterUsersInState = (users, input) => {
     return users.filter((user) => {
       return (
-        user.username.toLowerCase().includes(input) ||
-        user.email.toLowerCase().includes(input) ||
-        user.fullname.toLowerCase().includes(input)
+        user.username.toLowerCase().includes(input.toLowerCase()) ||
+        user.email.toLowerCase().includes(input.toLowerCase()) ||
+        user.fullname.toLowerCase().includes(input.toLowerCase())
       );
     });
-  }, [input, users]);
+  };
 
-  //causing an infinite loop. Need to fix this
-  // useEffect(() => {
-  //   console.log("called");
-  //   if (input.trim() === "") {
-  //     setFoundUsers([]);
-  //   } else if (foundUsers.length === 0 && input.trim() !== "") {
-  //     searchdbForUsers();
-  //   }
-  // }, [input, foundUsers]);
+  const handleUserSearch = async () => {
+    const filtered = filterUsersInState(users, input);
+    if (filtered.length > 0) {
+      setFoundUsers(filtered);
+    } else {
+      await searchdbForUsers();
+    }
+  };
+
+  useEffect(() => {
+    if (input.trim() === "") {
+      setFoundUsers(users);
+    } else {
+      handleUserSearch();
+    }
+  }, [input, users]);
 
   return (
     <div className="admin__dashboard">
@@ -113,7 +123,7 @@ const AdminDashboard = () => {
           <div>
             <h3 className="admin__h3">Active Users Roles </h3>
             <div className="admin__userslist">
-              {filteredUsers?.map((user) => (
+              {foundUsers?.map((user) => (
                 <ProfileCard
                   key={user.id}
                   user={user}
@@ -123,15 +133,15 @@ const AdminDashboard = () => {
               ))}
             </div>
             <div className="no__result">
-              {input.length > 1 && filteredUsers.length < 1 && (
+              {input.length > 1 && foundUsers.length < 1 && (
                 <p>No users found with username: {input}</p>
               )}
             </div>
           </div>
 
           {/* <div className="admin__logs">
-          <AdminLogs />
-        </div> */}
+            <AdminLogs />
+          </div> */}
         </div>
       </div>
     </div>
