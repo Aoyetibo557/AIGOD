@@ -4,7 +4,10 @@ import { MessageItem } from "./messageitem";
 
 export const MessageList = ({ messages, username, profile }) => {
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "100px",
+      }}>
       {messages.map(
         (message, index) =>
           message.content && (

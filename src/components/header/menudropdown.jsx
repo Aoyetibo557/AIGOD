@@ -27,6 +27,6 @@ export const MenuDropdown = ({ content, profile }) => {
 };
 
 MenuDropdown.propTypes = {
-  menuItems: PropTypes.array.isRequired,
+  content: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };

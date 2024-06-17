@@ -14,7 +14,7 @@ import { UserNotifications } from "../../notification/notifications";
 
 const Navbar = () => {
   const { username } = useAuth();
-  const { profile } = useUser(username || "");
+  const { profile, loading } = useUser(username || "");
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,6 +73,10 @@ const Navbar = () => {
       </Link>
     </div>
   );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

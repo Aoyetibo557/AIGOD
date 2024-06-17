@@ -2,7 +2,7 @@ import axios from "axios";
 import { updateToken } from "../utils/auth";
 
 const API_URL =
-  process.env.NODE_ENV === "development"
+  process.env.REACT_APP_NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_SERVER_URL
     : process.env.REACT_APP_PROD_SERVER_URL;
 
@@ -14,6 +14,8 @@ const handleError = (error) => {
 };
 
 const checkUserCredentials = async ({ username, password }) => {
+  console.log("API_URL", API_URL);
+  console.log("PRocess", process.env.REACT_APP_NODE_ENV);
   try {
     const response = await axios.post(`${API_URL}/user/login`, {
       username,

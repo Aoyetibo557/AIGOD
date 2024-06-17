@@ -18,8 +18,10 @@ export const SearchBar = ({
   return (
     <div>
       <Flex
-        position="relative"
-        top="0px"
+        position="fixed"
+        top="70px"
+        width="100%"
+        zIndex="1000"
         marginTop="30px"
         marginBottom="40px"
         alignItems="center"
