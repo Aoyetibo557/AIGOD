@@ -2,14 +2,14 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@chakra-ui/react";
 import "./sermonlist.css";
 import { SermonCard } from "./sermoncard";
-import { getBlogs } from "../../queries/blog";
+import { getSermons } from "../../queries/sermon";
 
 const SermonList = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchBlogs = async () => {
-    const blogData = await getBlogs();
+  const fetchSermons = async () => {
+    const blogData = await getSermons();
     setBlogs(blogData?.blogs);
   };
 
@@ -17,7 +17,7 @@ const SermonList = () => {
   const blogList = useMemo(() => {
     try {
       setIsLoading(true);
-      return fetchBlogs();
+      return fetchSermons();
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {

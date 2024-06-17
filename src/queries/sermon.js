@@ -13,7 +13,7 @@ const handleError = (error) => {
   return error;
 };
 
-const createNewBlogPost = async (blogData) => {
+const createNewSermonPost = async (blogData) => {
   try {
     const response = await axios.post(
       `${API_URL}/blog/createnewblog`,
@@ -38,7 +38,7 @@ const createNewBlogPost = async (blogData) => {
   }
 };
 
-const getBlogs = async () => {
+const getSermons = async () => {
   try {
     const response = await axios.get(`${API_URL}/blog/getallblogs`);
     return response.data;
@@ -48,7 +48,7 @@ const getBlogs = async () => {
 };
 
 // getblogbyid
-const getBlogById = async (id) => {
+const getSermonById = async (id) => {
   try {
     const response = await axios.get(`${API_URL}/blog/getblogbyid/${id}`);
     return response.data;
@@ -58,7 +58,7 @@ const getBlogById = async (id) => {
 };
 
 // deleteblog
-const deleteBlog = async (id) => {
+const deleteSermon = async (id) => {
   try {
     const response = await axios.delete(`${API_URL}/blog/deleteblog/${id}`, {
       headers: {
@@ -73,7 +73,7 @@ const deleteBlog = async (id) => {
 
 //updateblog/editblog
 
-const updateBlog = async (blogData) => {
+const updateSermon = async (blogData) => {
   try {
     const response = await axios.put(
       `${API_URL}/blog/updateblog/${blogData.blog_id}`,
@@ -99,4 +99,10 @@ const updateBlog = async (blogData) => {
   }
 };
 
-export { createNewBlogPost, getBlogs, getBlogById, deleteBlog, updateBlog };
+export {
+  createNewSermonPost,
+  getSermons,
+  getSermonById,
+  deleteSermon,
+  updateSermon,
+};

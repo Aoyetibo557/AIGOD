@@ -8,9 +8,7 @@ import ChatboxItem from "./ChatboxItem";
 
 const Chatbox = () => {
   const [chatLog, setChatLog] = useState([]); // [ {type: "user", content: "Hello"}, {type: "ai", content: "Hi"} ]
-  const handleAsk = (userInput) => {
-    console.log(userInput);
-  };
+  const handleAsk = (userInput) => {};
 
   return (
     <div className="chatbox">

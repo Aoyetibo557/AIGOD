@@ -5,7 +5,6 @@ import { Avatar } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { formatDate } from "../../utils/commonfunctions";
 import { BlogcardSkeleton } from "../skeleton/blogcardskeleton";
-
 export const SermonCard = ({
   blog_title,
   created_date,
@@ -27,6 +26,7 @@ export const SermonCard = ({
     blog_read_time ||
     blog_tags ||
     blog_id;
+
   return hasAllDetails ? (
     <Link to={`/sermon/${blog_id}`} className="blogcard">
       <div className="blogcard__top">

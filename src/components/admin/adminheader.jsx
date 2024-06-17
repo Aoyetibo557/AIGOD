@@ -21,7 +21,6 @@ export const AdminHeader = ({ onSearch }) => {
   const [showSearch, setShowSearch] = useState(false);
 
   const handleInput = (searchText) => {
-    console.log(searchText);
     onSearch(searchText);
   };
 

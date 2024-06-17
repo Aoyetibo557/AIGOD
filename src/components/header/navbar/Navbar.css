@@ -191,6 +191,7 @@
   }
   .mobile-menu-open .navbar_list {
     display: flex;
+    z-index: -2;
   }
   .navbar_avatar span {
     margin-right: 10px;

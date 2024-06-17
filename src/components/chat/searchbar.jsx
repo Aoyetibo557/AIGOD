@@ -1,5 +1,12 @@
 import React from "react";
-import { Flex, Input, Text, Button, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  Text,
+  Textarea,
+  Button,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 export const SearchBar = ({
   userInput,
@@ -21,23 +28,24 @@ export const SearchBar = ({
         position="fixed"
         top="70px"
         width="100%"
-        zIndex="1000"
+        zIndex="1"
         marginTop="30px"
         marginBottom="40px"
         alignItems="center"
         justifySelf="flex-end">
-        <Input
+        <Textarea
+          size="sm"
+          resize={"none"}
           minH="54px"
           width="60vw"
           border="1px solid"
           borderColor={borderColor}
           borderRadius="16px"
-          p="0px 20px"
+          p="10px 20px"
           me="10px"
           fontSize="sm"
           backgroundColor="white"
           fontWeight="500"
-          _focus={{ borderColor: "none" }}
           color={inputColor}
           _placeholder={placeholderColor}
           placeholder="Type your message here..."

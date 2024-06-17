@@ -16,7 +16,11 @@ import QuillEditor from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getBlogById, deleteBlog, updateBlog } from "../../queries/blog";
+import {
+  getSermonById,
+  deleteSermon,
+  updateSermon,
+} from "../../queries/sermon";
 import { formatDate } from "../../utils/commonfunctions";
 import { Select } from "antd";
 import parse from "html-react-parser";
@@ -37,15 +41,15 @@ export const SermonDetail = ({ blogId }) => {
   const navigate = useNavigate();
 
   const fetchBlog = async () => {
-    const blogData = await getBlogById(blogId);
+    const blogData = await getSermonById(blogId);
     setBlog(blogData?.blog);
     setEditedBlog(blogData?.blog);
   };
 
   const handleDelete = async () => {
-    const response = await deleteBlog(blogId);
+    const response = await deleteSermon(blogId);
     if (response) {
-      navigate(-1);
+      navigate("/sermons");
     }
   };
 
@@ -74,7 +78,7 @@ export const SermonDetail = ({ blogId }) => {
       // author_image_url: editedBlog.author_image_url,
       // created_date: editedBlog.created_date,
     };
-    const response = await updateBlog(blogData);
+    const response = await updateSermon(blogData);
     if (response) {
       setIsEditing(false);
       setBlog(editedBlog); // Update current blog state with edited data

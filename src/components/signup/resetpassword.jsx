@@ -32,7 +32,6 @@ function ResetPasswordForm() {
     };
 
     const res = await updateUserPassword(queryData);
-    console.log(res);
     if (res.status === "success") {
       setEmail("");
       setPassword("");

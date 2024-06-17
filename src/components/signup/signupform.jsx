@@ -100,7 +100,7 @@ export const SignupForm = () => {
         localStorage.setItem("aigod_userId", uid);
 
         // redirect
-        navigate("/chattest");
+        navigate("/chat");
       }
     } catch (error) {
       setError(`${error.message}`);
