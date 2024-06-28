@@ -69,7 +69,7 @@ const CreateNewSermon = () => {
       }
       const newFileName = changeImageFileName({
         fileName: file?.name,
-        origin: "blog",
+        origin: "sermon",
         userId: userId,
       });
 
