@@ -47,14 +47,14 @@ function App() {
       }}>
       <div className="App">
         <Routes>
-          {/* <Route
+          <Route
             path="/"
             element={
               <Suspense fallback={<Loading />}>
                 <ComingSoonPage />
               </Suspense>
             }
-          /> */}
+          />
           <Route
             path="/about"
             element={
@@ -64,32 +64,32 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/"
             element={
               <Suspense fallback={<Loading />}>
                 <LoginPage />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             path="/login"
             element={
               <Suspense fallback={<Loading />}>
                 <LoginPage />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             path="/signup"
             element={
               <Suspense fallback={<Loading />}>
                 <SignupPage />
               </Suspense>
             }
-          />
+          /> */}
 
           <Route
             path="/sermons"
@@ -110,54 +110,54 @@ function App() {
           />
 
           {/* These are private routes only available to authenticated users */}
-          <Route element={<PrivateRoutes />}>
-            <Route
+          {/* <Route element={<PrivateRoutes />}> */}
+          {/* <Route
               path="/chat"
               element={
                 <Suspense fallback={<Loading />}>
                   <ChatPage />
                 </Suspense>
               }
-            />
+            /> */}
 
-            <Route
+          {/* <Route
               path="/settings/profile"
               element={
                 <Suspense fallback={<Loading />}>
                   <ProfilePage />
                 </Suspense>
               }
-            />
+            /> */}
 
-            <Route
+          {/* <Route
               path="/settings/account"
               element={
                 <Suspense fallback={<Loading />}>
                   <SettingsAccount />
                 </Suspense>
               }
-            />
+            /> */}
 
-            <Route
+          {/* <Route
               path="/settings/subscription"
               element={
                 <Suspense fallback={<Loading />}>
                   <Subscription />
                 </Suspense>
               }
-            />
+            /> */}
 
-            <Route element={<AdminRoutes />}>
-              <Route
+          {/* <Route element={<AdminRoutes />}> */}
+          {/* <Route
                 path={`/epikavios/internal-e3gHt7Jp5q/admin`}
                 element={
                   <Suspense fallback={<Loading />}>
                     <AdminPage />
                   </Suspense>
                 }
-              />
+              /> */}
 
-              <Route
+          {/* <Route
                 path="/create-new-sermon"
                 element={
                   <Suspense fallback={<Loading />}>
@@ -165,26 +165,26 @@ function App() {
                   </Suspense>
                 }
               />
-            </Route>
-          </Route>
+            </Route> */}
+          {/* </Route> */}
 
-          <Route
+          {/* <Route
             path="/forgot-password"
             element={
               <Suspense fallback={<Loading />}>
                 <ForgotPasswordPage />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             path="/reset-password/:token"
             element={
               <Suspense fallback={<Loading />}>
                 <ResetPasswordForm />
               </Suspense>
             }
-          />
+          /> */}
 
           <Route
             path="*"

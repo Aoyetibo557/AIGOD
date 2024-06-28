@@ -74,9 +74,9 @@ const Navbar = () => {
     </div>
   );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
@@ -92,7 +92,7 @@ const Navbar = () => {
           <Link to="/sermons" className="navbar_list_item">
             Sermons
           </Link>
-
+          {/* 
           {username ? (
             <>
               <UserNotifications />
@@ -107,7 +107,7 @@ const Navbar = () => {
                 <Link to="/signup">Register</Link>
               </Button>
             </>
-          )}
+          )} */}
         </ul>
       </div>
     </>
