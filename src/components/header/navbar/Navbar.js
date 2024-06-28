@@ -14,7 +14,7 @@ import { UserNotifications } from "../../notification/notifications";
 
 const Navbar = () => {
   const { username } = useAuth();
-  const { profile } = useUser(username || "");
+  const { profile, loading } = useUser(username || "");
   const { userRoles, isLoading, isError } = useUserRoles(profile?.id);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,27 +32,51 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const items = [
-    {
-      key: "1",
-      label: (
-        <Link className="navbar_list_item" to="/profile">
-          Profile
-        </Link>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <button className="logout__btn" onClick={logOut}>
-          Log Out
-        </button>
-      ),
-    },
-  ];
+  const isAdminUser = userRoles?.includes("super admin");
+  const isModerator = userRoles?.includes("moderator");
+  const isDev = userRoles?.includes("dev");
 
-  const isAdminUser =
-    userRoles?.includes("super admin") || userRoles?.includes("moderator");
+  const canViewAdminDashboard = isAdminUser || isModerator;
+
+  const renderRoles = () => {
+    if (isAdminUser) return "Admin";
+    if (isModerator) return "Moderator";
+    if (isDev) return "Developer";
+    if (isAdminUser && isModerator) return "Admin";
+    if (isAdminUser && isDev) return "Admin";
+    if (isModerator && isDev) return "Moderator";
+    if (isAdminUser && isModerator && isDev) return "Admin";
+  };
+
+  const content = (
+    <div className={`content__container`}>
+      <div className={`content__container__top`}>
+        <div className={`content__div`}>
+          <span className={`content__name`}>{profile?.fullname}</span>
+          <span className={`content__email`}>{profile?.email}</span>
+        </div>
+        <span className={`content__role`}>{renderRoles()}</span>
+      </div>
+      {canViewAdminDashboard && (
+        <Link
+          className={`content__link`}
+          to={`/epikavios/internal-e3gHt7Jp5q/admin`}>
+          Dashboard
+        </Link>
+      )}
+      <Link to="/settings/profile" className={`content__link`}>
+        Settings
+      </Link>
+
+      <Link className={`content__link`} onClick={logOut}>
+        Log Out
+      </Link>
+    </div>
+  );
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
@@ -61,36 +85,18 @@ const Navbar = () => {
           {isMenuOpen ? <MdOutlineClose /> : <MdMenu />}
         </div>
         <ul className="navbar_list">
-          <Link to="/" className="navbar_list_item">
-            Holy Book
-          </Link>
-          <Link to="/" className="navbar_list_item">
-            Sermons
-          </Link>
-          <Link to="/blogs" className="navbar_list_item">
-            Blog
+          <Link to="/about" className="navbar_list_item">
+            About
           </Link>
 
-          {isAdminUser && (
-            <Button
-              size="sm"
-              colorScheme="blue"
-              variant="solid"
-              style={{
-                borderRadius: "50px",
-                color: "#fff",
-                fontWeight: "400",
-              }}
-              className="">
-              <Link to={`/epikavios/internal-e3gHt7Jp5q/admin`}>Dashboard</Link>
-            </Button>
-          )}
+          <Link to="/sermons" className="navbar_list_item">
+            Sermons
+          </Link>
+          {/* 
           {username ? (
             <>
               <UserNotifications />
-              <MenuDropdown menuItems={items} profile={profile}>
-                {username}
-              </MenuDropdown>
+              <MenuDropdown content={content} profile={profile} />
             </>
           ) : (
             <>
@@ -101,7 +107,7 @@ const Navbar = () => {
                 <Link to="/signup">Register</Link>
               </Button>
             </>
-          )}
+          )} */}
         </ul>
       </div>
     </>

@@ -7,7 +7,7 @@ import { Box, Text } from "@chakra-ui/react";
 const ComingSoonPage = () => {
   return (
     <div>
-      <Header />
+      <Header showNav />
       <div className="comingsoon_page_container">
         <Waitlistinput />
       </div>

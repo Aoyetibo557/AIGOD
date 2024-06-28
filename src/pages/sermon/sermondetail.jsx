@@ -1,15 +1,15 @@
 import React from "react";
-import { SingleBlog } from "../../components/blog/singleblog";
+import { SermonDetail } from "../../components/sermon/sermondetail";
 import { useParams } from "react-router-dom";
 import Layout from "../../components/Layout/layout";
 
-const BlogDetail = () => {
+const SermonDetailPage = () => {
   const { blogId } = useParams();
   return (
     <Layout>
-      <SingleBlog blogId={blogId} />
+      <SermonDetail blogId={blogId} />
     </Layout>
   );
 };
 
-export default BlogDetail;
+export default SermonDetailPage;

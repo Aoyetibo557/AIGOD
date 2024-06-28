@@ -1,13 +1,13 @@
 import React from "react";
-import { Dropdown } from "antd";
+import { Dropdown, Popover } from "antd";
 import { Avatar } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
-export const MenuDropdown = ({ menuItems, children, profile }) => {
+export const MenuDropdown = ({ content, profile }) => {
   return (
-    <Dropdown menu={{ items: menuItems }}>
+    <Popover placement="bottomRight" content={content} trigger="click">
       <div className="navbar_avatar">
         <Avatar
           size="sm"
@@ -21,14 +21,12 @@ export const MenuDropdown = ({ menuItems, children, profile }) => {
           icon={<FaUser />}
           src={profile?.profile_image}
         />
-        <span>{children}</span>
       </div>
-    </Dropdown>
+    </Popover>
   );
 };
 
 MenuDropdown.propTypes = {
-  menuItems: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired,
+  content: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };

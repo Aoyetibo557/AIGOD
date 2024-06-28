@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import "./singleblog.css";
+import "./sermondetail.css";
 import {
   Button,
   Avatar,
@@ -16,7 +16,11 @@ import QuillEditor from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getBlogById, deleteBlog, updateBlog } from "../../queries/blog";
+import {
+  getSermonById,
+  deleteSermon,
+  updateSermon,
+} from "../../queries/sermon";
 import { formatDate } from "../../utils/commonfunctions";
 import { Select } from "antd";
 import parse from "html-react-parser";
@@ -26,7 +30,7 @@ import { useUserRoles } from "../../utils/hooks/useUserRoles";
 import { ImageLoader } from "../imageloader/imageloader";
 import { modules, formats, tagOptions } from "../../utils/const/quillconfig";
 
-export const SingleBlog = ({ blogId }) => {
+export const SermonDetail = ({ blogId }) => {
   const [blog, setBlog] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedBlog, setEditedBlog] = useState({});
@@ -37,15 +41,15 @@ export const SingleBlog = ({ blogId }) => {
   const navigate = useNavigate();
 
   const fetchBlog = async () => {
-    const blogData = await getBlogById(blogId);
+    const blogData = await getSermonById(blogId);
     setBlog(blogData?.blog);
     setEditedBlog(blogData?.blog);
   };
 
   const handleDelete = async () => {
-    const response = await deleteBlog(blogId);
+    const response = await deleteSermon(blogId);
     if (response) {
-      navigate(-1);
+      navigate("/sermons");
     }
   };
 
@@ -68,12 +72,13 @@ export const SingleBlog = ({ blogId }) => {
       blog_title: editedBlog.blog_title,
       blog_content: editedBlog.blog_content,
       blog_tags: editedBlog.blog_tags,
+      blog_author: profile?.id || editedBlog.blog_author,
       // blog_image_url: editedBlog.blog_image_url,
       // author_name: editedBlog.author_name,
       // author_image_url: editedBlog.author_image_url,
       // created_date: editedBlog.created_date,
     };
-    const response = await updateBlog(blogData);
+    const response = await updateSermon(blogData);
     if (response) {
       setIsEditing(false);
       setBlog(editedBlog); // Update current blog state with edited data
@@ -97,7 +102,7 @@ export const SingleBlog = ({ blogId }) => {
       </div>
 
       <div className="blogdetails">
-        <div>
+        {/* <div>
           {isEditing ? (
             <Select
               size="middle"
@@ -123,7 +128,7 @@ export const SingleBlog = ({ blogId }) => {
               })}
             </div>
           )}
-        </div>
+        </div> */}
         <div>
           {isEditing ? (
             <input
@@ -175,7 +180,7 @@ export const SingleBlog = ({ blogId }) => {
                       size="sm"
                       className="blogdetails__btn"
                       onClick={onOpen}>
-                      Delete Blog
+                      Delete Sermon
                     </Button>
                   </>
                 ) : (
@@ -242,10 +247,10 @@ export const SingleBlog = ({ blogId }) => {
         motionPreset="slideInBottom">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Delete Blog</ModalHeader>
+          <ModalHeader>Delete Sermon</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>Are you sure you want to delete this blog?</p>
+            <p>Are you sure you want to delete this sermon?</p>
           </ModalBody>
 
           <ModalFooter>
@@ -266,6 +271,6 @@ export const SingleBlog = ({ blogId }) => {
   );
 };
 
-SingleBlog.propTypes = {
+SermonDetail.propTypes = {
   blogId: PropTypes.string,
 };

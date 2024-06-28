@@ -2,7 +2,7 @@ import axios from "axios";
 import { updateToken } from "../utils/auth";
 
 const API_URL =
-  process.env.NODE_ENV === "development"
+  process.env.REACT_APP_NODE_ENV === "development"
     ? process.env.REACT_APP_DEV_SERVER_URL
     : process.env.REACT_APP_PROD_SERVER_URL;
 

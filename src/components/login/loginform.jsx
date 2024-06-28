@@ -53,7 +53,7 @@ export const LoginForm = () => {
           localStorage.setItem("aigod_token", newToken);
         }
 
-        window.location.href = "/chattest";
+        window.location.href = "/chat";
       }
     } catch (error) {
       setError(error.message);

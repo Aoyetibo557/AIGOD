@@ -8,18 +8,23 @@ import PrivateRoutes from "./pages/customRoutes/privateRoutes";
 import AdminRoutes from "./pages/customRoutes/adminRoutes";
 import { verifyToken } from "./utils/auth";
 import ResetPasswordForm from "./components/signup/resetpassword";
-import NewBlogPost from "./pages/blog/newblog";
+import NewSermonPost from "./pages/sermon/newsermon";
 import AdminPage from "./pages/admin/admin";
 import { generateRandomString } from "./utils/commonfunctions";
+import Subscription from "./components/settings/settingssubscription";
+import AboutPage from "./pages/about/about";
 
 const HomePage = lazy(() => import("./pages/homepage"));
-const ChatPage = lazy(() => import("./pages/ChatPage"));
+const ChatPage = lazy(() => import("./pages/chatpage/ChatPage"));
 const ComingSoonPage = lazy(() => import("./pages/coming_soon/ComingSoonPage"));
 const LoginPage = lazy(() => import("./pages/login/login"));
 const SignupPage = lazy(() => import("./pages/signup/signup"));
 const ProfilePage = lazy(() => import("./pages/profile/profile"));
-const BlogPage = lazy(() => import("./pages/blog/blog"));
-const BlogDetail = lazy(() => import("./pages/blog/blogdetail"));
+const SettingsAccount = lazy(() =>
+  import("./components/settings/settingsaccount")
+);
+const SermonPage = lazy(() => import("./pages/sermon/sermon"));
+const SermonDetailPage = lazy(() => import("./pages/sermon/sermondetail"));
 const ForgotPasswordPage = lazy(() =>
   import("./pages/forgot-password/forgotPassword")
 );
@@ -51,99 +56,135 @@ function App() {
             }
           />
           <Route
-            path="/chattest"
+            path="/about"
             element={
               <Suspense fallback={<Loading />}>
-                <ChatPage />
+                <AboutPage />
               </Suspense>
             }
           />
 
-          <Route
+          {/* <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loading />}>
+                <LoginPage />
+              </Suspense>
+            }
+          /> */}
+
+          {/* <Route
             path="/login"
             element={
               <Suspense fallback={<Loading />}>
                 <LoginPage />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             path="/signup"
             element={
               <Suspense fallback={<Loading />}>
                 <SignupPage />
               </Suspense>
             }
-          />
+          /> */}
 
           <Route
-            path="/blogs"
+            path="/sermons"
             element={
               <Suspense fallback={<Loading />}>
-                <BlogPage />
+                <SermonPage />
               </Suspense>
             }
           />
 
           <Route
-            path="/blog/:blogId"
+            path="/sermon/:blogId"
             element={
               <Suspense fallback={<Loading />}>
-                <BlogDetail />
+                <SermonDetailPage />
               </Suspense>
             }
           />
 
           {/* These are private routes only available to authenticated users */}
-          <Route element={<PrivateRoutes />}>
-            <Route
-              path="/profile"
+          {/* <Route element={<PrivateRoutes />}> */}
+          {/* <Route
+              path="/chat"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ChatPage />
+                </Suspense>
+              }
+            /> */}
+
+          {/* <Route
+              path="/settings/profile"
               element={
                 <Suspense fallback={<Loading />}>
                   <ProfilePage />
                 </Suspense>
               }
-            />
+            /> */}
 
-            <Route element={<AdminRoutes />}>
-              <Route
+          {/* <Route
+              path="/settings/account"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <SettingsAccount />
+                </Suspense>
+              }
+            /> */}
+
+          {/* <Route
+              path="/settings/subscription"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Subscription />
+                </Suspense>
+              }
+            /> */}
+
+          {/* <Route element={<AdminRoutes />}> */}
+          {/* <Route
                 path={`/epikavios/internal-e3gHt7Jp5q/admin`}
                 element={
                   <Suspense fallback={<Loading />}>
                     <AdminPage />
                   </Suspense>
                 }
-              />
+              /> */}
 
-              <Route
-                path="/create-new-blog"
+          {/* <Route
+                path="/create-new-sermon"
                 element={
                   <Suspense fallback={<Loading />}>
-                    <NewBlogPost />
+                    <NewSermonPost />
                   </Suspense>
                 }
               />
-            </Route>
-          </Route>
+            </Route> */}
+          {/* </Route> */}
 
-          <Route
+          {/* <Route
             path="/forgot-password"
             element={
               <Suspense fallback={<Loading />}>
                 <ForgotPasswordPage />
               </Suspense>
             }
-          />
+          /> */}
 
-          <Route
+          {/* <Route
             path="/reset-password/:token"
             element={
               <Suspense fallback={<Loading />}>
                 <ResetPasswordForm />
               </Suspense>
             }
-          />
+          /> */}
 
           <Route
             path="*"

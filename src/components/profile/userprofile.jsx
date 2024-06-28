@@ -23,9 +23,7 @@ const UserProfile = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [msgType, setMsgType] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [updatePassword, setUpdatePassword] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [hasChanged, setHasChanged] = useState(false);
   const [orginalData, setOrginalData] = useState({});
@@ -65,45 +63,6 @@ const UserProfile = () => {
   const handleUploadOnClickEvent = () => {
     const imageInput = document.getElementById("imageInput");
     imageInput.click();
-  };
-
-  const handlePasswordReset = async () => {
-    setError("");
-    setMsgType("");
-    setIsLoading(true);
-    try {
-      if (newPassword !== confirmPassword) {
-        setError("Passwords do not match");
-        setMsgType("error");
-        return;
-      }
-      if (newPassword.length === 0 || confirmPassword.length === 0) {
-        setError("Password cannot be empty");
-        setMsgType("error");
-        return;
-      }
-      const response = await updateUserPassword({
-        email: profile?.email,
-        token: token,
-        password: newPassword,
-      });
-      if (response?.status === "success") {
-        setError(response?.message);
-        setMsgType("success");
-        setNewPassword("");
-        setConfirmPassword("");
-        setUpdatePassword(false);
-        window.locaion.reload();
-      } else {
-        setError("Error updating password");
-        setMsgType("error");
-      }
-    } catch (error) {
-      setError(error.message);
-      setMsgType("error");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const handleInputChange = (e) => {
@@ -240,8 +199,8 @@ const UserProfile = () => {
 
         <div>
           <label
-            aria-label="Username"
-            title="Username"
+            aria-label="email"
+            title="email"
             className="isDisabled userprofile__label"
             htmlFor="email">
             Email
@@ -255,73 +214,6 @@ const UserProfile = () => {
             disabled
             value={formValues?.email}
           />
-        </div>
-
-        <div>
-          {updatePassword ? (
-            <div className="password__div">
-              <div>
-                <label className="userprofile__label" htmlFor="password">
-                  New Password
-                </label>
-                <input
-                  className="userprofile__input"
-                  name="password"
-                  placeholder="***************"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label className="userprofile__label" htmlFor="password">
-                  Confirm New Password
-                </label>
-                <input
-                  className="userprofile__input"
-                  name="password"
-                  placeholder="***************"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-
-              <Button
-                size="md"
-                colorScheme="blue"
-                variant="solid"
-                marginBottom="15px"
-                isLoading={isLoading}
-                loadingText="Resetting..."
-                onClick={handlePasswordReset}
-                className="userprofile__updatepassword">
-                Reset Password
-              </Button>
-
-              <Button
-                size="md"
-                colorScheme="blue"
-                variant="outline"
-                onClick={() => setUpdatePassword(false)}
-                disabled={isLoading}
-                className="userprofile__updatepassword">
-                Cancel
-              </Button>
-            </div>
-          ) : (
-            !hasChanged && (
-              <Button
-                size="sm"
-                colorScheme="blue"
-                variant="outline"
-                onClick={() => setUpdatePassword(true)}
-                className="userprofile__updatepassword">
-                Update Password
-              </Button>
-            )
-          )}
         </div>
 
         {hasChanged && (

@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./blogcard.css";
+import "./sermoncard.css";
 import { Avatar } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { formatDate } from "../../utils/commonfunctions";
 import { BlogcardSkeleton } from "../skeleton/blogcardskeleton";
-
-export const BlogCard = ({
+export const SermonCard = ({
   blog_title,
   created_date,
   author_name,
@@ -27,13 +26,14 @@ export const BlogCard = ({
     blog_read_time ||
     blog_tags ||
     blog_id;
+
   return hasAllDetails ? (
-    <Link to={`/blog/${blog_id}`} className="blogcard">
+    <Link to={`/sermon/${blog_id}`} className="blogcard">
       <div className="blogcard__top">
         <img src={blog_image_url} alt={blog_title} className="blogcard__img" />
         <div className="blogcard__top-div">
           <span className="blogcard__readtime">{blog_read_time} min read </span>
-          {blog_tags && (
+          {/* {blog_tags && (
             <div>
               {blog_tags.map((tag) => (
                 <span key={tag} className="blogcard__tags">
@@ -41,7 +41,7 @@ export const BlogCard = ({
                 </span>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <h3 className="blogcard__title">{blog_title}</h3>
@@ -62,7 +62,7 @@ export const BlogCard = ({
   );
 };
 
-BlogCard.propTypes = {
+SermonCard.propTypes = {
   title: PropTypes.string,
   date: PropTypes.string,
   author: PropTypes.string,

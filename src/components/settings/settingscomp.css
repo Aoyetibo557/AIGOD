@@ -1,0 +1,135 @@
+.settings__sidebar {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings__link {
+  width: 180px;
+  color: white;
+  padding: 5px;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+.settings__link:hover {
+  border-radius: 6px;
+  background-color: #ea00ff23;
+  opacity: 1;
+}
+
+.settings__link--active {
+  border-radius: 6px;
+  background-color: #ea00ff23;
+  opacity: 1;
+}
+
+.settings__container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(20px);
+}
+
+.account__container {
+  width: 40vw;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.account__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.account__top h2 {
+  font-weight: 600;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.account__top span {
+  font-size: clamp(0.8rem, 5vw, 1rem);
+  color: #fff;
+  opacity: 0.6;
+}
+
+.account__password div {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin: 20px 0;
+}
+
+.password__input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ea00ff64;
+  background-color: #ea00ff23;
+  color: #fff;
+  font-size: clamp(0.8rem, 5vw, 1rem);
+  font-family: "Manrope", sans-serif;
+  margin-top: 10px;
+}
+
+.password__btn {
+  background-color: #ea00ff;
+  color: #fff;
+  font-size: clamp(0.8rem, 5vw, 1rem);
+  font-family: "Manrope", sans-serif;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.account__password__msg {
+  margin-top: 10px;
+  font-size: clamp(0.8rem, 5vw, 1rem);
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+  opacity: 0.6;
+}
+
+.account__password__msg--success {
+  color: #00ff00;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.account__password__msg--error {
+  color: #ff0000;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.account__link {
+  color: #ea00ff;
+  font-weight: 600;
+  text-decoration: underline;
+  font-size: clamp(0.9em, 5vw, 1rem);
+  font-family: "Manrope", sans-serif;
+  margin-top: 10px;
+  opacity: 1;
+}
+
+.account__link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .settings__sidebar {
+    flex-direction: row;
+  }
+  .settings__link--active {
+    opacity: 1;
+    background: none;
+  }
+  .account__container {
+    width: 80vw;
+  }
+}

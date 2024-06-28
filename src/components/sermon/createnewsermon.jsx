@@ -18,11 +18,11 @@ import {
 import QuillEditor from "react-quill";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { Select } from "antd";
-import { ViewNewBlog } from "./viewnewblog";
-import "./createnewblog.css";
+import { ViewNewSermon } from "./viewnewsermon";
+import "./createnewsermon.css";
 import "react-quill/dist/quill.snow.css";
 import { NotificationAlert } from "../alert/notificationalert";
-import { createNewBlogPost } from "../../queries/blog";
+import { createNewSermonPost } from "../../queries/sermon";
 import {
   changeImageFileName,
   uploadToS3,
@@ -30,7 +30,7 @@ import {
   constructImageUrl,
 } from "../../utils/s3";
 
-const CreateNewBlog = () => {
+const CreateNewSermon = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
@@ -69,7 +69,7 @@ const CreateNewBlog = () => {
       }
       const newFileName = changeImageFileName({
         fileName: file?.name,
-        origin: "blog",
+        origin: "sermons",
         userId: userId,
       });
 
@@ -173,7 +173,7 @@ const CreateNewBlog = () => {
   //   setImageName(newFileName);
   // };
 
-  const handleNewBlogSubmit = async (e) => {
+  const handleNewSermonSubmit = async (e) => {
     e.preventDefault();
     setError("");
     // handleChangeName();
@@ -182,8 +182,8 @@ const CreateNewBlog = () => {
       return;
     } else {
       try {
-        const imageUrl = constructImageUrl(imageName, "blogs");
-        const newBlog = {
+        const imageUrl = constructImageUrl(imageName, "sermons");
+        const newSermon = {
           title,
           readTime,
           tags,
@@ -192,22 +192,23 @@ const CreateNewBlog = () => {
           content: value,
           imageUrl,
         };
-        const res = await createNewBlogPost(newBlog);
+        //need to go update the blog to sermon logic(just update naming conventions)
+        const res = await createNewSermonPost(newSermon);
         if (res.status === "success") {
           const { fileName, url } = await uploadToS3({
             file,
             fileName: imageName,
             userId,
-            location: "blogs",
+            location: "sermons",
           });
 
-          setError("Blog created successfully");
+          setError("Sermon created successfully");
           setMsgType("success");
           clearForm();
 
-          navigate(`/blog/${res?.blog.blog_id}`);
+          navigate(`/sermon/${res?.blog.blog_id}`);
         } else {
-          setError("Error creating blog");
+          setError("Error creating sermon");
           setMsgType("error");
         }
       } catch (error) {
@@ -221,7 +222,7 @@ const CreateNewBlog = () => {
       <div className="blog__container ">
         <TabList>
           <Tab>
-            <h2>Create New Blog</h2>
+            <h2>Create New Sermon</h2>
           </Tab>
           <Tab>
             <h2>Preview</h2>
@@ -234,7 +235,7 @@ const CreateNewBlog = () => {
                 {error && <NotificationAlert type={msgType} message={error} />}
                 <div>
                   <label htmlFor="imageInput" className="newblog__label">
-                    <span>Blog Image</span>
+                    <span>Sermon Image</span>
 
                     <Input
                       id="imageInput"
@@ -257,7 +258,7 @@ const CreateNewBlog = () => {
                     onChange={(e) => setReadTime(e.target.value)}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label htmlFor="tags" className="newblog__label">
                     Tags
                   </label>
@@ -271,10 +272,10 @@ const CreateNewBlog = () => {
                     options={tagOptions}
                     maxCount={2}
                   />
-                </div>
+                </div> */}
                 <div>
                   <label htmlFor="title" className="newblog__label">
-                    Blog Title
+                    Sermon Title
                   </label>
                   <input
                     id="title"
@@ -289,7 +290,7 @@ const CreateNewBlog = () => {
 
                 <div>
                   <label htmlFor="description" className="newblog__label">
-                    Blog Description
+                    Sermon Description
                   </label>
                   <input
                     id="description"
@@ -303,7 +304,7 @@ const CreateNewBlog = () => {
                 </div>
                 <div>
                   <label htmlFor="content" className="newblog__label">
-                    Blog Content
+                    Sermon Content
                   </label>
                   <QuillEditor
                     ref={(el) => (quill.current = el)}
@@ -323,8 +324,8 @@ const CreateNewBlog = () => {
                     colorScheme="teal"
                     variant="solid"
                     type="submit"
-                    onClick={handleNewBlogSubmit}>
-                    Submit Blog
+                    onClick={handleNewSermonSubmit}>
+                    Submit Sermon
                   </Button>
                 </div>
               </form>
@@ -333,7 +334,7 @@ const CreateNewBlog = () => {
 
           <TabPanel>
             <div className="newblog__container">
-              <ViewNewBlog
+              <ViewNewSermon
                 blog={{
                   image: imageName,
                   title,
@@ -351,4 +352,4 @@ const CreateNewBlog = () => {
   );
 };
 
-export default CreateNewBlog;
+export default CreateNewSermon;

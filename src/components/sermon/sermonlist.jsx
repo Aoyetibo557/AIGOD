@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@chakra-ui/react";
-import "./bloglist.css";
-import { BlogCard } from "./blogcard";
-import { getBlogs } from "../../queries/blog";
+import "./sermonlist.css";
+import { SermonCard } from "./sermoncard";
+import { getSermons } from "../../queries/sermon";
 
-const BlogList = () => {
+const SermonList = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchBlogs = async () => {
-    const blogData = await getBlogs();
+  const fetchSermons = async () => {
+    const blogData = await getSermons();
     setBlogs(blogData?.blogs);
   };
 
@@ -17,7 +17,7 @@ const BlogList = () => {
   const blogList = useMemo(() => {
     try {
       setIsLoading(true);
-      return fetchBlogs();
+      return fetchSermons();
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {
@@ -29,7 +29,7 @@ const BlogList = () => {
     <div className="bloglist">
       <div className="bloglist__cards">
         {blogs
-          ?.map((blog) => <BlogCard key={blog.blog_id} {...blog} />)
+          ?.map((blog) => <SermonCard key={blog.blog_id} {...blog} />)
           .reverse()}
       </div>
 
@@ -44,9 +44,9 @@ const BlogList = () => {
     </div>
   ) : (
     <div>
-      <p>No blogs found</p>
+      <p>No sermon found</p>
     </div>
   );
 };
 
-export default BlogList;
+export default SermonList;
