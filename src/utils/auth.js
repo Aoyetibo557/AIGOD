@@ -5,13 +5,6 @@ const API_URL =
     ? process.env.REACT_APP_DEV_SERVER_URL
     : process.env.REACT_APP_PROD_SERVER_URL;
 
-const getToken = () => localStorage.getItem("aigod_token");
-
-const handleError = (error) => {
-  console.error("Error:", error.message);
-  throw new Error(error.message);
-};
-
 const updateToken = (newToken) => {
   if (localStorage) {
     localStorage.setItem("aigod_token", newToken);
@@ -19,22 +12,6 @@ const updateToken = (newToken) => {
     console.error("localStorage is not supported in this browser");
   }
 };
-
-// const verifyToken = async () => {
-//   const token = getToken();
-//   if (!token) return null;
-
-//   try {
-//     const response = await axios.get(`${API_URL}/user/verifiedtoken`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     return response?.data.user.username;
-//   } catch (error) {
-//     return handleError(error);
-//   }
-// };
 
 const verifyToken = async () => {
   try {

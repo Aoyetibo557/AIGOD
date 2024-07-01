@@ -1,6 +1,4 @@
 import axios from "axios";
-import { updateToken } from "../utils/auth";
-import { createLog } from "./admin";
 
 const API_URL =
   process.env.REACT_APP_NODE_ENV === "development"
