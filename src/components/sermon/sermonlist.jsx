@@ -1,50 +1,50 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Button } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Spin } from "antd";
 import "./sermonlist.css";
 import { SermonCard } from "./sermoncard";
 import { getSermons } from "../../queries/sermon";
 
 const SermonList = () => {
-  const [blogs, setBlogs] = useState([]);
+  const [sermons, setSermons] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const fetchSermons = async () => {
-    const blogData = await getSermons();
-    setBlogs(blogData?.blogs);
-  };
-
-  //useMemo to store the value of the blogs so that it doesn't get recalculated on every render
-  const blogList = useMemo(() => {
-    try {
+  useEffect(() => {
+    const fetchSermons = async () => {
       setIsLoading(true);
-      return fetchSermons();
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-    } finally {
-      setIsLoading(false);
-    }
+      try {
+        const blogData = await getSermons();
+        setSermons(blogData?.blogs || []);
+      } catch (error) {
+        console.error("Error fetching sermons:", error);
+        setError("Error fetching sermons. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSermons();
   }, []);
 
-  return blogs?.length > 0 ? (
+  if (isLoading) {
+    return <Spin size="large" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
     <div className="bloglist">
       <div className="bloglist__cards">
-        {blogs
-          ?.map((blog) => <SermonCard key={blog.blog_id} {...blog} />)
-          .reverse()}
+        {sermons.length > 0 ? (
+          sermons
+            .map((sermon) => <SermonCard key={sermon.blog_id} {...sermon} />)
+            .reverse()
+        ) : (
+          <p>No sermon found</p>
+        )}
       </div>
-
-      {/* Switch this to pagination! */}
-      {/* <Button
-        colorScheme="teal"
-        variant="outline"
-        size="md"
-        className="bloglist__button">
-        View All Posts
-      </Button> */}
-    </div>
-  ) : (
-    <div>
-      <p>No sermon found</p>
     </div>
   );
 };

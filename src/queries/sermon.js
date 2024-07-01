@@ -1,5 +1,4 @@
 import axios from "axios";
-import { updateToken } from "../utils/auth";
 
 const API_URL =
   process.env.REACT_APP_NODE_ENV === "development"

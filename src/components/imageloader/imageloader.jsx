@@ -21,22 +21,37 @@ export const ImageLoader = ({ src, alt, width, height, className }) => {
       width={width}
       height={height}
       className={className}>
-      <Skeleton
-        isLoaded={!isLoading && !error}
-        startColor="gray.100"
-        endColor="gray.300">
+      {isLoading && (
+        <Skeleton
+          width={width}
+          height={height}
+          startColor="gray.100"
+          endColor="gray.300"
+        />
+      )}
+      {!error && (
         <Image
-          src={src || "https://via.placeholder.com/300x150"}
+          src={src}
           alt={alt}
           onLoad={handleLoad}
           onError={handleError}
-          display={isLoading || error ? "none" : "block"}
+          display={isLoading ? "none" : "block"}
           width={width}
           height={height}
           objectFit="cover"
           borderRadius="md"
         />
-      </Skeleton>
+      )}
+      {error && !isLoading && (
+        <Image
+          src="https://via.placeholder.com/300x150"
+          alt="Placeholder"
+          width={width}
+          height={height}
+          objectFit="cover"
+          borderRadius="md"
+        />
+      )}
     </Box>
   );
 };
@@ -47,4 +62,8 @@ ImageLoader.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   className: PropTypes.string,
+};
+
+ImageLoader.defaultProps = {
+  className: "",
 };

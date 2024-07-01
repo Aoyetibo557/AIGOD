@@ -43,3 +43,13 @@
 .about__content {
   margin-top: 30px;
 }
+
+@media only screen and (max-width: 768px) {
+  .about__body {
+    width: 100%;
+  }
+  .about__img {
+    width: 100%;
+    height: 250px;
+  }
+}
